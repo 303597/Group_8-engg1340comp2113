@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #include "tools.h"
 #include "game.h"
 #include "characters.h"
@@ -27,3 +28,6 @@ int main()
 
     return 0;
 }
+=======
+
+>>>>>>> 4aed8732af520778f79b3e672427d9662a585a62
