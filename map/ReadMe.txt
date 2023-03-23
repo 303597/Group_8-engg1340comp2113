@@ -5,9 +5,9 @@
 ' '-- Free spaces, both player and monsters can walk through
 
 
-sizes: 2_1: 16 X 12
-       2_2: 14 X 14
-       2_3: 12 X 16
+sizes: 2_1: 16 X 11
+       2_2: 16 X 11
+       2_3: 16 X 11
        3_1: 21 X 21
        3_2: 21 X 21
        3_3: 21 X 21
