@@ -1,21 +1,21 @@
-#include "tools.h"
-//#include "game.h"
+//#include "tools.h"
+#include "game.h"
 //#include "characters.h"
 #include <locale.h>
 #include <ncurses.h>
 
-const double fps = 60.00;
-
-bool start_game = false;
+bool start_game = true;
 
 void initialize()
 {
     setlocale(LC_ALL, "");
     initscr();
+    noecho();
+    keypad(stdscr, true);
 
-    Map game_map = Map("../map/3_Monsters/map1.txt");
+    //Map game_map = Map("../map/3_Monsters/map1.txt");
 
-    game_map.show();
+    //game_map.show();
 }
 
 int main()
@@ -24,8 +24,8 @@ int main()
 
     //welcomeLoop();
 
-    //if (start_game)
-    //    gameLoop();
+    if (start_game)
+        gameLoop();
 
     //showHighScore();
 
