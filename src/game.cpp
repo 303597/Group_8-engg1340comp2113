@@ -52,8 +52,7 @@ void gameLoop()
                 direction = 3;
                 break;
         }
-
-        mvprintw(0, 0, "%d", direction);
+        
         refresh();
         last_frame_time = this_frame_time;
     }
