@@ -7,8 +7,9 @@ class Character
 {
 public:
     Character(int start_x, int start_y, Map* on_map);
-    int x, y;
-    bool mode = False;
+    int start_x, start_y; // initial position
+    int x, y; // present position
+    bool mode = False; // whether in counter-attack mode
     Map* map;
 };
 
