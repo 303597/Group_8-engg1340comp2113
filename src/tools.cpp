@@ -38,6 +38,9 @@ Map::Map(string filename)
             if (vals[i][j] == 'E')
             {
                 ghost_count++;
+                /*Ghost g[ghost_conut];
+                g[ghost_count].start_x = i;
+                g[ghost_count].start_y = j;*/
                 //ghosts.emplace_back(new Ghost(i, j, this));
             }
         }
