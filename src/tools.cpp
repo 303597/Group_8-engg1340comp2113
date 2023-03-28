@@ -9,6 +9,7 @@ using namespace std;
 
 Map::Map(string filename)
 {
+    //Ghost *g = new Ghost;
     ifstream fin;
     fin.open(filename);
     if (fin.fail())
@@ -37,10 +38,20 @@ Map::Map(string filename)
             }
             if (vals[i][j] == 'E')
             {
+                /*Ghost *tmp = new Ghost[ghost_count];
+                for(int i=0; i < ghost_count; i++){ 
+                    tmp[i] = g[i];
+                }
+                delete [] g;
+                *Ghost g = new Ghost[ghost_count+1]
+                for(int i=0; i < ghost_count; i++){ 
+                    g[i] = tmp[i];
+                }
+                delete [] tmp;
+                */
                 ghost_count++;
-                /*Ghost g[ghost_conut];
-                g[ghost_count].start_x = i;
-                g[ghost_count].start_y = j;*/
+                //g[ghost_count].start_x = i;
+                //g[ghost_count].start_y = j;
                 //ghosts.emplace_back(new Ghost(i, j, this));
             }
         }
