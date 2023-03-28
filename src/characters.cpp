@@ -1,5 +1,8 @@
 #include "tools.h"
 #include "characters.h"
+#include <ctime>
+#include <cstdlib>
+#include <iostream>
 
 Character::Character(int start_x, int start_y, Map* on_map)
 {
