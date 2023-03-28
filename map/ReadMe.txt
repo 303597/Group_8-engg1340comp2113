@@ -3,6 +3,7 @@
 'E'-- Monsters
 '_'-- Monsters' starting point
 ' '-- Free spaces, both player and monsters can walk through
+'0'-- Tools making player invincible and could eat monsters to gain bonus points
 
 
 sizes: 2_1: 16 X 11
