@@ -8,7 +8,7 @@ class Character
 public:
     Character(int start_x, int start_y, Map* on_map);
     int x, y;
-    int mode;
+    bool mode = False;
     Map* map;
 };
 
