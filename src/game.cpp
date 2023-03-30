@@ -1,6 +1,9 @@
 #include "game.h"
+#include "characters.h"
+#include "tools.h"
 #include <chrono>
 #include <string>
+#include <vector>
 #include <iostream>
 #include <ncurses.h>
 using namespace std;
@@ -17,6 +20,15 @@ void welcomeLoop()
 void gameLoop()
 {
     nodelay(stdscr, true); // don't wait until input
+
+    bool in_counteratk_mode = false;
+    double ghost_speed = 0.4;
+    PacMan pacman(0, 0); vector<Ghost> ghosts;
+    Map game_map = Map("../map/3_Monsters/map1.txt", pacman, ghosts);
+    pacman.linkMap(&game_map);
+    for (size_t i = 0; i < ghosts.size(); i++)
+        ghosts[i].linkMap(&game_map);
+    game_map.show();
 
     int dirx[] = {0, 0, -1, 1};
     int diry[] = {-1, 1, 0, 0}; // up, down, left, right
@@ -52,7 +64,18 @@ void gameLoop()
                 direction = 3;
                 break;
         }
-        
+
+        pacman.move(direction);
+        int tile_info = game_map.updateTile(pacman.x, pacman.y);
+        if (tile_info == 1)
+            for (Ghost ghost: ghosts)
+                ghost.in_counteratk_mode = true;
+        checkCharacterCollision(pacman, ghosts);
+
+        for (Ghost ghost: ghosts)
+            ghost.move(pacman.x, pacman.y, ghost_speed);
+        checkCharacterCollision(pacman, ghosts);
+
         refresh();
         last_frame_time = this_frame_time;
     }

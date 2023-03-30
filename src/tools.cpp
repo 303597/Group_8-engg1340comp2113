@@ -7,9 +7,8 @@
 #include <iostream>
 using namespace std;
 
-Map::Map(string filename)
+Map::Map(string filename, PacMan &_pacman, vector<Ghost> &_ghosts)
 {
-    //Ghost *g = new Ghost;
     ifstream fin;
     fin.open(filename);
     if (fin.fail())
@@ -33,7 +32,8 @@ Map::Map(string filename)
                     cout << "ERROR: Map includes more than 1 pac-man." << endl;
                     return;
                 }
-                //pacman = new PacMan(i, j, this);
+                _pacman = PacMan(i, j);
+                pacman = &_pacman;
                 vals[i][j] = ' ';
             }
             if (vals[i][j] == 'E')
@@ -50,12 +50,13 @@ Map::Map(string filename)
                 delete [] tmp;
                 */
                 ghost_count++;
+                _ghosts.emplace_back(Ghost(i, j));
+                ghosts.emplace_back(&_ghosts.back());
                 //g[ghost_count].start_x = i;
                 //g[ghost_count].start_y = j;
                 //ghosts.emplace_back(new Ghost(i, j, this));
             }
         }
-    
     if (pacman_count < 1)
         cout << "ERROR: Map does not include pac-man starting point." << endl;
 }
@@ -93,4 +94,9 @@ void Map::printMapElement(int x, int y, char element)
         default:
             mvprintw(x, y, "ㅤ");
     }
+}
+
+int Map::updateTile(int x, int y)
+{
+    // not implemented
 }

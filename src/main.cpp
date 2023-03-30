@@ -1,6 +1,6 @@
-//#include "tools.h"
+#include "tools.h"
 #include "game.h"
-//#include "characters.h"
+#include "characters.h"
 #include <locale.h>
 #include <ncurses.h>
 
@@ -12,10 +12,6 @@ void initialize()
     initscr();
     noecho();
     keypad(stdscr, true);
-
-    //Map game_map = Map("../map/3_Monsters/map1.txt");
-
-    //game_map.show();
 }
 
 int main()
