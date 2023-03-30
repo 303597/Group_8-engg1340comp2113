@@ -6,7 +6,7 @@
 #include <string>
 using namespace std;
 
-int score = 0, eat_ghosts_streak = 0;
+int score = 0;
 
 class Map
 {

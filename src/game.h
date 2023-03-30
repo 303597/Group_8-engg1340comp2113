@@ -5,6 +5,6 @@ const double time_per_loop = 200; // milliseconds
 
 void welcomeLoop();
 
-void gameLoop();
+bool gameLoop();
 
 #endif

@@ -17,7 +17,7 @@ void welcomeLoop()
     // not implemented, to be done with UI
 }
 
-void gameLoop()
+bool gameLoop()
 {
     nodelay(stdscr, true); // don't wait until input
 
@@ -80,5 +80,8 @@ void gameLoop()
 
         refresh();
         last_frame_time = this_frame_time;
+        
+        if (pacman.lives <= 0)
+            return false;
     }
 }
