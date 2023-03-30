@@ -92,4 +92,15 @@ void Map::printMapElement(int x, int y, char element)
 int Map::updateTile(int x, int y)
 {
     // not implemented
+    
+    if (vals[x][y] == 'E')
+    {
+        return 1;
+    }
+    else
+    {
+        vals[x][y] = ' ';
+        return 0;
+    }
+    
 }
