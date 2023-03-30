@@ -4,9 +4,9 @@
 #include <cstdlib>
 #include <iostream>
 
-Character::Character(int start_x, int start_y)
+Character::Character(int _start_x, int _start_y)
 {
-    x = start_x; y = start_y;
+    start_x = x = _start_x; start_y = y = _start_y;
 }
 
 void Character::linkMap(Map* _map)
