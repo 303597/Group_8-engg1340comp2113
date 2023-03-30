@@ -59,6 +59,8 @@ void Map::show()
     {
         for (size_t j = 0; j < vals[i].length(); j++)
             printMapElement(i, j, vals[i][j]);
+        printMapElement(pacman->x, pacman->y, 'o');
+        
     }
     refresh();
 }

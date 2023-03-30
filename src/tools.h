@@ -7,6 +7,8 @@
 using namespace std;
 
 int score = 0;
+int dirx[] = {0, 0, -1, 1};
+int diry[] = {-1, 1, 0, 0}; // up, down, left, right
 
 class Map
 {

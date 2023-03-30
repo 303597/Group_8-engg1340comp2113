@@ -30,8 +30,6 @@ bool gameLoop()
         ghosts[i].linkMap(&game_map);
     game_map.show();
 
-    int dirx[] = {0, 0, -1, 1};
-    int diry[] = {-1, 1, 0, 0}; // up, down, left, right
     auto last_frame_time = chrono::high_resolution_clock::now(), this_frame_time = last_frame_time;
 
     int direction = 0;
@@ -77,6 +75,8 @@ bool gameLoop()
         for (Ghost ghost: ghosts)
             ghost.move(pacman.x, pacman.y, ghost_speed);
         checkCharacterCollision(pacman, ghosts);
+
+        game_map.show();
 
         refresh();
         last_frame_time = this_frame_time;
