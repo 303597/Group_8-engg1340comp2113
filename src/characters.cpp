@@ -50,12 +50,12 @@ void Ghost::move(int target_x, int target_y, double speed)
 		for(int p = 0; p < 4; p++){
 			int xx = (*ghosts)[i].x + dirx[p];
 			int yy = (*ghosts)[i].y + diry[p];
-			if(xx < 0){ xx = vals.size() - 1; }
-			else if(xx > vals.size()){ xx = 0; }
-			if(yy < 0){ xx = vals[i].size() - 1; }
-			else if(yy > vals[i].size()){ xx = 0; }
+			if(xx < 0){ xx = map.map.vals.size() - 1; }
+			else if(xx > map.vals.size()){ xx = 0; }
+			if(yy < 0){ xx = map.vals[i].size() - 1; }
+			else if(yy > map.vals[i].size()){ xx = 0; }
 			// deal with overflow;
-			if(vals[xx][yy] == '#'){ poss[i] = 0; cnt--; }
+			if(map.vals[xx][yy] == '#'){ poss[i] = 0; cnt--; }
 		}
 		// delete impossible moving directions; divide possibilities
 		co_x = (*ghosts)[i].x - target_x;
@@ -172,10 +172,10 @@ void Ghost::move(int target_x, int target_y, double speed)
 				break;		
 		}
 		// if in line-- better avoid the pac-man.
-		if((*ghosts)[i].x < 0){ (*ghosts)[i].x += vals.size(); }
-		else if((*ghosts)[i].x > vals.size()){ (*ghosts)[i].x -= vals.size(); }
-		if((*ghosts)[i].y < 0){ (*ghosts)[i].y += vals[i].size(); }
-		else if((*ghosts)[i].y > vals[i].size()){ (*ghosts)[i].y -= vals.size(); }
+		if((*ghosts)[i].x < 0){ (*ghosts)[i].x += map.vals.size(); }
+		else if((*ghosts)[i].x > map.vals.size()){ (*ghosts)[i].x -= map.vals.size(); }
+		if((*ghosts)[i].y < 0){ (*ghosts)[i].y += map.vals[i].size(); }
+		else if((*ghosts)[i].y > map.vals[i].size()){ (*ghosts)[i].y -= map.vals.size(); }
 		// deal with overflow;
 	}
     return;
