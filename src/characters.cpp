@@ -34,7 +34,7 @@ void Ghost::move(int target_x, int target_y, double speed)
     // not implemented
 }
 
-void checkCharacterCollision(PacMan pacman, vector<Ghost> ghosts)
+void checkCharacterCollision(PacMan &pacman, vector<Ghost> &ghosts)
 {   
     for (int i=0;i<ghosts.size();++i)
     {
