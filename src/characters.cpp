@@ -34,7 +34,6 @@ void PacMan::move(int direction)
 void Ghost::move(int target_x, int target_y, double speed)
 {
 	int co_x,co_y;//corresponding postions
-	int multi = 1; // switch mode 
 	int fl=0, fx=1, fy=1;
 	int poss[4] = {1, 1, 1, 1}, cnt=4; // up down right left
 	int dirx[4] = {0, 0, 1, -1};
