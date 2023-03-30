@@ -7,7 +7,7 @@
 #include <iostream>
 using namespace std;
 
-Map::Map(string filename, PacMan &_pacman, vector<Ghost> &_ghosts)
+Map::Map(string filename, PacMan &_pacman, vector<Ghost> &_ghosts) // _pacman: passed by reference  pacman: belongs to Map
 {
     ifstream fin;
     fin.open(filename);
