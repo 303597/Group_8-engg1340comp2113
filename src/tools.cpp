@@ -79,7 +79,10 @@ void Map::printMapElement(int x, int y, char element)
             mvprintw(x, y, "◽");
             break;
         case 'E':
-            mvprintw(x, y, "👻");
+            if(in_counteratk_mode){
+                mvprintw(x, y, "👻");}
+            else{
+                mvprintw(x, y, "🥶");}
             break;
         default:
             mvprintw(x, y, "ㅤ");
