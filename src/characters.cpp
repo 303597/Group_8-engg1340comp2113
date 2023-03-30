@@ -35,7 +35,34 @@ void Ghost::move(int target_x, int target_y, double speed)
 }
 
 void checkCharacterCollision(PacMan pacman, vector<Ghost> ghosts)
-{
-    // not implemented
+{   
+    for (int i=0;i<ghosts.size();++i)
+    {
+        if (ghosts[i].x==pacman.x && ghosts[i].y==pacman.y)
+        {
+            // determine the mode of the ghost
+            if (ghosts[i].in_counteratk_mode)
+            {
+                pacman.eaten_ghosts++;
+                score += 50*pacman.eaten_ghosts;
+                ghosts[i].x = ghosts[i].start_x;
+                ghosts[i].y = ghosts[i].start_y;
+                // the eaten ghost reset
+            }
+            else
+            {
+                pacman.lives--;
+                if (pacman.lives == 0) return; // player dies
+                pacman.x = pacman.start_x;
+                pacman.y = pacman.start_y;
+                for (int j=0; j<ghosts.size(); ++j)
+                {
+                    ghosts[j].x = ghosts[j].start_x;
+                    ghosts[j].y = ghosts[j].start_y;
+                }
+                // player and all the ghosts reset
+            }
+        }
+    }
     // note: check counteratk mode, handle eat results
 }
