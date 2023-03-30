@@ -55,21 +55,19 @@ void Ghost::move(int target_x, int target_y, double speed)
 			if(yy < 0){ xx = map.vals[i].size() - 1; }
 			else if(yy > map.vals[i].size()){ xx = 0; }
 			// deal with overflow;
-			if(map.vals[xx][yy] == '#'){ poss[i] = 0; cnt--; }
+			if(map.vals[xx][yy] == '#'){ poss[p] = 0; cnt--; }
 		}
 		// delete impossible moving directions; divide possibilities
 		co_x = (*ghosts)[i].x - target_x;
     	co_y = (*ghosts)[i].y - target_y;
     	// corresponding direction of the pacman to ghost
     	if(co_x == 0){
-	    	if(co_y < 0){ (*ghosts)[i].y += speed; }
-			else if (co_y > 0){ (*ghosts)[i].y -= speed; }
-			continue;
+	    	if(co_y < 0 && poss[1] != 0){ (*ghosts)[i].y += diry[1]*speed; continue;}
+			else if (co_y > 0 && poss[0] != 0){ (*ghosts)[i].y += diry[0]*speed; continue;}
 		}
 		if(co_y == 0){
-	    	if(co_x < 0){ (*ghosts)[i].x += speed; }
-			else if (co_x > 0){ (*ghosts)[i].x -= speed; }
-			continue;
+	    	if(co_x < 0 && poss[2] != 0){ (*ghosts)[i].x += dirx[2]*speed; continue;}
+			else if (co_x > 0 && poss[3] != 0){ (*ghosts)[i].x += dirx[3]*speed; continue;}
 		}
 		// if in line-- better track the pac-man.
 		int hori, verti, type; // up or down ; left or right
