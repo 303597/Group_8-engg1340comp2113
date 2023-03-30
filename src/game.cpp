@@ -23,7 +23,7 @@ void gameLoop()
 
     bool in_counteratk_mode = false;
     double ghost_speed = 0.4;
-    PacMan pacman(0, 0); vector<Ghost> ghosts;
+    PacMan pacman; vector<Ghost> ghosts;
     Map game_map = Map("../map/3_Monsters/map1.txt", pacman, ghosts);
     pacman.linkMap(&game_map);
     for (size_t i = 0; i < ghosts.size(); i++)

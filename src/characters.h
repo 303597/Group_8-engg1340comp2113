@@ -6,7 +6,7 @@
 class Character
 {
 public:
-    Character(int start_x, int start_y);
+    Character(int start_x = 0, int start_y = 0);
     void linkMap(Map* _map);
     //int start_x, start_y; // initial position
     int x, y; // present position
