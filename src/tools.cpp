@@ -40,7 +40,7 @@ Map::Map(string filename, PacMan &_pacman, vector<Ghost> &_ghosts) // _pacman: p
             {
                 ghost_count++;
                 _ghosts.emplace_back(Ghost(i, j));
-                //ghosts.emplace_back(&_ghosts.back());
+                ghosts.emplace_back(&_ghosts.back());
                 //ghosts.emplace_back(new Ghost(i, j, this));
             }
         }
