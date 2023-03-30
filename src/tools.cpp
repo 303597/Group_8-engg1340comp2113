@@ -38,22 +38,9 @@ Map::Map(string filename, PacMan &_pacman, vector<Ghost> &_ghosts) // _pacman: p
             }
             if (vals[i][j] == 'E')
             {
-                /*Ghost *tmp = new Ghost[ghost_count];
-                for(int i=0; i < ghost_count; i++){ 
-                    tmp[i] = g[i];
-                }
-                delete [] g;
-                *Ghost g = new Ghost[ghost_count+1]
-                for(int i=0; i < ghost_count; i++){ 
-                    g[i] = tmp[i];
-                }
-                delete [] tmp;
-                */
                 ghost_count++;
                 _ghosts.emplace_back(Ghost(i, j));
                 //ghosts.emplace_back(&_ghosts.back());
-                //g[ghost_count].start_x = i;
-                //g[ghost_count].start_y = j;
                 //ghosts.emplace_back(new Ghost(i, j, this));
             }
         }
