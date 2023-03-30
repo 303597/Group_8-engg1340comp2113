@@ -93,12 +93,16 @@ int Map::updateTile(int x, int y)
 {
     // not implemented
     
-    if (vals[x][y] == 'E')
+    if (vals[x][y] == '0')
     {
         return 1;
     }
     else
     {
+        if (vals[x][y] == '.')
+        {
+            // score++
+        }
         vals[x][y] = ' ';
         return 0;
     }
