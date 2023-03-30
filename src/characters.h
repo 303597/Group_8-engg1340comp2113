@@ -1,7 +1,11 @@
 #ifndef CHARACTERS_H
 #define CHARACTERS_H
 
+#include <vector>
 #include "tools.h"
+using namespace std;
+
+class Map;
 
 class Character
 {
@@ -34,6 +38,6 @@ public:
     double steps = 0;
 };
 
-bool checkCharacterCollision(PacMan pacman, vector<Ghost> ghosts);
+void checkCharacterCollision(PacMan pacman, vector<Ghost> ghosts);
 
 #endif
