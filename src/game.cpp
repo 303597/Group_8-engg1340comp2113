@@ -21,6 +21,8 @@ bool gameLoop()
 {
     nodelay(stdscr, true); // don't wait until input
 
+    int score = 0;
+
     bool in_counteratk_mode = false;
     double ghost_speed = 0.4;
     PacMan pacman; vector<Ghost> ghosts;

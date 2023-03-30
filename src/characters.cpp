@@ -3,6 +3,7 @@
 #include <ctime>
 #include <cstdlib>
 #include <iostream>
+#include <vector>
 
 Character::Character(int _start_x, int _start_y)
 {
@@ -27,11 +28,13 @@ void PacMan::move(int direction)
         x = x + dirx[direction]; y = y + dirx[direction];
     }
     
+    return;
 }
 
 void Ghost::move(int target_x, int target_y, double speed)
 {
     // not implemented
+    return;
 }
 
 void checkCharacterCollision(PacMan &pacman, vector<Ghost> &ghosts)
@@ -65,4 +68,5 @@ void checkCharacterCollision(PacMan &pacman, vector<Ghost> &ghosts)
         }
     }
     // note: check counteratk mode, handle eat results
+    return;
 }
