@@ -18,6 +18,15 @@ void PacMan::move(int direction)
 {
     // not implemented
     // note: check collision
+    
+    int x_temp, y_temp;
+    x_temp = x + dirx[direction]; y_temp = y + dirx[direction];
+
+    if (map -> vals[x_temp][y_temp] != '#')
+    {
+        x = x + dirx[direction]; y = y + dirx[direction];
+    }
+    
 }
 
 void Ghost::move(int target_x, int target_y, double speed)
