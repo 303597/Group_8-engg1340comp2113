@@ -22,6 +22,7 @@ public:
     using Character::Character;
     void move(int direction);
     int lives = 3;
+    int eaten_ghosts = 0;
 };
 
 class Ghost: public Character
