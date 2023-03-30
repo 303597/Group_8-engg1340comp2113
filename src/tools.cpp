@@ -51,12 +51,13 @@ Map::Map(string filename, PacMan &_pacman, vector<Ghost> &_ghosts) // _pacman: p
                 */
                 ghost_count++;
                 _ghosts.emplace_back(Ghost(i, j));
-                ghosts.emplace_back(&_ghosts.back());
+                //ghosts.emplace_back(&_ghosts.back());
                 //g[ghost_count].start_x = i;
                 //g[ghost_count].start_y = j;
                 //ghosts.emplace_back(new Ghost(i, j, this));
             }
         }
+    ghosts = &_ghosts;
     if (pacman_count < 1)
         cout << "ERROR: Map does not include pac-man starting point." << endl;
 }

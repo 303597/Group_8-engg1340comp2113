@@ -6,12 +6,14 @@
 #include <string>
 using namespace std;
 
+int score = 0, eat_ghosts_streak = 0;
+
 class Map
 {
 private:
     vector<string> vals;
     PacMan* pacman;
-    vector<Ghost*> ghosts;
+    vector<Ghost>* ghosts;
     void printMapElement(int x, int y, char element);
 
 public:

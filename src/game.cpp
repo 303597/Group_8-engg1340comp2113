@@ -67,9 +67,11 @@ void gameLoop()
 
         pacman.move(direction);
         int tile_info = game_map.updateTile(pacman.x, pacman.y);
+        /*
         if (tile_info == 1)
             for (Ghost ghost: ghosts)
                 ghost.in_counteratk_mode = true;
+                */
         checkCharacterCollision(pacman, ghosts);
 
         for (Ghost ghost: ghosts)
