@@ -3,6 +3,8 @@
 #include "characters.h"
 #include <locale.h>
 #include <ncurses.h>
+#include <filesystem>
+#include <string>
 
 bool start_game = true;
 
@@ -13,8 +15,8 @@ void initialize()
     noecho();
     keypad(stdscr, true);
 
-    const int dirx[] = {0, 0, -1, 1};
-    const int diry[] = {-1, 1, 0, 0};
+    int dirx[] = {0, 0, -1, 1};
+    int diry[] = {-1, 1, 0, 0};
 }
 
 int main()

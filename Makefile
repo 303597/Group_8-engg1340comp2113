@@ -1,14 +1,22 @@
-TARGET = pacman
+TARGET = bin/pacman
 FLAGS = -pedantic-errors -std=c++17 -lncursesw
 
-tools.o: src/tools.cpp src/characters.h src/tools.h
-	g++ $(FLAGS) -c $<
+bin/tools.o: src/tools.cpp src/characters.h src/tools.h
+	g++ -c $< $(FLAGS) -o $@ 
 
-game.o: src/game.cpp src/tools.h src/characters.h src/game.h
-	g++ $(FLAGS) -c $<
+bin/characters.o: src/characters.cpp src/characters.h src/tools.h
+	g++ -c $< $(FLAGS) -o $@
 
-main.o: src/main.cpp src/tools.h src/characters.h src/game.h
-	g++ $(FLAGS) -c $<
+bin/game.o: src/game.cpp src/tools.h src/characters.h src/game.h
+	g++ -c $< $(FLAGS) -o $@
 
-$(TARGET): main.o tools.o game.o
-	g++ $(FLAGS) $^ -o $(TARGET)
+bin/main.o: src/main.cpp src/tools.h src/characters.h src/game.h
+	g++ -c $< $(FLAGS) -o $@
+
+$(TARGET): bin/main.o bin/game.o bin/characters.o bin/tools.o
+	g++ $^ -o $(TARGET) $(FLAGS)
+
+clean:
+	rm bin/tools.o bin/characters.o bin/game.o bin/main.o bin/pacman
+
+.PHONY: clean

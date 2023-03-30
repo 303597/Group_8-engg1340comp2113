@@ -1,11 +1,12 @@
-#include "game.h"
-#include "characters.h"
-#include "tools.h"
 #include <chrono>
 #include <string>
 #include <vector>
 #include <iostream>
 #include <ncurses.h>
+#include <filesystem>
+#include "tools.h"
+#include "characters.h"
+#include "game.h"
 using namespace std;
 
 //void save() //high score or map
@@ -26,7 +27,9 @@ bool gameLoop()
     bool in_counteratk_mode = false;
     double ghost_speed = 0.4;
     PacMan pacman; vector<Ghost> ghosts;
-    Map game_map = Map("../map/3_Monsters/map1.txt", pacman, ghosts);
+
+    string map_path = getPath() + "/../map";
+    Map game_map = Map(map_path + "/3_Monsters/map1.txt", pacman, ghosts);
     pacman.linkMap(&game_map);
     for (size_t i = 0; i < ghosts.size(); i++)
         ghosts[i].linkMap(&game_map);
@@ -38,6 +41,7 @@ bool gameLoop()
     while (true)
     {
         int operation = 0;
+        
         while (chrono::duration_cast<chrono::milliseconds>(this_frame_time - last_frame_time).count() < time_per_loop)
         {
             int ch = getch();
@@ -64,14 +68,15 @@ bool gameLoop()
                 direction = 3;
                 break;
         }
-
         pacman.move(direction);
+        
         int tile_info = game_map.updateTile(pacman.x, pacman.y);
         /*
         if (tile_info == 1)
             for (Ghost ghost: ghosts)
                 ghost.in_counteratk_mode = true;
                 */
+        
         checkCharacterCollision(pacman, ghosts);
 
         for (Ghost ghost: ghosts)
@@ -82,7 +87,7 @@ bool gameLoop()
 
         refresh();
         last_frame_time = this_frame_time;
-        
+        mvprintw(0, 0, "🟦"); // move cursor
         if (pacman.lives <= 0)
             return false;
     }

@@ -5,6 +5,9 @@
 #include <string>
 #include <fstream>
 #include <iostream>
+#include <libgen.h>
+#include <unistd.h>
+#include <linux/limits.h>
 using namespace std;
 
 Map::Map(string filename, PacMan &_pacman, vector<Ghost> &_ghosts) // _pacman: passed by reference  pacman: belongs to Map
@@ -19,10 +22,10 @@ Map::Map(string filename, PacMan &_pacman, vector<Ghost> &_ghosts) // _pacman: p
     string str;
     while (getline(fin, str))
         vals.emplace_back(str);
-    
+
     int pacman_count = 0, ghost_count = 0;
     for (size_t i = 0; i < vals.size(); i++)
-        for (size_t j = 0; j < str.length(); j++)
+        for (size_t j = 0; j < vals[i].length(); j++)
         {
             if (vals[i][j] == 'o')
             {
@@ -58,10 +61,11 @@ void Map::show()
     for (size_t i = 0; i < vals.size(); i++)
     {
         for (size_t j = 0; j < vals[i].length(); j++)
+        {
             printMapElement(i, j, vals[i][j]);
-        printMapElement(pacman->x, pacman->y, 'o');
-        
+        }
     }
+    printMapElement(pacman->x, pacman->y, 'o');
     refresh();
 }
 
@@ -70,22 +74,22 @@ void Map::printMapElement(int x, int y, char element)
     switch (element)
     {
         case 'o':
-            mvprintw(x, y, "🟡");
+            mvprintw(x, 2 * y, "🟡");
             break;
         case '#':
-            mvprintw(x, y, "🟦");
+            mvprintw(x, 2 * y, "🟦");
             break;
         case '.':
-            mvprintw(x, y, "◽");
+            mvprintw(x, 2 * y, "◽");
             break;
         case 'E':
             //if(!in_counteratk_mode){
-                mvprintw(x, y, "👻");//}
+                mvprintw(x, 2 * y, "👻");//}
             //else{
             //    mvprintw(x, y, "🥶");}
             break;
         default:
-            mvprintw(x, y, "ㅤ");
+            mvprintw(x, 2 * y, "ㅤ");
     }
 }
 
@@ -108,4 +112,13 @@ int Map::updateTile(int x, int y)
     }
     
     return 0;
+}
+
+string getPath() // note: this solution to get executable file path is found at https://stackoverflow.com/questions/8579065/c-c-executable-path
+{
+    char buf[PATH_MAX + 1];
+    if (readlink("/proc/self/exe", buf, sizeof(buf) - 1) == -1)
+        throw string("readlink() failed");
+    string str(buf);
+    return str.substr(0, str.rfind('/'));
 }

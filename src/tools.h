@@ -8,8 +8,8 @@
 using namespace std;
 
 extern int score;
-extern const int dirx[]; //  = {0, 0, -1, 1}
-extern const int diry[]; // = {-1, 1, 0, 0}// up, down, left, right
+extern int dirx[]; //  = {0, 0, -1, 1}
+extern int diry[]; // = {-1, 1, 0, 0}// up, down, left, right
 
 class Character;
 
@@ -20,7 +20,6 @@ class Ghost;
 class Map
 {
 private:
-    vector<string> vals;
     PacMan* pacman;
     vector<Ghost>* ghosts;
     void printMapElement(int x, int y, char element);
@@ -31,11 +30,9 @@ public:
     void show();
     bool isWall(int x, int y);
     int updateTile(int x, int y); // return 0: no buff, 1: energizer
+    vector<string> vals;
 };
 
-//class Controller
-//{
-//
-//};
+string getPath();
 
 #endif

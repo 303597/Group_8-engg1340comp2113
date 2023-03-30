@@ -16,7 +16,7 @@ public:
     int x, y; // present position
     //bool in_counteratk_mode = false; // whether in counter-attack mode
 
-private:
+protected:
     Map* map;
 };
 
@@ -38,6 +38,6 @@ public:
     double steps = 0;
 };
 
-void checkCharacterCollision(PacMan pacman, vector<Ghost> ghosts);
+void checkCharacterCollision(PacMan &pacman, vector<Ghost> &ghosts);
 
 #endif

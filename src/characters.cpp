@@ -17,18 +17,18 @@ void Character::linkMap(Map* _map)
 
 void PacMan::move(int direction)
 {
-    // not implemented
     // note: check collision
-    
-    int x_temp, y_temp;
-    x_temp = x + dirx[direction]; y_temp = y + dirx[direction];
 
-    if (map -> vals[x_temp][y_temp] != '#')
+    int dirx[] = {-1, 1, 0, 0};
+    int diry[] = {0, 0, -1, 1};
+
+    int x_temp, y_temp;
+    x_temp = x + dirx[direction]; y_temp = y + diry[direction];
+
+    if (map->vals[x_temp][y_temp] != '#')
     {
-        x = x + dirx[direction]; y = y + dirx[direction];
+        x = x + dirx[direction]; y = y + diry[direction];
     }
-    
-    return;
 }
 
 void Ghost::move(int target_x, int target_y, double speed)
@@ -39,6 +39,7 @@ void Ghost::move(int target_x, int target_y, double speed)
 
 void checkCharacterCollision(PacMan &pacman, vector<Ghost> &ghosts)
 {   
+    int score;
     for (int i=0;i<ghosts.size();++i)
     {
         if (ghosts[i].x==pacman.x && ghosts[i].y==pacman.y)
@@ -68,5 +69,4 @@ void checkCharacterCollision(PacMan &pacman, vector<Ghost> &ghosts)
         }
     }
     // note: check counteratk mode, handle eat results
-    return;
 }
