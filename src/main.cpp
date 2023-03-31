@@ -14,9 +14,6 @@ void initialize()
     initscr();
     noecho();
     keypad(stdscr, true);
-
-    int dirx[] = {0, 0, -1, 1};
-    int diry[] = {-1, 1, 0, 0};
 }
 
 int main()

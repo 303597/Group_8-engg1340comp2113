@@ -43,6 +43,7 @@ Map::Map(string filename, PacMan &_pacman, vector<Ghost> &_ghosts) // _pacman: p
             {
                 ghost_count++;
                 _ghosts.emplace_back(Ghost(i, j));
+                vals[i][j] = ' ';
                 //ghosts.emplace_back(&_ghosts.back());
                 //ghosts.emplace_back(new Ghost(i, j, this));
             }
@@ -66,6 +67,11 @@ void Map::show()
         }
     }
     printMapElement(pacman->x, pacman->y, 'o');
+    for (Ghost ghost: *ghosts)
+        if (ghost.in_counteratk_mode)
+            printMapElement(ghost.x, ghost.y, 'e');
+        else
+            printMapElement(ghost.x, ghost.y, 'E');
     refresh();
 }
 
@@ -82,11 +88,13 @@ void Map::printMapElement(int x, int y, char element)
         case '.':
             mvprintw(x, 2 * y, "◽");
             break;
-        case 'E':
-            //if(!in_counteratk_mode){
-                mvprintw(x, 2 * y, "👻");//}
-            //else{
-            //    mvprintw(x, y, "🥶");}
+        case 'E':mvprintw(x, 2 * y, "👻");
+            break;
+        case 'e':
+            mvprintw(x, 2 * y, "🥶");
+            break;
+        case '0':
+            mvprintw(x, 2 * y, "🟢");
             break;
         default:
             mvprintw(x, 2 * y, "ㅤ");
@@ -95,8 +103,6 @@ void Map::printMapElement(int x, int y, char element)
 
 int Map::updateTile(int x, int y)
 {
-    // not implemented
-    
     if (vals[x][y] == '0')
     {
         return 1;
