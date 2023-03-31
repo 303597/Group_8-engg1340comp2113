@@ -36,7 +36,9 @@ void PacMan::move(int direction)
 
 void Ghost::move(int target_x, int target_y, double speed)
 {
-	int co_x, co_y; // corresponding postions
+	x = 7;
+	y = 10;
+	/*int co_x, co_y; // corresponding postions
 	int fl = 0, fx = 1, fy = 1;
 	int poss[4] = {1, 1, 1, 1}, cnt = 4; // up down left right
 	int dirx[4] = {-1, 1, 0, 0};
@@ -78,7 +80,7 @@ void Ghost::move(int target_x, int target_y, double speed)
 			cnt--;
 		}
 	}
-	// delete impossible moving directions; divide possibilities
+	// delete impossible moving directions;
 	co_x = x - target_x;
 	co_y = y - target_y;
 	// corresponding direction of the pacman to ghost
@@ -95,12 +97,12 @@ void Ghost::move(int target_x, int target_y, double speed)
 			} // whether go through holes on the wall
 			if (co_y < 0 && poss[1] != 0)
 			{
-				y += fy * speed;
+				y += fy;
 				fl = 1;
 			}
 			else if (co_y > 0 && poss[0] != 0)
 			{
-				y -= fy * speed;
+				y -= fy;
 				fl = 1;
 			}
 		}
@@ -113,14 +115,14 @@ void Ghost::move(int target_x, int target_y, double speed)
 					fx = -1;
 				}
 			} // whether go through holes on the wall
-			if (co_x < 0 && poss[2] != 0)
+			if (co_x < 0 && poss[3] != 0)
 			{
-				x += fx * speed;
+				x += fx;
 				fl = 1;
 			}
-			else if (co_x > 0 && poss[3] != 0)
+			else if (co_x > 0 && poss[2] != 0)
 			{
-				x -= fx * speed;
+				x -= fx;
 				fl = 1;
 			}
 		}
@@ -133,22 +135,22 @@ void Ghost::move(int target_x, int target_y, double speed)
 			{
 				if (num % 2 == 0)
 				{
-					x += speed;
+					x += 1;
 				}
 				else
 				{
-					x -= speed;
+					x -= 1;
 				}
 				fl = 1;
 			}
-			else if (poss[2] != 0 && poss[3] == 0)
+			else if (poss[3] != 0 && poss[2] == 0)
 			{
-				x += speed;
+				x += 1;
 				fl = 1;
 			}
-			else if (poss[2] == 0 && poss[3] != 0)
+			else if (poss[3] == 0 && poss[2] != 0)
 			{
-				x -= speed;
+				x -= 1;
 				fl = 1;
 			}
 		}
@@ -158,22 +160,22 @@ void Ghost::move(int target_x, int target_y, double speed)
 			{
 				if (num % 2 == 0)
 				{
-					y += speed;
+					y += 1;
 				}
 				else
 				{
-					y -= speed;
+					y -= 1;
 				}
 				fl = 1;
 			}
 			else if (poss[0] != 0 && poss[1] == 0)
 			{
-				y += speed;
+				y += 1;
 				fl = 1;
 			}
 			else if (poss[0] == 0 && poss[1] != 0)
 			{
-				y -= speed;
+				y -= 1;
 				fl = 1;
 			}
 		}
@@ -194,7 +196,7 @@ void Ghost::move(int target_x, int target_y, double speed)
 		}
 		else if (y > map->vals[x].size())
 		{
-			y -= map->vals.size();
+			y -= map->vals[x].size();
 		}
 		// deal with overflow;
 		return;
@@ -211,11 +213,11 @@ void Ghost::move(int target_x, int target_y, double speed)
 	}
 	if (co_y < 0)
 	{
-		hori = 2;
+		hori = 3;
 	}
 	else if (co_y > 0)
 	{
-		hori = 3;
+		hori = 2;
 	}
 	if (cnt == 1)
 	{
@@ -303,8 +305,8 @@ void Ghost::move(int target_x, int target_y, double speed)
 			}
 			else
 			{
-				x += dirx[3 - verti];// * speed;
-				y += diry[3 - verti];// * speed;
+				x += dirx[1 - verti];// * speed;
+				y += diry[1 - verti];// * speed;
 			}
 		}
 		break;
@@ -328,8 +330,8 @@ void Ghost::move(int target_x, int target_y, double speed)
 			}
 			else
 			{
-				x += dirx[3 - verti];// * speed;
-				y += diry[3 - verti];// * speed;
+				x += dirx[1 - verti];// * speed;
+				y += diry[1 - verti];// * speed;
 			}
 		}
 		break;
@@ -354,8 +356,8 @@ void Ghost::move(int target_x, int target_y, double speed)
 		}
 		else
 		{
-			x += dirx[3 - verti];// * speed;
-			y += diry[3 - verti];// * speed;
+			x += dirx[1 - verti];// * speed;
+			y += diry[1 - verti];// * speed;
 		}
 		break;
 	case 6:
@@ -376,8 +378,8 @@ void Ghost::move(int target_x, int target_y, double speed)
 		}
 		else
 		{
-			x += dirx[3 - verti];// * speed;
-			y += diry[3 - verti];// * speed;
+			x += dirx[1 - verti];// * speed;
+			y += diry[1 - verti];// * speed;
 		}
 		break;
 	}
@@ -396,9 +398,10 @@ void Ghost::move(int target_x, int target_y, double speed)
 	}
 	else if (y > map->vals[x].size())
 	{
-		y -= map->vals.size();
+		y -= map->vals[x].size();
 	}
 	// deal with overflow;
+	*/
 	return;
 }
 
