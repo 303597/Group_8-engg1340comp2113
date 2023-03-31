@@ -54,7 +54,6 @@ void PacMan::move(int direction)
 
 void Ghost::move(int target_x, int target_y, double speed)
 {
-	int f=0;
 	if(x == start_x && start_y == y){
 		if(map->vals[x-1][y] == '_'){
 			x = x - 2; y = y;
@@ -210,8 +209,17 @@ void Ghost::move(int target_x, int target_y, double speed)
 		{
 			if(co_y == 0)
 			{
+				if(target_x == 0 || target_x == map->vals.size())
+				{
+					if(abs(co_x) > map->vals.size() / 2)
+					{
+						poss[1-p] = 7 + sum; sum += 7;
+						poss[p] = 3 + sum; sum += 3;
+						continue;
+					}// better chase the pac-man
+				}
 				poss[p] = 10 + sum; sum += 10;
-			}// better chase the pac-man
+			}
 			else
 			{
 				poss[p] = 5 + sum; sum += 5;
@@ -221,6 +229,15 @@ void Ghost::move(int target_x, int target_y, double speed)
 		{
 			if(co_x == 0)
 			{
+				if(target_y == 0 || target_y == map->vals[x].size())
+				{
+					if(abs(co_y) > map->vals[x].size() / 2)
+					{
+						poss[5-p] = 7 + sum; sum += 7;
+						poss[p] = 3 + sum; sum += 3;
+						continue;
+					}// better chase the pac-man
+				}
 				poss[p] = 10 + sum; sum += 10;
 			}// better chase the pac-man
 			else
