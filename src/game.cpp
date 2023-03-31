@@ -29,7 +29,7 @@ bool gameLoop()
     PacMan pacman; vector<Ghost> ghosts;
 
     string map_path = getPath() + "/../map";
-    Map game_map = Map(map_path + "/3_Monsters/map1.txt", pacman, ghosts);
+    Map game_map = Map(map_path + "/2_Monsters/map1.txt", pacman, ghosts);
     pacman.linkMap(&game_map);
     for (size_t i = 0; i < ghosts.size(); i++)
         ghosts[i].linkMap(&game_map);
@@ -79,9 +79,11 @@ bool gameLoop()
         
         checkCharacterCollision(pacman, ghosts);
 
-        for (Ghost ghost: ghosts)
+        for (Ghost &ghost: ghosts)
             ghost.move(pacman.x, pacman.y, ghost_speed);
         checkCharacterCollision(pacman, ghosts);
+        
+	    refresh();
 
         game_map.show();
 
