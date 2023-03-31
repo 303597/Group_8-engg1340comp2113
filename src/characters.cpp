@@ -45,7 +45,7 @@ void Ghost::move(int target_x, int target_y, double speed)
 		else{
 			x = x + 2; y = y;
 		}
-		return;
+		//return;
 	}//initializing
 	int co_x, co_y; // corresponding postions
 	int fl = 0, fx = 1, fy = 1;
