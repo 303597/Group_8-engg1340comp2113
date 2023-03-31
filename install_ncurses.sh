@@ -4,4 +4,4 @@ cd ncurses-6.4
 ./configure --enable-widec
 
 make
-make install
+sudo make install
