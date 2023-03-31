@@ -33,6 +33,24 @@ void PacMan::move(int direction)
 		x = x + dirx[direction];
 		y = y + diry[direction];
 	}
+	if (x < 0)
+	{
+		x += map->vals.size();
+	}
+	else if (x > map->vals.size() - 1)
+	{
+		x -= map->vals.size();
+	}
+	if (y < 0)
+	{
+		y += map->vals[x].size();
+	}
+	else if (y > map->vals[x].size() - 1)
+	{
+		y -= map->vals[x].size();
+	}
+	// deal with overflow;
+	return;
 }
 
 void Ghost::move(int target_x, int target_y, double speed)
