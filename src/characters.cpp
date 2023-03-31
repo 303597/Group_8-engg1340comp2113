@@ -27,29 +27,28 @@ void PacMan::move(int direction)
 	int x_temp, y_temp;
 	x_temp = x + dirx[direction];
 	y_temp = y + diry[direction];
-
-	if (map->vals[x_temp][y_temp] != '#')
+	if (x_temp < 0)
 	{
-		x = x + dirx[direction];
-		y = y + diry[direction];
+		x_temp += map->vals.size();
 	}
-	if (x < 0)
+	else if (x_temp > map->vals.size() - 1)
 	{
-		x += map->vals.size();
+		x_temp -= map->vals.size();
 	}
-	else if (x > map->vals.size() - 1)
+	if (y_temp < 0)
 	{
-		x -= map->vals.size();
+		y_temp += map->vals[x].size();
 	}
-	if (y < 0)
+	else if (y_temp > map->vals[x].size() - 1)
 	{
-		y += map->vals[x].size();
-	}
-	else if (y > map->vals[x].size() - 1)
-	{
-		y -= map->vals[x].size();
+		y_temp -= map->vals[x].size();
 	}
 	// deal with overflow;
+	if (map->vals[x_temp][y_temp] != '#')
+	{
+		x = x_temp;
+		y = y_temp;
+	}
 	return;
 }
 
