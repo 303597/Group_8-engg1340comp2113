@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <vector>
+#include <cmath>
 
 Character::Character(int _start_x, int _start_y)
 {
@@ -203,7 +204,7 @@ void Ghost::move(int target_x, int target_y, double speed)
 	}
 	// if in the same line-- better track or avoid the pac-man.
 	int hori, verti, type; // up or down ; left or right
-	if (co_x < 0)
+	if (co_x <= 0)
 	{
 		verti = 1;
 	}
@@ -211,7 +212,7 @@ void Ghost::move(int target_x, int target_y, double speed)
 	{
 		verti = 0;
 	}
-	if (co_y < 0)
+	if (co_y <= 0)
 	{
 		hori = 3;
 	}
