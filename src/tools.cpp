@@ -85,6 +85,9 @@ void Map::printMapElement(int x, int y, char element)
         case '#':
             mvprintw(x, 2 * y, "🟦");
             break;
+        case '_':
+            mvprintw(x, 2 * y, "🟩");
+            break;
         case '.':
             mvprintw(x, 2 * y, "◽");
             break;
