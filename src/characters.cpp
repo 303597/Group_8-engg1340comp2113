@@ -45,6 +45,7 @@ void Ghost::move(int target_x, int target_y, double speed)
 		else{
 			x = x + 2; y = y;
 		}
+		return;
 	}//initializing
 	int co_x, co_y; // corresponding postions
 	int fl = 0, fx = 1, fy = 1;
@@ -89,78 +90,7 @@ void Ghost::move(int target_x, int target_y, double speed)
 	co_x = x - target_x;
 	co_y = y - target_y;
 	// corresponding direction of the pacman to ghost
-	/*if (!in_counteratk_mode)
-	{
-		if (co_y == 0)
-		{
-			if (map->vals[x][0] != '#' && map->vals[x][map->vals[x].size()-1] != '#')
-			{
-				if (abs(co_y) > map->vals[x].size() / 2)
-				{
-					fy = -1;
-				}
-			} // whether go through holes on the wall
-			if (poss[1] != 0)
-			{
-				if(co_y < 0 && fy == 1)
-				{	y += 1;
-					fl = 1;
-				}
-				else if(co_y > 0 && fy == -1)
-				{
-					y -= 1;
-					fl = 1;
-				}
-			}
-			if (poss[0] != 0)
-			{
-				if(co_y > 0 && fy == 1)
-				{	y += 1;
-					fl = 1;
-				}
-				else if(co_y < 0 && fy == -1)
-				{
-					y -= 1;
-					fl = 1;
-				}
-			}
-		}
-		if (co_y == 0)
-		{
-			if (map->vals[0][y] != '#' && map->vals[map->vals.size()-1][y] != '#')
-			{
-				if (abs(co_x) > map->vals.size() / 2)
-				{
-					fx = -1;
-				}
-			} // whether go through holes on the wall
-			if (poss[2] != 0)
-			{
-				if(co_x < 0 && fy == 1)
-				{	y += 1;
-					fl = 1;
-				}
-				else if(co_y > 0 && fy == -1)
-				{
-					y -= 1;
-					fl = 1;
-				}
-			}
-			if (poss[3] != 0)
-			{
-				if(co_y > 0 && fy == 1)
-				{	y += 1;
-					fl = 1;
-				}
-				else if(co_y < 0 && fy == -1)
-				{
-					y -= 1;
-					fl = 1;
-				}
-			}
-		}
-	}
-	else
+	if(in_counteratk_mode)
 	{
 		srand(time(0));
 		int number = rand();
@@ -214,7 +144,7 @@ void Ghost::move(int target_x, int target_y, double speed)
 				fl = 1;
 			}
 		}
-	}
+	}// better avoid pac-man
 	if (fl == 1)
 	{
 		if (x < 0)
@@ -235,7 +165,7 @@ void Ghost::move(int target_x, int target_y, double speed)
 		}
 		// deal with overflow;
 		return;
-	}*/
+	}
 	// if in the same line-- better track or avoid the pac-man.
 	int hori, verti, type; // up or down ; left or right
 	if (co_x <= 0)
@@ -259,8 +189,27 @@ void Ghost::move(int target_x, int target_y, double speed)
 		if(poss[p] == 0){
 			continue;
 		}
-		if(hori == p || verti == p){
-			poss[p] = 5 + sum; sum += 5;
+		if(hori == p)
+		{
+			if(co_y == 0)
+			{
+				poss[p] = 10 + sum; sum += 10;
+			}// better chase the pac-man
+			else
+			{
+				poss[p] = 5 + sum; sum += 5;
+			}
+		}
+		else if (verti == p)
+		{
+			if(co_x == 0)
+			{
+				poss[p] = 10 + sum; sum += 10;
+			}// better chase the pac-man
+			else
+			{
+				poss[p] = 5 + sum; sum += 5;
+			}
 		}
 		else{
 			poss[p] = 1 + sum; sum += 1;
@@ -269,7 +218,7 @@ void Ghost::move(int target_x, int target_y, double speed)
 	srand(time(0));
 	int num = rand() % sum; // generate a random number range [0, sum-1]
 	for(int p = 0; p < 4; p++){
-		if(num <= poss[p]){
+		if(num < poss[p]){
 			x += dirx[p];
 			y += diry[p];
 			break;
