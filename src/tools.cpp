@@ -109,19 +109,17 @@ int Map::updateTile(int x, int y)
 {
     if (vals[x][y] == '0')
     {
+        vals[x][y] = ' ';
         return 1;
     }
-    else
+    else if(vals[x][y] == '.')
     {
-        if (vals[x][y] == '.')
-        {
-            // score++
-        }
+        //score ++;
         vals[x][y] = ' ';
         return 0;
     }
     
-    return 0;
+    return 2;
 }
 
 string getPath() // note: this solution to get executable file path is found at https://stackoverflow.com/questions/8579065/c-c-executable-path
