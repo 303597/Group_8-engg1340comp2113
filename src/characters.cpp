@@ -292,6 +292,7 @@ void checkCharacterCollision(PacMan &pacman, vector<Ghost> &ghosts)
 				score += 50 * pacman.eaten_ghosts;
 				ghosts[i].x = ghosts[i].start_x;
 				ghosts[i].y = ghosts[i].start_y;
+				ghost[i].in_counteratk_mode = false;
 				// the eaten ghost reset
 			}
 			else
