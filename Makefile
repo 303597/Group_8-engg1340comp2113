@@ -14,7 +14,7 @@ bin/main.o: src/main.cpp src/tools.h src/characters.h src/game.h
 	g++ -c $< $(FLAGS) -o $@
 
 $(TARGET): bin/main.o bin/game.o bin/characters.o bin/tools.o
-	g++ $^ -o $(TARGET) $(FLAGS)
+	g++ $^ -o $(TARGET) -static $(FLAGS) -ltinfo
 
 clean:
 	rm bin/tools.o bin/characters.o bin/game.o bin/main.o bin/pacman
