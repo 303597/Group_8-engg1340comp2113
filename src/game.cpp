@@ -25,6 +25,7 @@ bool gameLoop()
     int score = 0;
 
     bool in_counteratk_mode = false;
+    int turns = 0;
     double ghost_speed = 0.4;
     PacMan pacman; vector<Ghost> ghosts;
 
