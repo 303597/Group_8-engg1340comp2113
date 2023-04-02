@@ -80,7 +80,7 @@ bool gameLoop()
                 ghost.in_counteratk_mode = true;
             }
         }
-        if(turns == 20){
+        if(turns == ghosts.size() * 15){
             turns = 0;
             for (Ghost &ghost: ghosts)
             {
