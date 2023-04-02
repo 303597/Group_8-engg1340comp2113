@@ -71,11 +71,24 @@ bool gameLoop()
         pacman.move(direction);
         
         int tile_info = game_map.updateTile(pacman.x, pacman.y);
-        /*
         if (tile_info == 1)
-            for (Ghost ghost: ghosts)
+        {
+            turns++;      
+            for (Ghost &ghost: ghosts)
+            {
                 ghost.in_counteratk_mode = true;
-                */
+            }
+        }
+        if(turns == 20){
+            turns = 0;
+            for (Ghost &ghost: ghosts)
+            {
+                ghost.in_counteratk_mode = false;
+            }
+        }
+        if(turns != 0){
+            turns++;
+        }
         
         checkCharacterCollision(pacman, ghosts);
 
