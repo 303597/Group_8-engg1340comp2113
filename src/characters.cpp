@@ -1,10 +1,12 @@
 #include "tools.h"
 #include "characters.h"
 #include <ctime>
+#include <unistd.h>
 #include <cstdlib>
 #include <iostream>
 #include <vector>
 #include <cmath>
+#include <ncurses.h>
 
 Character::Character(int _start_x, int _start_y)
 {
@@ -296,7 +298,11 @@ void checkCharacterCollision(PacMan &pacman, vector<Ghost> &ghosts, int &turns)
 			{
 				pacman.lives--;
 				if (pacman.lives == 0)
+				{	mvprintw(12, 12, "%d", score);
+					sleep(5);
+					refresh();
 					return; // player dies
+				}
 				pacman.x = pacman.start_x;
 				pacman.y = pacman.start_y;
 				for (int j = 0; j < ghosts.size(); ++j)
