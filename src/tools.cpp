@@ -107,19 +107,17 @@ int Map::updateTile(int x, int y)
 {
     if (vals[x][y] == '0')
     {
+        vals[x][y] = ' ';
         return 1;
     }
-    else
+    else if(vals[x][y] == '.')
     {
-        if (vals[x][y] == '.')
-        {
-            // score++
-        }
+        //score ++;
         vals[x][y] = ' ';
         return 0;
     }
     
-    return 0;
+    return 2;
 }
 
 string getPath() // This solution to get the path of the execuatable is found at https://stackoverflow.com/questions/1528298/get-path-of-executable

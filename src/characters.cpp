@@ -116,22 +116,22 @@ void Ghost::move(int target_x, int target_y, double speed)
 			{
 				if (number % 2 == 0)
 				{
-					x += 1;
+					y += 1;
 				}
 				else
 				{
-					x -= 1;
+					y -= 1;
 				}
 				fl = 1;
 			}
 			else if (poss[3] != 0 && poss[2] == 0)
 			{
-				x += 1;
+				y += 1;
 				fl = 1;
 			}
 			else if (poss[3] == 0 && poss[2] != 0)
 			{
-				x -= 1;
+				y -= 1;
 				fl = 1;
 			}
 		}
@@ -141,22 +141,22 @@ void Ghost::move(int target_x, int target_y, double speed)
 			{
 				if (number % 2 == 0)
 				{
-					y += 1;
+					x += 1;
 				}
 				else
 				{
-					y -= 1;
+					x -= 1;
 				}
 				fl = 1;
 			}
 			else if (poss[0] != 0 && poss[1] == 0)
 			{
-				y += 1;
+				x += 1;
 				fl = 1;
 			}
 			else if (poss[0] == 0 && poss[1] != 0)
 			{
-				y -= 1;
+				x -= 1;
 				fl = 1;
 			}
 		}
@@ -292,6 +292,7 @@ void checkCharacterCollision(PacMan &pacman, vector<Ghost> &ghosts)
 				score += 50 * pacman.eaten_ghosts;
 				ghosts[i].x = ghosts[i].start_x;
 				ghosts[i].y = ghosts[i].start_y;
+				ghosts[i].in_counteratk_mode = false;
 				// the eaten ghost reset
 			}
 			else

@@ -25,6 +25,7 @@ bool gameLoop()
     int score = 0;
 
     bool in_counteratk_mode = false;
+    int turns = 0;
     double ghost_speed = 0.4;
     PacMan pacman; vector<Ghost> ghosts;
 
@@ -72,11 +73,24 @@ bool gameLoop()
         pacman.move(direction);
         
         int tile_info = game_map.updateTile(pacman.x, pacman.y);
-        /*
         if (tile_info == 1)
-            for (Ghost ghost: ghosts)
+        {
+            turns++;      
+            for (Ghost &ghost: ghosts)
+            {
                 ghost.in_counteratk_mode = true;
-                */
+            }
+        }
+        if(turns == ghosts.size() * 15){
+            turns = 0;
+            for (Ghost &ghost: ghosts)
+            {
+                ghost.in_counteratk_mode = false;
+            }
+        }
+        if(turns != 0){
+            turns++;
+        }
         
         checkCharacterCollision(pacman, ghosts);
 
