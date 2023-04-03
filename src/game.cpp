@@ -9,7 +9,45 @@
 #include "game.h"
 using namespace std;
 
+int score = 0; // initialize score to be zero
+
 //void save() //high score or map
+void save()
+{
+	bool need_update = false;
+	ifstream fin;
+	fin.open("score_Record.txt");
+	if (fin.fail())
+	{
+		cout << "Error in opening the file." << endl;
+	}
+	else
+	{
+		int history_score;
+		fin >> history_score;
+		if (score > history_score)
+		{
+			need_update = true;
+		}
+	}
+	fin.close();
+	// update the score record if the score this round is higher than history highest score
+	if (need_update)
+	{
+		ofstream fout;
+		fout.open("score_Record.txt");
+		if (fout.fail())
+		{
+			cout << "Error in writing to the file." << endl;
+		}
+		else
+		{
+			fout << score << endl;
+		}
+	}
+	fout.close();
+	score = 0; // reset score to zero after saving it
+}
 
 //void UI() //welcome, gamescore, end, user interfaces
 
@@ -22,7 +60,7 @@ bool gameLoop()
 {
     nodelay(stdscr, true); // don't wait until input
 
-    int score = 0;
+    //int score = 0;
 
     bool in_counteratk_mode = false;
     int turns = 0;
@@ -75,7 +113,11 @@ bool gameLoop()
         int tile_info = game_map.updateTile(pacman.x, pacman.y);
         if (tile_info == 1)
         {
-            turns++;      
+            //turns++;
+	    // if the pacman eats another super bean before the effect of the former super bean ends
+	    if (turns > 0)      pacman.eaten_ghosts = 0;
+	    turns = 1; 
+	    // reset count time and number of eaten ghosts to zero and count from start again
             for (Ghost &ghost: ghosts)
             {
                 ghost.in_counteratk_mode = true;
@@ -83,6 +125,7 @@ bool gameLoop()
         }
         if(turns == ghosts.size() * 15){
             turns = 0;
+	    pacman.eaten_ghosts = 0; // reset the number of eaten ghosts to zero for the next round
             for (Ghost &ghost: ghosts)
             {
                 ghost.in_counteratk_mode = false;
@@ -96,6 +139,7 @@ bool gameLoop()
         checkCharacterCollision(pacman, ghosts);
         if(tmp != pacman.lives){
             turns = 0;
+            pacman.eaten_ghosts = 0; 
             for (Ghost &ghost: ghosts)
             {
                 ghost.in_counteratk_mode = false;
@@ -114,6 +158,9 @@ bool gameLoop()
         last_frame_time = this_frame_time;
         mvprintw(0, 0, "🟦"); // move cursor
         if (pacman.lives <= 0)
+	{
+	    save();
             return false;
+	}
     }
 }
