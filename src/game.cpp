@@ -45,8 +45,9 @@ void save()
 		{
 			fout << score << endl;
 		}
+        fout.close();
 	}
-	fout.close();
+	
 	score = 0; // reset score to zero after saving it
 }
 
