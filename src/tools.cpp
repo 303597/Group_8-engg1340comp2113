@@ -112,7 +112,7 @@ int Map::updateTile(int x, int y)
     }
     else if(vals[x][y] == '.')
     {
-        //score ++;
+        score += 2;
         vals[x][y] = ' ';
         return 0;
     }
