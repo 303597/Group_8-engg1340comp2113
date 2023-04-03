@@ -278,7 +278,6 @@ void Ghost::move(int target_x, int target_y, double speed)
 
 void checkCharacterCollision(PacMan &pacman, vector<Ghost> &ghosts)
 {
-	int score;
 	for (int i = 0; i < ghosts.size(); ++i)
 	{
 		if (ghosts[i].x == pacman.x && ghosts[i].y == pacman.y)
@@ -287,11 +286,11 @@ void checkCharacterCollision(PacMan &pacman, vector<Ghost> &ghosts)
 			if (ghosts[i].in_counteratk_mode)
 			{
 				pacman.eaten_ghosts++;
-				score += 50 * pacman.eaten_ghosts;
+				score += 50 * pacman.eaten_ghosts; // modify the extern score variable directly
 				ghosts[i].x = ghosts[i].start_x;
 				ghosts[i].y = ghosts[i].start_y;
 				ghosts[i].in_counteratk_mode = false;
-				// the eaten ghost reset
+				// the eaten ghost reset to normal mode
 			}
 			else
 			{
