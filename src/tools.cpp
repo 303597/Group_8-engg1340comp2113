@@ -5,9 +5,7 @@
 #include <string>
 #include <fstream>
 #include <iostream>
-#include <libgen.h>
-#include <unistd.h>
-#include <linux/limits.h>
+#include <filesystem>
 using namespace std;
 
 Map::Map(string filename, PacMan &_pacman, vector<Ghost> &_ghosts) // _pacman: passed by reference  pacman: belongs to Map
@@ -124,11 +122,8 @@ int Map::updateTile(int x, int y)
     return 0;
 }
 
-string getPath() // note: this solution to get executable file path is found at https://stackoverflow.com/questions/8579065/c-c-executable-path
+string getPath() // This solution to get the path of the execuatable is found at https://stackoverflow.com/questions/1528298/get-path-of-executable
 {
-    char buf[PATH_MAX + 1];
-    if (readlink("/proc/self/exe", buf, sizeof(buf) - 1) == -1)
-        throw string("readlink() failed");
-    string str(buf);
+    string str = filesystem::canonical("/proc/self/exe");
     return str.substr(0, str.rfind('/'));
 }

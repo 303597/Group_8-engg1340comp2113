@@ -10,7 +10,7 @@ bool start_game = true;
 
 void initialize()
 {
-    setlocale(LC_ALL, "");
+    setlocale(LC_ALL, "en_US.UTF-8");
     initscr();
     noecho();
     keypad(stdscr, true);

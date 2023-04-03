@@ -28,6 +28,7 @@ bool gameLoop()
     double ghost_speed = 0.4;
     PacMan pacman; vector<Ghost> ghosts;
 
+    
     string map_path = getPath() + "/../map";
     Map game_map = Map(map_path + "/2_Monsters/map2.txt", pacman, ghosts);
     pacman.linkMap(&game_map);
