@@ -298,9 +298,12 @@ void checkCharacterCollision(PacMan &pacman, vector<Ghost> &ghosts, int &turns)
 			{
 				pacman.lives--;
 				if (pacman.lives == 0)
-				{	mvprintw(12, 12, "%d", score);
-					sleep(5);
+				{
+					mvprintw(12, 12, "%d", score);
 					refresh();
+					nodelay(stdscr, false);
+					mvprintw(13, 12, "Press any key to quit.");
+					getch();
 					return; // player dies
 				}
 				pacman.x = pacman.start_x;
