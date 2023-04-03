@@ -92,7 +92,15 @@ bool gameLoop()
             turns++;
         }
         
+        int tmp = pacman.lives;
         checkCharacterCollision(pacman, ghosts);
+        if(tmp != pacman.lives){
+            turns = 0;
+            for (Ghost &ghost: ghosts)
+            {
+                ghost.in_counteratk_mode = false;
+            }
+        }
 
         for (Ghost &ghost: ghosts)
             ghost.move(pacman.x, pacman.y, ghost_speed);

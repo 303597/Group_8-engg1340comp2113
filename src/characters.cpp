@@ -108,9 +108,8 @@ void Ghost::move(int target_x, int target_y, double speed)
 	// corresponding direction of the pacman to ghost
 	if(in_counteratk_mode)
 	{
-		srand(time(0));
 		int number = rand();
-		if (co_x == 0)
+		if (co_y == 0)
 		{
 			if (poss[2] != 0 && poss[3] != 0)
 			{
@@ -126,16 +125,16 @@ void Ghost::move(int target_x, int target_y, double speed)
 			}
 			else if (poss[3] != 0 && poss[2] == 0)
 			{
-				y += 1;
+				y -= 1;
 				fl = 1;
 			}
 			else if (poss[3] == 0 && poss[2] != 0)
 			{
-				y -= 1;
+				y += 1;
 				fl = 1;
 			}
 		}
-		else if (co_y == 0)
+		else if (co_x == 0)
 		{
 			if (poss[0] != 0 && poss[1] != 0)
 			{
@@ -249,7 +248,6 @@ void Ghost::move(int target_x, int target_y, double speed)
 			poss[p] = 1 + sum; sum += 1;
 		}
 	}
-	srand(time(0));
 	int num = rand() % sum; // generate a random number range [0, sum-1]
 	for(int p = 0; p < 4; p++){
 		if(num < poss[p]){

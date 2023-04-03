@@ -5,6 +5,7 @@
 #include <ncurses.h>
 #include <filesystem>
 #include <string>
+#include <ctime>
 
 bool start_game = true;
 
@@ -14,6 +15,7 @@ void initialize()
     initscr();
     noecho();
     keypad(stdscr, true);
+    srand(time(0));
 }
 
 int main()
