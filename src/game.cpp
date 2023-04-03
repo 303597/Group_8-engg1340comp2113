@@ -7,6 +7,7 @@
 #include "tools.h"
 #include "characters.h"
 #include "game.h"
+#include <fstream>
 using namespace std;
 
 int score = 0; // initialize score to be zero
