@@ -276,7 +276,7 @@ void Ghost::move(int target_x, int target_y, double speed)
 	return;
 }
 
-void checkCharacterCollision(PacMan &pacman, vector<Ghost> &ghosts)
+void checkCharacterCollision(PacMan &pacman, vector<Ghost> &ghosts, int &turns)
 {
 	for (int i = 0; i < ghosts.size(); ++i)
 	{
@@ -303,6 +303,8 @@ void checkCharacterCollision(PacMan &pacman, vector<Ghost> &ghosts)
 				{
 					ghosts[j].x = ghosts[j].start_x;
 					ghosts[j].y = ghosts[j].start_y;
+					ghosts[j].in_counteratk_mode = false;
+					turns = 0;
 				}
 				// player and all the ghosts reset
 			}

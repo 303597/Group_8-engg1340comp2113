@@ -38,6 +38,6 @@ public:
     double steps = 0;
 };
 
-void checkCharacterCollision(PacMan &pacman, vector<Ghost> &ghosts);
+void checkCharacterCollision(PacMan &pacman, vector<Ghost> &ghosts,int &turns);
 
 #endif
