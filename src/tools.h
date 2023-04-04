@@ -33,6 +33,6 @@ public:
     vector<string> vals;
 };
 
-string getPath();
+string getExecutablePath();
 
 #endif

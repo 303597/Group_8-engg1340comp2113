@@ -16,37 +16,27 @@ int score = 0; // initialize score to be zero
 void save()
 {
 	bool need_update = false;
-	ifstream fin;
-	fin.open("score_Record.txt");
+	ifstream fin(getExecutablePath() + "/../data/score_record.txt", ios::in | ios::out);
+    int history_score = 0;
 	if (fin.fail())
 	{
-		cout << "Error in opening the file." << endl;
+		//cout << "Error in opening the file." << endl;
+        need_update = true;
 	}
 	else
 	{
-		int history_score;
 		fin >> history_score;
 		if (score > history_score)
-		{
 			need_update = true;
-		}
 	}
-	fin.close();
+    fin.close();
 	// update the score record if the score this round is higher than history highest score
 	if (need_update)
-	{
-		ofstream fout;
-		fout.open("score_Record.txt");
-		if (fout.fail())
-		{
-			cout << "Error in writing to the file." << endl;
-		}
-		else
-		{
-			fout << score << endl;
-		}
+    {
+        ofstream fout(getExecutablePath() + "/../data/score_record.txt");
+        fout << score << endl;
         fout.close();
-	}
+    }        
 	
 	score = 0; // reset score to zero after saving it
 }
@@ -70,7 +60,7 @@ bool gameLoop()
     PacMan pacman; vector<Ghost> ghosts;
 
     
-    string map_path = getPath() + "/../map";
+    string map_path = getExecutablePath() + "/../map";
     Map game_map = Map(map_path + "/2_Monsters/map2.txt", pacman, ghosts);
     pacman.linkMap(&game_map);
     for (size_t i = 0; i < ghosts.size(); i++)

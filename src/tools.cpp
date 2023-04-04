@@ -120,7 +120,7 @@ int Map::updateTile(int x, int y)
     return 2;
 }
 
-string getPath() // This solution to get the path of the execuatable is found at https://stackoverflow.com/questions/1528298/get-path-of-executable
+string getExecutablePath() // This solution to get the path of the execuatable is found at https://stackoverflow.com/questions/1528298/get-path-of-executable
 {
     string str = filesystem::canonical("/proc/self/exe");
     return str.substr(0, str.rfind('/'));
