@@ -30,6 +30,7 @@ public:
     void show();
     bool isWall(int x, int y);
     int updateTile(int x, int y); // return 0: no buff, 1: energizer
+    void saveToFile(string filename);
     vector<string> vals;
 };
 

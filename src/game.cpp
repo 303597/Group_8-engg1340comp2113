@@ -10,7 +10,6 @@
 #include <fstream>
 #include <stdlib.h>
 #include <string>
-#include <conio.h>
 
 using namespace std;
 
@@ -56,7 +55,7 @@ int welcome_ui(int i, int j, int index_) {
     int jj = j - 1 - 14;
     int index = index_;
 
-    char menu0[20][91] =
+    string menu0[20] =
     {
     "—————————————————————————————————————————————",
     "|               Use W / S to move upwards / downwards, and use y to choose               |",
@@ -80,7 +79,7 @@ int welcome_ui(int i, int j, int index_) {
     "—————————————————————————————————————————————",
     };
 
-    char menu1[20][91] =
+    string menu1[20] =
     {
     "—————————————————————————————————————————————",
     "|               Use W / S to move upwards / downwards, and use y to choose               |",
@@ -104,7 +103,7 @@ int welcome_ui(int i, int j, int index_) {
     "—————————————————————————————————————————————",
     };
 
-    char menu2[20][91] =
+    string menu2[20] =
     {
     "—————————————————————————————————————————————",
     "|               Use W / S to move upwards / downwards, and use y to choose               |",
@@ -128,7 +127,7 @@ int welcome_ui(int i, int j, int index_) {
     "—————————————————————————————————————————————",
     };
 
-    char menu3[20][91] =
+    string menu3[20][91] =
     {
     "—————————————————————————————————————————————",
     "|               Use W / S to move upwards / downwards, and use y to choose               |",
@@ -152,7 +151,7 @@ int welcome_ui(int i, int j, int index_) {
     "—————————————————————————————————————————————",
     };
 
-    char menu4[20][91] =
+    string menu4[20][91] =
     {
     "—————————————————————————————————————————————",
     "|               Use W / S to move upwards / downwards, and use y to choose               |",
@@ -191,7 +190,7 @@ int show_in_game()
 
 int show_records()
 {
-    char header[5][61] =
+    string header[5] =
     {
     "——————————————————————————————",
     "                                                            ",
@@ -218,7 +217,7 @@ int show_records()
         cout << "\n";
     }
     char a;
-    a = _getch();
+    a = getch();
 
     system("cls");
     return 0;
@@ -231,13 +230,13 @@ void welcomeLoop()
 
     char a;
     cout << "input anything to start" << endl;
-    a = _getch();
+    a = getch();
 
-    system("cls");
+    system("clear");
 
     int choice;
 
-    char menu0[20][91] =
+    string menu0[20] =
     {
     "—————————————————————————————————————————————",
     "|               Use W / S to move upwards / downwards, and use y to choose               |",
@@ -261,7 +260,7 @@ void welcomeLoop()
     "—————————————————————————————————————————————",
     };
 
-    char pac_man[5][61] =
+    string pac_man[5] =
     {
     "——————————————————————————————",
     "                                                            ",
@@ -294,46 +293,44 @@ void welcomeLoop()
         }
         cout << "\n";
         }
-        inputted = _getch();
+        inputted = getch();
         if ((inputted == "W" || inputted == "w") && index > 0) { index--; }
         if ((inputted == "S" || inputted == "s") && index < 4) { index++; }
 
 
-        system("cls");
+        system("clear");
         if (inputted == "y" || inputted == "Y")
         {
-        choice = index;
+            choice = index;
 
-        switch (choice)
-        {
-        case 0:
-            cout << "We are moving to New game mode" << endl;
-            // newgame();
-            break;
+            switch (choice)
+            {
+            case 0:
+                cout << "We are moving to New game mode" << endl;
+                // newgame();
+                break;
 
-        case 1:
-            cout << "This is the tutorial" << endl;
-            // show_tutorial();
-            continue;
+            case 1:
+                cout << "This is the tutorial" << endl;
+                // show_tutorial();
+                continue;
 
-        case 2:
-            show_records();
-            continue;
+            case 2:
+                show_records();
+                continue;
 
-        case 3:
-            cout << "We are moving to previous game" << endl;
-            // back_to_game();
-            break;
+            case 3:
+                cout << "We are moving to previous game" << endl;
+                // back_to_game();
+                break;
 
-        default:
-            cout << "We are exiting the game, Press to continue" << endl;
-            a = _getch();
-
-            return 0;
+            default:
+                cout << "We are exiting the game, Press to continue" << endl;
+                a = getch();
+            }
         }
     }
 }
-
 
 bool gameLoop()
 {

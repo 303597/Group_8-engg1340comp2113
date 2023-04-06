@@ -125,3 +125,8 @@ string getExecutablePath() // This solution to get the path of the execuatable i
     string str = filesystem::canonical("/proc/self/exe");
     return str.substr(0, str.rfind('/'));
 }
+
+void Map::saveToFile(string filename)
+{
+    // not implemented
+}

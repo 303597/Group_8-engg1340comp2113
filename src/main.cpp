@@ -21,7 +21,7 @@ void initialize()
 
 int main()
 {
-    initialize();
+    initialize();   
 
     //welcomeLoop();
 
