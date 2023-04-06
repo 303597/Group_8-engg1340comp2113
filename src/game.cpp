@@ -8,6 +8,10 @@
 #include "characters.h"
 #include "game.h"
 #include <fstream>
+#include <stdlib.h>
+#include <string>
+#include <conio.h>
+
 using namespace std;
 
 int score = 0; // initialize score to be zero
