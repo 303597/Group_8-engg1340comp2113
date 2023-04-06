@@ -11,6 +11,7 @@ bool start_game = true;
 
 void initialize()
 {
+    setenv("TERMINFO", "/lib/terminfo", 1);
     setlocale(LC_ALL, "en_US.UTF-8");
     initscr();
     noecho();
