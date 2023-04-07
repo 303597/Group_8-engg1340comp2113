@@ -126,7 +126,132 @@ string getExecutablePath() // This solution to get the path of the execuatable i
     return str.substr(0, str.rfind('/'));
 }
 
+
 void Map::saveToFile(string filename)
 {
-    // not implemented
+    ofstream fout;
+    fout.open(filename.c_str());
+    if (fout.fail())
+    {
+        cout << "Error in saving records." << endl;
+        return;
+    }
+
+    fout << "Score " << score << endl;
+
+    // pacman
+    fout << "startx " << pacman->start_x << endl;
+    fout << "starty " << pacman->start_y << endl;
+    fout << "lives " << pacman->lives << endl;
+    fout << "eatenghosts " << pacman->eaten_ghosts << endl;
+
+    // ghosts
+    fout << "ghostnumber " << ghosts->size() << endl;
+    for (int i=0; i<ghosts->size(); ++i)
+    {
+        fout << "startx " << (*ghosts)[i].start_x << endl;
+        fout << "starty " << (*ghosts)[i].start_y << endl;
+    }
+
+    // map
+    for (size_t i=0; i<vals.size(); ++i)
+        fout << vals[i] << endl;
+
+    fout.close();
+    return;
+}
+
+int read_line(string line)
+{
+    istringstream record(line);
+    string name;
+    int value;
+    record >> name;
+    record >> value;
+    return value;
+}
+
+void Map::readFromFile(string filename, PacMan &_pacman, vector<Ghost> &_ghosts)
+{
+    ifstream fin;
+    fin.open(filename.c_str());
+    if (fin.fail())
+    {
+        cout << "Error in opening file " << filename << endl;
+        return;
+    }
+
+    string line;
+
+    getline(fin,line);
+    score = read_line(line);
+
+    // _pacman
+    int pacman_start_x, pacman_start_y;
+    getline(fin,line);
+    pacman_start_x = read_line(line);
+    getline(fin,line);
+    pacman_start_y = read_line(line);
+    _pacman = PacMan(pacman_start_x, pacman_start_y);
+
+    getline(fin,line);
+    _pacman.lives = read_line(line);
+    getline(fin,line);
+    _pacman.eaten_ghosts = read_line(line);
+
+    // _ghosts
+    getline(fin,line);
+    int ghost_number = read_line(line);
+    for (int i=0; i<ghost_number; ++i)
+    {
+        int ghost_start_x, ghost_start_y;
+        getline(fin,line);
+        ghost_start_x = read_line(line);
+        getline(fin,line);
+        ghost_start_y = read_line(line);
+        _ghosts.emplace_back(Ghost(ghost_start_x, ghost_start_y));
+    }
+
+    // vals
+    while (getline(fin,line))
+        vals.emplace_back(line);
+
+    fin.close();
+
+    // read vals
+    int pacman_count = 0, ghost_count = 0;
+    for (size_t i = 0; i < vals.size(); i++)
+        for (size_t j = 0; j < vals[i].length(); j++)
+        {
+            if (vals[i][j] == 'o')
+            {
+                pacman_count++;
+                if (pacman_count != 1)
+                {
+                    cout << "ERROR: Map includes more than 1 pacman." << endl;
+                    return;
+                }
+                _pacman.x = i;
+                _pacman.y = j;
+                pacman = &_pacman;
+                vals[i][j] = ' ';
+            }
+            if (vals[i][j] == 'E' || vals[i][j] == 'e')
+            {
+                _ghosts[ghost_count].x = i;
+                _ghosts[ghost_count].y = j;
+                if (vals[i][j] == 'E')
+                    _ghosts[ghost_count].in_counteratk_mode = false;
+                else
+                    _ghosts[ghost_count].in_counteratk_mode = true;
+                ghost_count++;
+                vals[i][j] = ' ';
+            }
+        }
+    ghosts = &_ghosts;
+
+    if (pacman_count < 1)
+        cout << "ERROR: Map does not include pacman." << endl;
+
+    return;
 }
