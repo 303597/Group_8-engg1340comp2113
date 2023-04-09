@@ -7,8 +7,10 @@ extern int score; // declare a score variable that can be modified in other file
 
 void save(); // declare the save function
 
-void welcomeLoop();
+int welcomeLoop();
 
 bool gameLoop();
+
+void showHighScore();
 
 #endif

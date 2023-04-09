@@ -35,6 +35,8 @@ public:
     vector<string> vals;
 };
 
+//void printMenuElement(int x, string line);
+
 string getExecutablePath();
 
 #endif

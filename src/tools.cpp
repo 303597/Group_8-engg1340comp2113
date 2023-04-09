@@ -102,6 +102,53 @@ void Map::printMapElement(int x, int y, char element)
             mvprintw(x, 2 * y, "ㅤ");
     }
 }
+/*
+void printMenuElement(int x, string line)
+{
+    int posi = 0;
+    for (int i = 0; i < line.length(); i++)
+    {
+        switch (line[i])
+        {
+            case '#':
+                mvprintw(x, posi, "🟦");
+                posi += 2;
+                break;
+            case '{':
+                mvprintw(x, posi, "═");
+                posi++;
+                break;
+            case '}':
+                mvprintw(x, posi, "║");
+                posi++;
+                break;
+            case '%':
+                mvprintw(x, posi, "╔");
+                posi++;
+                break;
+            case '^':
+                mvprintw(x, posi, "╗");
+                posi++;
+                break;
+            case '&':
+                mvprintw(x, posi, "╚");
+                posi++;
+                break;
+            case '*':
+                mvprintw(x, posi, "╝");
+                posi++;
+                break;
+            case ' ':
+                mvprintw(x, posi, " ");
+                posi++;
+                break;
+            default:
+                mvprintw(x, posi, "%c", line[i]);
+                posi++;
+        }
+    }
+}
+*/
 
 int Map::updateTile(int x, int y)
 {
