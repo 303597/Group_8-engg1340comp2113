@@ -184,20 +184,20 @@ void Ghost::move(int target_x, int target_y, double speed)
 		return;
 	}
 	// if in the same line-- better track or avoid the pac-man.
-	int hori, verti, type; // up or down ; left or right
-	if (co_y <= 0)
+	int verti, hori; // up or down ; left or right
+	if (co_x <= 0)
 	{
 		verti = 1;
 	}
-	else if (co_y > 0)
+	else if (co_x > 0)
 	{
 		verti = 0;
 	}
-	if (co_x <= 0)
+	if (co_y <= 0)
 	{
 		hori = 3;
 	}
-	else if (co_x > 0)
+	else if (co_y > 0)
 	{
 		hori = 2;
 	}
@@ -214,7 +214,10 @@ void Ghost::move(int target_x, int target_y, double speed)
 				{
 					if(abs(co_x) > map->vals.size() / 2)
 					{
-						poss[1-p] = 10 + sum; sum += 10;
+						if(poss[1-p] != 0)
+						{
+							poss[1-p] = 20 + sum; sum += 20;
+						}
 						poss[p] = 3 + sum; sum += 3;
 						continue;
 					}// better chase the pac-man
@@ -223,7 +226,7 @@ void Ghost::move(int target_x, int target_y, double speed)
 			}
 			else
 			{
-				poss[p] = 5 + sum; sum += 5;
+				poss[p] = 10 + sum; sum += 10;
 			}
 		}
 		else if (hori == p)
@@ -234,7 +237,10 @@ void Ghost::move(int target_x, int target_y, double speed)
 				{
 					if(abs(co_y) > map->vals[x].size() / 2)
 					{
-						poss[5-p] = 10 + sum; sum += 10;
+						if(poss[5-p] != 0)
+						{
+							poss[5-p] = 20 + sum; sum += 20;
+						}
 						poss[p] = 3 + sum; sum += 3;
 						continue;
 					}// better chase the pac-man
@@ -243,7 +249,7 @@ void Ghost::move(int target_x, int target_y, double speed)
 			}// better chase the pac-man
 			else
 			{
-				poss[p] = 5 + sum; sum += 5;
+				poss[p] = 10 + sum; sum += 10;
 			}
 		}
 		else{
