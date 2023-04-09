@@ -70,6 +70,7 @@ void Map::show()
             printMapElement(ghost.x, ghost.y, 'e');
         else
             printMapElement(ghost.x, ghost.y, 'E');
+    fl = true;
     refresh();
 }
 
@@ -88,6 +89,10 @@ void Map::printMapElement(int x, int y, char element)
             break;
         case '.':
             mvprintw(x, 2 * y, "◽");
+            if(!fl)
+            {
+                total_num++;
+            }
             break;
         case 'E':
             mvprintw(x, 2 * y, "👻");
@@ -159,7 +164,7 @@ int Map::updateTile(int x, int y)
     }
     else if(vals[x][y] == '.')
     {
-        score += 2;
+        score += 5;
         vals[x][y] = ' ';
         return 0;
     }

@@ -35,9 +35,9 @@ public:
     using Character::Character;
     void move(int target_x, int target_y, double ghost_speed);
     bool in_counteratk_mode = false;
-    double steps = 0;
+    double speed = 0;
 };
 
-void checkCharacterCollision(PacMan &pacman, vector<Ghost> &ghosts,int &turns);
+void checkCharacterCollision(PacMan &pacman, vector<Ghost> &ghosts,int &turns, int &direction);
 
 #endif

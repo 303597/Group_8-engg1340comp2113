@@ -112,7 +112,7 @@ bool gameLoop()
 
     auto last_frame_time = chrono::high_resolution_clock::now(), this_frame_time = last_frame_time;
 
-    int direction = 0;
+    int direction = -2;
     while (true)
     {
         int operation = 0;
@@ -122,6 +122,28 @@ bool gameLoop()
             int ch = getch();
             if (ch != ERR)
                 operation = ch;
+                switch (operation)
+                {
+                    case 'w':
+                    case KEY_UP:
+                        direction = 0;
+                        break;
+                    case 's':
+                    case KEY_DOWN:
+                        direction = 1;
+                        break;
+                    case 'a':
+                    case KEY_LEFT:
+                        direction = 2;
+                        break;
+                    case 'd':
+                    case KEY_RIGHT:
+                        direction = 3;
+                        break;
+                }
+            if(direction == -2){
+                continue;
+            }
             this_frame_time = chrono::high_resolution_clock::now();
         }
         switch (operation)
@@ -149,18 +171,35 @@ bool gameLoop()
         if (tile_info == 1)
         {
             //turns++;
-	    // if the pacman eats another super bean before the effect of the former super bean ends
-	    if (turns > 0)      pacman.eaten_ghosts = 0;
-	    turns = 1; 
-	    // reset count time and number of eaten ghosts to zero and count from start again
+	        // if the pacman eats another super bean before the effect of the former super bean ends
+	        if (turns > 0)      pacman.eaten_ghosts = 0;
+	        turns = 1; 
+	        // reset count time and number of eaten ghosts to zero and count from start again
             for (Ghost &ghost: ghosts)
             {
                 ghost.in_counteratk_mode = true;
             }
         }
+        if(score >= game_map.total_num * 5 / 3 + 50 * ghosts.size() / 3){
+            ghost_speed = 0.8;
+        }
+        if(score >= game_map.total_num * 10 / 3 + 100 * ghosts.size() / 3){ 
+            ghost_speed = 1.0;
+        }
+        for (Ghost &ghost: ghosts)
+        {
+            if(ghost.in_counteratk_mode == true)
+            {
+                ghost.speed += 0.6;
+            }
+            else
+            {
+                ghost.speed += ghost_speed;
+            }
+        }
         if(turns == ghosts.size() * 15){
             turns = 0;
-	    pacman.eaten_ghosts = 0; // reset the number of eaten ghosts to zero for the next round
+	        pacman.eaten_ghosts = 0; // reset the number of eaten ghosts to zero for the next round
             for (Ghost &ghost: ghosts)
             {
                 ghost.in_counteratk_mode = false;
@@ -170,11 +209,18 @@ bool gameLoop()
             turns++;
         }
         
-        checkCharacterCollision(pacman, ghosts, turns);
+        checkCharacterCollision(pacman, ghosts, turns, direction);
 
         for (Ghost &ghost: ghosts)
-            ghost.move(pacman.x, pacman.y, ghost_speed);
-        checkCharacterCollision(pacman, ghosts, turns);
+        {
+            if(ghost.speed >= 1.0)
+            {
+                ghost.speed -= 1.0;
+                ghost.move(pacman.x, pacman.y, ghost_speed);
+            }
+        }
+
+        checkCharacterCollision(pacman, ghosts, turns, direction);
         
 	    refresh();
 

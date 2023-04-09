@@ -206,40 +206,40 @@ void Ghost::move(int target_x, int target_y, double speed)
 		if(poss[p] == 0){
 			continue;
 		}
-		if(hori == p)
+		if(verti == p)
 		{
 			if(co_y == 0)
 			{
-				if(target_x == 0 || target_x == map->vals.size())
+				if(map->vals[0][y] != '#' && map->vals[map->vals.size()-1][y] != '#')
 				{
 					if(abs(co_x) > map->vals.size() / 2)
 					{
-						poss[1-p] = 7 + sum; sum += 7;
+						poss[1-p] = 10 + sum; sum += 10;
 						poss[p] = 3 + sum; sum += 3;
 						continue;
 					}// better chase the pac-man
 				}
-				poss[p] = 10 + sum; sum += 10;
+				poss[p] = 103 + sum; sum += 103;
 			}
 			else
 			{
 				poss[p] = 5 + sum; sum += 5;
 			}
 		}
-		else if (verti == p)
+		else if (hori == p)
 		{
 			if(co_x == 0)
 			{
-				if(target_y == 0 || target_y == map->vals[x].size())
+				if(map->vals[x][0] != '#' && map->vals[x][map->vals[x].size()-1] != '#')
 				{
 					if(abs(co_y) > map->vals[x].size() / 2)
 					{
-						poss[5-p] = 7 + sum; sum += 7;
+						poss[5-p] = 10 + sum; sum += 10;
 						poss[p] = 3 + sum; sum += 3;
 						continue;
 					}// better chase the pac-man
 				}
-				poss[p] = 10 + sum; sum += 10;
+				poss[p] = 103 + sum; sum += 103;
 			}// better chase the pac-man
 			else
 			{
@@ -278,7 +278,7 @@ void Ghost::move(int target_x, int target_y, double speed)
 	return;
 }
 
-void checkCharacterCollision(PacMan &pacman, vector<Ghost> &ghosts, int &turns)
+void checkCharacterCollision(PacMan &pacman, vector<Ghost> &ghosts, int &turns, int &direction)
 {
 	for (int i = 0; i < ghosts.size(); ++i)
 	{
@@ -297,6 +297,7 @@ void checkCharacterCollision(PacMan &pacman, vector<Ghost> &ghosts, int &turns)
 			else
 			{
 				pacman.lives--;
+				direction = -2;
 				if (pacman.lives == 0)
 				{
 					mvprintw(12, 12, "%d", score);
