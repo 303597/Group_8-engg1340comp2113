@@ -185,19 +185,19 @@ void Ghost::move(int target_x, int target_y, double speed)
 	}
 	// if in the same line-- better track or avoid the pac-man.
 	int hori, verti, type; // up or down ; left or right
-	if (co_x <= 0)
+	if (co_y <= 0)
 	{
 		verti = 1;
 	}
-	else if (co_x > 0)
+	else if (co_y > 0)
 	{
 		verti = 0;
 	}
-	if (co_y <= 0)
+	if (co_x <= 0)
 	{
 		hori = 3;
 	}
-	else if (co_y > 0)
+	else if (co_x > 0)
 	{
 		hori = 2;
 	}
