@@ -35,6 +35,15 @@ public:
     vector<string> vals;
 };
 
+class Menu
+{
+private:
+    vector<string> vals;
+public:
+    Menu(string filename);
+    void show(int selected = -1);
+};
+
 //void printMenuElement(int x, string line);
 
 string getExecutablePath();

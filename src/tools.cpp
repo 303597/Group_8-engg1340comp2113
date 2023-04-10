@@ -10,8 +10,7 @@ using namespace std;
 
 Map::Map(string filename, PacMan &_pacman, vector<Ghost> &_ghosts) // _pacman: passed by reference  pacman: belongs to Map
 {
-    ifstream fin;
-    fin.open(filename);
+    ifstream fin(getExecutablePath() + "/../map/" + filename);
     if (fin.fail())
     {
         cout << "Failed to open file: " << filename << endl;
@@ -78,28 +77,28 @@ void Map::printMapElement(int x, int y, char element)
     switch (element)
     {
         case 'o':
-            mvprintw(x, 2 * y, "🟡");
+            mvprintw(x + 2, 2 * y + 2, "🟡");
             break;
         case '#':
-            mvprintw(x, 2 * y, "🟦");
+            mvprintw(x + 2, 2 * y + 2, "🟦");
             break;
         case '_':
-            mvprintw(x, 2 * y, "🟩");
+            mvprintw(x + 2, 2 * y + 2, "🟩");
             break;
         case '.':
-            mvprintw(x, 2 * y, "◽");
+            mvprintw(x + 2, 2 * y + 2, "◽");
             break;
         case 'E':
-            mvprintw(x, 2 * y, "👻");
+            mvprintw(x + 2, 2 * y + 2, "👻");
             break;
         case 'e':
-            mvprintw(x, 2 * y, "🥶");
+            mvprintw(x + 2, 2 * y + 2, "🥶");
             break;
         case '0':
-            mvprintw(x, 2 * y, "🟢");
+            mvprintw(x + 2, 2 * y + 2, "🟢");
             break;
         default:
-            mvprintw(x, 2 * y, "ㅤ");
+            mvprintw(x + 2, 2 * y + 2, "ㅤ");
     }
 }
 /*
@@ -301,4 +300,29 @@ void Map::readFromFile(string filename, PacMan &_pacman, vector<Ghost> &_ghosts)
         cout << "ERROR: Map does not include pacman." << endl;
 
     return;
+}
+
+Menu::Menu(string filename)
+{
+    ifstream fin(getExecutablePath() + "/../ui/" + filename);
+    if (fin.fail())
+        cout << "Error opening file." << endl;
+    string line;
+    while (getline(fin, line))
+        vals.emplace_back(line);
+    fin.close();
+}
+
+void Menu::show(int selected)
+{
+    int line_no = 0;
+    for (string line: vals)
+    {
+        if ((line_no >= 14) && (line_no - 14) / 3 == selected)
+            attron(COLOR_PAIR(2));
+        else
+            attron(COLOR_PAIR(1));
+        mvprintw(line_no, 0, "%s", line.c_str());
+        line_no++;
+    }
 }

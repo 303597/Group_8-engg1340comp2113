@@ -47,28 +47,14 @@ void save()
 int welcomeLoop()
 {
     cbreak();
-    ifstream fin(getExecutablePath() + "/../ui/start_menu.txt");
-    if (fin.fail())
-        cout << "Error opening file." << endl;
-    string line;
+    
     int selected = 0, line_no = 0;
     bool confirmed = false;
-    vector<string> start_menu;
-    while (getline(fin, line))
-        start_menu.emplace_back(line);
-    fin.close();
+    Menu start_menu("start_menu.txt");
+    
     while (!confirmed)
     {
-        line_no = 0;
-        for (string line: start_menu)
-        {
-            if ((line_no >= 14) && (line_no - 14) / 3 == selected)
-                attron(COLOR_PAIR(2));
-            else
-                attron(COLOR_PAIR(1));
-            mvprintw(line_no, 0, "%s", line.c_str());
-            line_no++;
-        }
+        start_menu.show(selected);
         refresh();
         int ch = getch();
         switch (ch)
@@ -96,18 +82,18 @@ bool gameLoop()
     nodelay(stdscr, true); // don't wait until input
 
     //int score = 0;
-    //vector<string> game_menu;
+    Menu game_menu("in_game.txt");
 
     bool in_counteratk_mode = false;
     int turns = 0;
     double ghost_speed = 0.4;
     PacMan pacman; vector<Ghost> ghosts;
     
-    string map_path = getExecutablePath() + "/../map";
-    Map game_map = Map(map_path + "/2_Monsters/map2.txt", pacman, ghosts);
+    Map game_map = Map("/2_Monsters/map2.txt", pacman, ghosts);
     pacman.linkMap(&game_map);
     for (size_t i = 0; i < ghosts.size(); i++)
         ghosts[i].linkMap(&game_map);
+    game_menu.show();
     game_map.show();
 
     auto last_frame_time = chrono::high_resolution_clock::now(), this_frame_time = last_frame_time;
@@ -178,6 +164,7 @@ bool gameLoop()
         
 	    refresh();
 
+        game_menu.show();
         game_map.show();
 
         refresh();
