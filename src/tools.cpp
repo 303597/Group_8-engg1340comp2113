@@ -103,7 +103,39 @@ void Map::printMapElement(int x, int y, char element)
         case '0':
             mvprintw(x, 2 * y, "🟢");
             break;
-        default:
+        /*
+	case '@':
+            mvprintw(x, 2 * y, "🧲");
+	    break;
+	case '$':
+	    mvprintw(x, 2 * y, "🪙");
+	    break;
+	case '*':
+	    mvprintw(x, 2 * y, "🧊");
+	    break;
+	case '^':
+	    mvprintw(x, 2 * y, "🛹");
+	    break;
+	case '!':
+	    mvprintw(x, 2 * y, "📜");
+	    break;
+	case '?':
+	    mvprintw(x, 2 * y, "❓");
+	    break;
+	case '1':
+            mvprintw(x, 2 * y, "🍒");
+            break;
+	case '2':
+            mvprintw(x, 2 * y, "🍑");
+            break;
+	case '3':
+            mvprintw(x, 2 * y, "🍉");
+            break;
+	case '4':
+            mvprintw(x, 2 * y, "🍇");
+            break;
+	*/
+	default:
             mvprintw(x, 2 * y, "ㅤ");
     }
 }
@@ -157,6 +189,51 @@ void printMenuElement(int x, string line)
 
 int Map::updateTile(int x, int y)
 {
+    /*int num;
+    switch(vals[x][y])
+    {
+    	case '0':
+	    num = 8;
+	    break;
+    	case '.':
+	    score += 5;
+	    num = 7;
+	    break;
+	case '@':
+	    num = 0;
+	    break;
+	case '$':
+	    num = 1;
+	    break;
+	case '*':
+	    num = 2;
+	    break;
+	case '^':
+	    num = 3;
+	    break;
+	case '!':
+	    num = 4;
+	    break;
+	case '?':
+	    num = 5;
+	    break;
+	case '1':
+	    score += 50;
+	    num = 9;
+	case '2':
+	    score += 75;
+	    num = 9;
+	case '3':
+	    score += 100;
+	    num = 9;
+	case '4':
+	    score += 150;
+	    num = 9;
+	default:
+	    num = 6;
+    }*/
+    //vals[x][y] = ' ';
+    //return num;
     if (vals[x][y] == '0')
     {
         vals[x][y] = ' ';

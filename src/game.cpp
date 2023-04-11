@@ -10,6 +10,8 @@
 #include <fstream>
 #include <stdlib.h>
 #include <string>
+#include <ctime>
+#include <cstdlib>
 
 using namespace std;
 
@@ -43,6 +45,21 @@ void save()
 	
 	score = 0; // reset score to zero after saving it
 }
+
+/*int generate_prop(Map &game_map, int &prop_lasting_time)
+{
+	char prop[5] = {'@', '$', '*', '^', '!', '?'};
+	int num = rand() % 6; // generate random number from [0,5]
+	int x = 0, y = 0;// position
+	while(game_map.vals[x][y] != ' ')
+	{
+		x = rand() % game_map.vals.size();
+		y = rand() % game_map.vals[0].size(); // generate postion
+	}
+	game_map.vals[x][y] = prop[num];
+	prop_lasting_time = 20;
+	return x*10 + y; // return position
+}*/
 
 int welcomeLoop()
 {
@@ -100,6 +117,11 @@ bool gameLoop()
 
     bool in_counteratk_mode = false;
     int turns = 0;
+    //int prop_turns = 0, prop_lasting_time = 0, prop_type = -1, fruit_lating_time;
+    //int prop_pos = 0, fruit_pos = 0;
+    //int fruit_x = 0, fruit_y = 0, fruit_num;
+    //char fruits[4] = {'1', '2', '3', '4'};
+    //char special = 'none';
     double ghost_speed = 0.4;
     PacMan pacman; vector<Ghost> ghosts;
     
@@ -166,13 +188,26 @@ bool gameLoop()
                 break;
         }
         pacman.move(direction);
-        
+        /*if (score >= ghosts.size() * 150 && prop_lasting_time == 0)
+	{
+	    generate_prop(gampe_map);
+	}*/
+	if(score >= game_map.total_num * 5 / 3 + 50 * ghosts.size() / 3)
+	{
+             ghost_speed = 0.8;
+	}
+	if(score >= game_map.total_num * 10 / 3 + 100 * ghosts.size() / 3)
+	{
+             ghost_speed = 1.0;
+	}
         int tile_info = game_map.updateTile(pacman.x, pacman.y);
-        if (tile_info == 1)
+        if (tile_info == 1)//if (tile_info == 8)
         {
-            //turns++;
 	        // if the pacman eats another super bean before the effect of the former super bean ends
-	        if (turns > 0)      pacman.eaten_ghosts = 0;
+	        if (turns > 0)
+		{
+		    pacman.eaten_ghosts = 0;
+		}
 	        turns = 1; 
 	        // reset count time and number of eaten ghosts to zero and count from start again
             for (Ghost &ghost: ghosts)
@@ -180,16 +215,97 @@ bool gameLoop()
                 ghost.in_counteratk_mode = true;
             }
         }
-        if(score >= game_map.total_num * 5 / 3 + 50 * ghosts.size() / 3){
-            ghost_speed = 0.8;
-        }
-        if(score >= game_map.total_num * 10 / 3 + 100 * ghosts.size() / 3){ 
-            ghost_speed = 1.0;
-        }
+	/*
+	else if(tile_info <= 5 && tile_info >= 0)
+	{
+	    prop_type = tile_info;
+	    switch(tile_info)
+	    {
+	    	case 0:
+			magnet = true;
+			prop_turns = 10;
+			break;
+		case 1:
+			double_points = true;
+			prop_turns = 10;
+			break;
+		case 2:
+			ghost_speed = 0;
+			prop_turns = 6;
+			break;
+		case 3:
+			ghost_speed *= 0.5;
+			prop_turns = 10;
+			break;
+		case 4:
+			pass_bricks = true;
+			prop_turns = 15;
+			break;
+		case 5:
+			fruit_num = rand() % 4;
+			switch(fruit_num)
+			{
+				case 0:
+					while(game_map.vals[fruit_x][fruit_y] != ' ')
+					{
+						fruit_x = rand() % game_map.vals.size();
+						fruit_y = rand() % game_map.vals[fruit_x].size();
+					}
+					fruit_lastin_time = 25;
+					break;
+				case 1:
+					while(game_map.vals[fruit_x][fruit_y] != ' ')
+                                        {
+                                                 fruit_x = rand() % game_map.vals.size();
+                                                 fruit_y = rand() % game_map.vals[fruit_x].size();
+                                        }
+					fruit_lasting_time = 15;
+					break;
+				case 2:
+					int ghost_rand = rand() % ghosts.size();
+					int dirx[4] = {-1, 1, 0, 0}//up down left right
+					int diry[4] = {0, 0, -1, 1}
+					for(int i = 0; i < 4; i++)
+					{
+						if(game_map.vals[ghosts[ghost_rand].x + dirx[i]][ghosts[ghost_rand].y + diry[i]] != '#')
+						{
+							fruit_x = ghosts[ghost_rand].x + dirx[i];
+							fruit_y = ghosts[ghost_rand].y + diry[i];
+						}
+					}
+					fruit_lasting_time = 20;
+					break;
+				case 3:
+                                       int ghost_rand = rand() % ghosts.size();
+				       fruit_x = ghosts[ghost_rand].start_x;
+                                       fruit_y = ghosts[ghost_rand].start_y;
+				       fruit_lasting_time = 15;
+				       break;
+			}
+			break;
+		case 9:
+			fruit_lasting_time = 15;
+			break;
+	    }
+	    if(!(fruit_x == 0 && fruit_y == 0))
+	    {
+	    	fruit_pos = fruit_x*10 + fruit_y;
+		game_map[fruit_x][fruit_y] = fruits[fruit_num];
+		fruit_x = 0; fruit_y = 0;
+	    }
+	    prop_turns = 0;
+	    prop_lasting_time = 5; 
+	    tile_info = 6;
+	}
+	*/
         for (Ghost &ghost: ghosts)
         {
             if(ghost.in_counteratk_mode == true)
             {
+	    	if(tile_info == 3)
+		{
+			ghost.speed += 0.3;
+		}
                 ghost.speed += 0.6;
             }
             else
@@ -199,7 +315,7 @@ bool gameLoop()
         }
         if(turns == ghosts.size() * 15){
             turns = 0;
-	        pacman.eaten_ghosts = 0; // reset the number of eaten ghosts to zero for the next round
+	    pacman.eaten_ghosts = 0; // reset the number of eaten ghosts to zero for the next round
             for (Ghost &ghost: ghosts)
             {
                 ghost.in_counteratk_mode = false;
@@ -208,7 +324,16 @@ bool gameLoop()
         if(turns != 0){
             turns++;
         }
-        
+        /*
+	if(prop_lasting_time != 0)
+	{
+		prop_lasting_time--;
+	}
+	if(fruit_lasting_time != 0)
+	{
+		fruit_lasting_time--;
+	}
+	*/
         checkCharacterCollision(pacman, ghosts, turns, direction);
 
         for (Ghost &ghost: ghosts)
@@ -221,8 +346,17 @@ bool gameLoop()
         }
 
         checkCharacterCollision(pacman, ghosts, turns, direction);
-        
-	    refresh();
+
+	/*if(prop_lasting_time == 0)
+        {
+                game_map[prop_pos/10][prop_pos%10] = ' ';
+        }
+	if(prop_lasting_time == 0)
+        {
+                 game_map[prop_pos/10][prop_pos%10] = ' ';
+        }*/
+
+	refresh();
 
         game_map.show();
 
