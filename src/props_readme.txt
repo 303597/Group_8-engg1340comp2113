@@ -3,7 +3,7 @@
 '*':🧊-- froze the ghosts
 '^':🛹-- slow down the ghosts
 '!':📜-- go through walls
-'?':❓-- random
+'?':❓-- random point bonus(see fruits props below)
 all asting for 15 turns
 
 
