@@ -56,7 +56,7 @@ void PacMan::move(int direction)
 
 void Ghost::move(int target_x, int target_y, double speed)
 {
-	if(x == start_x && start_y == y){
+	if(x == start_x && y == start_y){
 		if(map->vals[x-1][y] == '_'){
 			x = x - 2; y = y;
 		}
@@ -284,7 +284,7 @@ void Ghost::move(int target_x, int target_y, double speed)
 	return;
 }
 
-void checkCharacterCollision(PacMan &pacman, vector<Ghost> &ghosts, int &turns, int &direction)
+void checkCharacterCollision(PacMan &pacman, vector<Ghost> &ghosts, int &turns, int &direction, int &prop_lasting_time, int &fruit_lasting_time, int &prop_turns)
 {
 	for (int i = 0; i < ghosts.size(); ++i)
 	{
@@ -322,6 +322,9 @@ void checkCharacterCollision(PacMan &pacman, vector<Ghost> &ghosts, int &turns, 
 					ghosts[j].in_counteratk_mode = false;
 					turns = 0;
 				}
+				fruit_lasting_time = 0;
+				prop_lasting_time = 0;
+				prop_turns = 0;
 				// player and all the ghosts reset
 			}
 		}

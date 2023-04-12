@@ -46,20 +46,42 @@ void save()
 	score = 0; // reset score to zero after saving it
 }
 
-/*int generate_prop(Map &game_map, int &prop_lasting_time)
+void generate_prop(Map &game_map, int &prop_lasting_time, int &prop_pos_x, int &prop_pos_y, int fruit_lasting_time)
 {
-	char prop[5] = {'@', '$', '*', '^', '!', '?'};
-	int num = rand() % 6; // generate random number from [0,5]
-	int x = 0, y = 0;// position
-	while(game_map.vals[x][y] != ' ')
+	char prop[6] = {'@', '$', '*', '^', '!', '?'};
+    int num;
+    if(fruit_lasting_time == 0)
+    {
+        num = rand() % 6; // generate random number from [0,5] 
+    }
+    else
+    {
+        num = rand() % 5; // exclude '?'
+    }
+    int x = game_map.vals.size() - 1;
+    int y = game_map.vals[x].size() - 1;
+	while(game_map.vals[x][y] != ' ' && !(x == 0 && y == 0))
 	{
 		x = rand() % game_map.vals.size();
-		y = rand() % game_map.vals[0].size(); // generate postion
+		y = rand() % game_map.vals[x].size(); // generate postion
 	}
 	game_map.vals[x][y] = prop[num];
 	prop_lasting_time = 20;
-	return x*10 + y; // return position
-}*/
+    prop_pos_x = x;
+    prop_pos_y = y;
+    refresh();
+    return;
+}
+bool check(int x,int y, vector<Ghost> &ghosts){
+    //mvprintw(19, 12, "HHHHHHHH");
+    for (Ghost &ghost: ghosts)
+    {
+        if(x == ghost.start_x && y == ghost.start_y){
+            return true;
+        }
+    }
+    return false;
+}
 
 int welcomeLoop()
 {
@@ -103,13 +125,15 @@ bool gameLoop()
 
     bool in_counteratk_mode = false;
     int turns = 0;
-    //int prop_turns = 0, prop_lasting_time = 0, prop_type = -1, fruit_lating_time;
-    //int prop_pos = 0, fruit_pos = 0;
-    //int fruit_x = 0, fruit_y = 0, fruit_num;
-    //char fruits[4] = {'1', '2', '3', '4'};
-    //char special = 'none';
     double ghost_speed = 0.4;
     PacMan pacman; vector<Ghost> ghosts;
+    int prop_turns = 0, prop_lasting_time = 0, prop_type = -1, fruit_lasting_time;
+    int prop_pos_x = 0, prop_pos_y = 0, fruit_pos_x = 0, fruit_pos_y = 0;
+    int fruit_num;
+    char fruits[4] = {'1', '2', '3', '4'};
+    string special = "none";
+    int dirx[4] = {-1, 1, 0, 0};//up down left right
+    int diry[4] = {0, 0, -1, 1};
     
     Map game_map = Map("/2_Monsters/map2.txt", pacman, ghosts);
     pacman.linkMap(&game_map);
@@ -117,6 +141,9 @@ bool gameLoop()
         ghosts[i].linkMap(&game_map);
     game_menu.showInGame(score, pacman.lives);
     game_map.show();
+    int ghost_rand = rand() % ghosts.size();
+    int fruit_x = game_map.vals.size() - 1;
+    int fruit_y = game_map.vals[fruit_x].size() - 1;
 
     auto last_frame_time = chrono::high_resolution_clock::now(), this_frame_time = last_frame_time;
 
@@ -174,26 +201,26 @@ bool gameLoop()
                 break;
         }
         pacman.move(direction);
-        /*if (score >= ghosts.size() * 150 && prop_lasting_time == 0)
-	{
-	    generate_prop(gampe_map);
-	}*/
-	if(score >= game_map.total_num * 5 / 3 + 50 * ghosts.size() / 3)
-	{
-             ghost_speed = 0.8;
-	}
-	if(score >= game_map.total_num * 10 / 3 + 100 * ghosts.size() / 3)
-	{
-             ghost_speed = 1.0;
-	}
+        if (score >= ghosts.size()*150 && prop_lasting_time == 0)
+        {
+            generate_prop(game_map, prop_lasting_time, prop_pos_x, prop_pos_y, fruit_lasting_time);
+        }
+        if(score >= game_map.total_num * 5 / 3 + 50 * ghosts.size() / 3)
+        {
+            ghost_speed = 0.8;
+        }
+        if(score >= game_map.total_num * 10 / 3 + 100 * ghosts.size() / 3)
+        {
+            ghost_speed = 1.0;
+        }
         int tile_info = game_map.updateTile(pacman.x, pacman.y);
-        if (tile_info == 1)//if (tile_info == 8)
+        if (tile_info == 8)
         {
 	        // if the pacman eats another super bean before the effect of the former super bean ends
 	        if (turns > 0)
-		{
-		    pacman.eaten_ghosts = 0;
-		}
+		    {
+		        pacman.eaten_ghosts = 0;
+	    	}
 	        turns = 1; 
 	        // reset count time and number of eaten ghosts to zero and count from start again
             for (Ghost &ghost: ghosts)
@@ -201,101 +228,148 @@ bool gameLoop()
                 ghost.in_counteratk_mode = true;
             }
         }
-	/*
-	else if(tile_info <= 5 && tile_info >= 0)
-	{
-	    prop_type = tile_info;
-	    switch(tile_info)
-	    {
-	    	case 0:
-			magnet = true;
-			prop_turns = 10;
-			break;
-		case 1:
-			double_points = true;
-			prop_turns = 10;
-			break;
-		case 2:
-			ghost_speed = 0;
-			prop_turns = 6;
-			break;
-		case 3:
-			ghost_speed *= 0.5;
-			prop_turns = 10;
-			break;
-		case 4:
-			pass_bricks = true;
-			prop_turns = 15;
-			break;
-		case 5:
-			fruit_num = rand() % 4;
-			switch(fruit_num)
-			{
-				case 0:
-					while(game_map.vals[fruit_x][fruit_y] != ' ')
-					{
-						fruit_x = rand() % game_map.vals.size();
-						fruit_y = rand() % game_map.vals[fruit_x].size();
-					}
-					fruit_lastin_time = 25;
-					break;
-				case 1:
-					while(game_map.vals[fruit_x][fruit_y] != ' ')
-                                        {
-                                                 fruit_x = rand() % game_map.vals.size();
-                                                 fruit_y = rand() % game_map.vals[fruit_x].size();
-                                        }
-					fruit_lasting_time = 15;
-					break;
-				case 2:
-					int ghost_rand = rand() % ghosts.size();
-					int dirx[4] = {-1, 1, 0, 0}//up down left right
-					int diry[4] = {0, 0, -1, 1}
-					for(int i = 0; i < 4; i++)
-					{
-						if(game_map.vals[ghosts[ghost_rand].x + dirx[i]][ghosts[ghost_rand].y + diry[i]] != '#')
-						{
-							fruit_x = ghosts[ghost_rand].x + dirx[i];
-							fruit_y = ghosts[ghost_rand].y + diry[i];
-						}
-					}
-					fruit_lasting_time = 20;
-					break;
-				case 3:
-                                       int ghost_rand = rand() % ghosts.size();
-				       fruit_x = ghosts[ghost_rand].start_x;
-                                       fruit_y = ghosts[ghost_rand].start_y;
-				       fruit_lasting_time = 15;
-				       break;
-			}
-			break;
-		case 9:
-			fruit_lasting_time = 15;
-			break;
-	    }
-	    if(!(fruit_x == 0 && fruit_y == 0))
-	    {
-	    	fruit_pos = fruit_x*10 + fruit_y;
-		game_map[fruit_x][fruit_y] = fruits[fruit_num];
-		fruit_x = 0; fruit_y = 0;
-	    }
-	    prop_turns = 0;
-	    prop_lasting_time = 5; 
-	    tile_info = 6;
-	}
-	*/
+        else if(tile_info <= 5 && tile_info >= 0)
+        {
+            prop_type = tile_info;
+            switch(tile_info)
+            {
+                case 0:
+                    special = "magnet";
+                    prop_turns = 10;
+                    break;
+                case 1:
+                    special = "double_points";
+                    prop_turns = 10;
+                    break;
+                case 2:
+                    special = "fronzen";
+                    prop_turns = 6;
+                    break;
+                case 3:
+                    special = "slow";
+                    prop_turns = 10;
+                    break;
+                case 4:
+                    special = "pass_bircks";
+                    prop_turns = 15;
+                    break;
+                case 5:
+                    fruit_num = rand() % 7;
+                    if(fruit_num <= 3){fruit_num = 0;}
+                    else if(fruit_num <= 6 && fruit_num >= 4){fruit_num = 1;}
+                    else if(fruit_num <= 8 && fruit_num >=7){fruit_num = 2;}
+                    else{fruit_num = 3;}
+                    //mvprintw(17, 12, "%d", fruit_num);
+                    switch(fruit_num)
+                    {
+                        case 0:
+                            //mvprintw(18, 12, "HHHHHHHH");
+                            while(game_map.vals[fruit_x][fruit_y] != ' ')
+                            {
+                                if(fruit_x == 0 && fruit_y == 0)
+                                {
+                                    fruit_x = rand() % game_map.vals.size();
+                                    fruit_y = rand() % game_map.vals[fruit_x].size();
+                                    continue;
+                                }
+                                if(!check(fruit_x, fruit_y, ghosts))
+                                {
+                                    fruit_x = rand() % game_map.vals.size();
+                                    fruit_y = rand() % game_map.vals[fruit_x].size();
+                                    continue;
+                                }
+                                fruit_x = rand() % game_map.vals.size();
+                                fruit_y = rand() % game_map.vals[fruit_x].size();
+                            }
+                            fruit_lasting_time = 25;
+                            break;
+                        case 1:
+                            //mvprintw(18, 12, "HHHHHHHH");
+                            while(game_map.vals[fruit_x][fruit_y] != ' ')
+                            {
+                                
+                                if(fruit_x == 0 && fruit_y == 0)
+                                {
+                                    fruit_x = rand() % game_map.vals.size();
+                                    fruit_y = rand() % game_map.vals[fruit_x].size();
+                                    continue;
+                                }
+                                if(!check(fruit_x, fruit_y, ghosts))
+                                {
+                                    fruit_x = rand() % game_map.vals.size();
+                                    fruit_y = rand() % game_map.vals[fruit_x].size();
+                                    continue;
+                                }
+                                fruit_x = rand() % game_map.vals.size();
+                                fruit_y = rand() % game_map.vals[fruit_x].size();
+                            }
+                            fruit_lasting_time = 15;
+                            break;
+                        case 2:
+                            for(int i = 0; i < 4; i++)
+                            {
+                                if(game_map.vals[ghosts[ghost_rand].x + dirx[i]][ghosts[ghost_rand].y + diry[i]] != '#')
+                                {
+                                    fruit_x = ghosts[ghost_rand].x + dirx[i];
+                                    fruit_y = ghosts[ghost_rand].y + diry[i];
+                                }
+                            }
+                            fruit_lasting_time = 20;
+                            break;
+                        case 3:
+                            fruit_x = ghosts[ghost_rand].start_x;
+                            fruit_y = ghosts[ghost_rand].start_y;
+                            fruit_lasting_time = 15;
+                            break;
+                    }
+                    //mvprintw(14, 12, "%d", fruit_x);
+                    //mvprintw(15, 12, "%d", fruit_y);
+                    if(!(fruit_x == 0 && fruit_y == 0))
+                    {
+                        fruit_pos_x = fruit_x;
+                        fruit_pos_y = fruit_y;
+                        game_map.vals[fruit_x][fruit_y] = fruits[fruit_num];
+                        //mvprintw(16, 12, "%c", game_map.vals[fruit_x][fruit_y]);
+                        fruit_x = game_map.vals.size() - 1;
+                        fruit_y = game_map.vals[fruit_x].size() - 1;
+                        refresh();
+                    }
+                    break;
+                case 9:
+                    break;
+                prop_turns = 0;
+                prop_lasting_time = 5; 
+                tile_info = 6;
+            }
+        }
+        
         for (Ghost &ghost: ghosts)
         {
             if(ghost.in_counteratk_mode == true)
             {
-	    	if(tile_info == 3)
-		{
-			ghost.speed += 0.3;
-		}
-                ghost.speed += 0.6;
+                if(special == "slow")
+                {
+                    ghost.speed += 0.3;
+                }
+                else if(special == "frozen")
+                {
+                    ghost.speed += 0;
+                }
+                else
+                {
+                    ghost.speed += 0.6;
+                }
             }
             else
             {
+                if(special == "slow")
+                {
+                    ghost.speed += ghost_speed * 0.5;
+                }
+                else if(special == "frozen")
+                {
+                    ghost.speed += 0;
+                }
                 ghost.speed += ghost_speed;
             }
         }
@@ -310,17 +384,19 @@ bool gameLoop()
         if(turns != 0){
             turns++;
         }
-        /*
-	if(prop_lasting_time != 0)
-	{
-		prop_lasting_time--;
-	}
-	if(fruit_lasting_time != 0)
-	{
-		fruit_lasting_time--;
-	}
-	*/
-        checkCharacterCollision(pacman, ghosts, turns, direction);
+        if(prop_lasting_time != 0)
+        {
+            prop_lasting_time--;
+        }
+        if(fruit_lasting_time != 0)
+        {
+            fruit_lasting_time--;
+        }
+        if(prop_turns != 0)
+        {
+            prop_turns--;
+        }
+        checkCharacterCollision(pacman, ghosts, turns, direction, prop_lasting_time, fruit_lasting_time, prop_turns);
 
         for (Ghost &ghost: ghosts)
         {
@@ -331,16 +407,20 @@ bool gameLoop()
             }
         }
 
-        checkCharacterCollision(pacman, ghosts, turns, direction);
+        checkCharacterCollision(pacman, ghosts, turns, direction, prop_lasting_time, fruit_lasting_time, prop_turns);
 
-	/*if(prop_lasting_time == 0)
+        if(prop_lasting_time == 0)
         {
-                game_map[prop_pos/10][prop_pos%10] = ' ';
+            game_map.vals[prop_pos_x][prop_pos_y] = ' ';
         }
-	if(prop_lasting_time == 0)
+        if(fruit_lasting_time == 0)
         {
-                 game_map[prop_pos/10][prop_pos%10] = ' ';
-        }*/
+            game_map.vals[fruit_pos_x][fruit_pos_y] = ' ';
+        }
+        if(prop_turns == 0)
+        {
+            special = "none";
+        }
 
 	refresh();
 

@@ -102,40 +102,45 @@ void Map::printMapElement(int x, int y, char element)
         case '0':
             mvprintw(x + 2, 2 * y + 4, "🟢");
             break;
-        /*
-	case '@':
+        case '@':
             mvprintw(x, 2 * y, "🧲");
-	    break;
-	case '$':
-	    mvprintw(x, 2 * y, "🪙");
-	    break;
-	case '*':
-	    mvprintw(x, 2 * y, "🧊");
-	    break;
-	case '^':
-	    mvprintw(x, 2 * y, "🛹");
-	    break;
-	case '!':
-	    mvprintw(x, 2 * y, "📜");
-	    break;
-	case '?':
-	    mvprintw(x, 2 * y, "❓");
-	    break;
-	case '1':
+            break;
+        case '$':
+            mvprintw(x, 2 * y, "💰");
+            break;
+        case '*':
+            mvprintw(x, 2 * y, "🧊");
+            break;
+        case '^':
+            mvprintw(x, 2 * y, "🛹");
+            break;
+        case '!':
+            mvprintw(x, 2 * y, "📜");
+            break;
+        case '?':
+            mvprintw(x, 2 * y, "❓");
+            break;
+        case '1':
             mvprintw(x, 2 * y, "🍒");
             break;
-	case '2':
+        case '2':
             mvprintw(x, 2 * y, "🍑");
             break;
-	case '3':
+        case '3':
             mvprintw(x, 2 * y, "🍉");
             break;
-	case '4':
+        case '4':
             mvprintw(x, 2 * y, "🍇");
             break;
+<<<<<<< HEAD
 	*/
 	default:
             mvprintw(x + 2, 2 * y + 4, "ㅤ");
+=======
+        default:
+            mvprintw(x, 2 * y, "ㅤ");
+            break;
+>>>>>>> added props
     }
 }
 /*
@@ -188,7 +193,7 @@ void printMenuElement(int x, string line)
 
 int Map::updateTile(int x, int y)
 {
-    /*int num;
+    int num;
     switch(vals[x][y])
     {
     	case '0':
@@ -219,21 +224,26 @@ int Map::updateTile(int x, int y)
 	case '1':
 	    score += 50;
 	    num = 9;
+        break;
 	case '2':
 	    score += 75;
 	    num = 9;
+        break;
 	case '3':
 	    score += 100;
 	    num = 9;
+        break;
 	case '4':
 	    score += 150;
 	    num = 9;
+        break;
 	default:
 	    num = 6;
-    }*/
-    //vals[x][y] = ' ';
-    //return num;
-    if (vals[x][y] == '0')
+        break;
+    }
+    vals[x][y] = ' ';
+    return num;
+    /*if (vals[x][y] == '0')
     {
         vals[x][y] = ' ';
         return 1;
@@ -245,7 +255,7 @@ int Map::updateTile(int x, int y)
         return 0;
     }
     
-    return 2;
+    return 2;*/
 }
 
 string getExecutablePath() // This solution to get the path of the execuatable is found at https://stackoverflow.com/questions/1528298/get-path-of-executable
