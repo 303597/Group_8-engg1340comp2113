@@ -16,7 +16,10 @@ bin/main.o: src/main.cpp src/tools.h src/characters.h src/game.h
 $(TARGET): bin/main.o bin/game.o bin/characters.o bin/tools.o
 	g++ $^ -o $(TARGET) -static $(FLAGS) -ltinfow
 
+all: bin/tools.o bin/characters.o bin/game.o bin/main.o $(TARGET)
+
+
 clean:
 	rm bin/tools.o bin/characters.o bin/game.o bin/main.o bin/pacman
 
-.PHONY: clean
+.PHONY: all clean

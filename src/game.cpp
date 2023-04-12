@@ -71,7 +71,7 @@ int welcomeLoop()
     
     while (!confirmed)
     {
-        start_menu.show(selected);
+        start_menu.showWelcome(selected);
         refresh();
         int ch = getch();
         switch (ch)
@@ -115,7 +115,7 @@ bool gameLoop()
     pacman.linkMap(&game_map);
     for (size_t i = 0; i < ghosts.size(); i++)
         ghosts[i].linkMap(&game_map);
-    game_menu.show();
+    game_menu.showInGame(score, pacman.lives);
     game_map.show();
 
     auto last_frame_time = chrono::high_resolution_clock::now(), this_frame_time = last_frame_time;
@@ -301,7 +301,7 @@ bool gameLoop()
         }
         if(turns == ghosts.size() * 15){
             turns = 0;
-	    pacman.eaten_ghosts = 0; // reset the number of eaten ghosts to zero for the next round
+	        pacman.eaten_ghosts = 0; // reset the number of eaten ghosts to zero for the next round
             for (Ghost &ghost: ghosts)
             {
                 ghost.in_counteratk_mode = false;
@@ -344,7 +344,7 @@ bool gameLoop()
 
 	refresh();
 
-        game_menu.show();
+        game_menu.showInGame(score, pacman.lives);
         game_map.show();
 
         refresh();

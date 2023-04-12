@@ -43,7 +43,8 @@ private:
     vector<string> vals;
 public:
     Menu(string filename);
-    void show(int selected = -1);
+    void showWelcome(int selected = -1);
+    void showInGame(int score, int lives);
 };
 
 //void printMenuElement(int x, string line);

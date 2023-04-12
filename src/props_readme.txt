@@ -1,6 +1,6 @@
 '@':🧲-- magnet
 '$':🪙-- double points
-'*':🧊-- froze the ghosts
+'*':🧊-- freeze the ghosts
 '^':🛹-- slow down the ghosts
 '!':📜-- go through walls
 '?':❓-- random point bonus(see fruits props below)

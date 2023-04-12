@@ -306,7 +306,7 @@ void checkCharacterCollision(PacMan &pacman, vector<Ghost> &ghosts, int &turns, 
 				direction = -2;
 				if (pacman.lives == 0)
 				{
-					mvprintw(12, 12, "%d", score);
+					//mvprintw(12, 12, "%d", score);
 					refresh();
 					nodelay(stdscr, false);
 					mvprintw(13, 12, "Press any key to quit.");

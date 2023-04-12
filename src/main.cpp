@@ -41,7 +41,6 @@ int main()
             break;
     }
 
-    getch();
     endwin();
 
     return 0;

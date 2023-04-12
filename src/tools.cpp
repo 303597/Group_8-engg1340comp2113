@@ -78,29 +78,29 @@ void Map::printMapElement(int x, int y, char element)
     switch (element)
     {
         case 'o':
-            mvprintw(x + 2, 2 * y + 2, "🟡");
+            mvprintw(x + 2, 2 * y + 4, "🟡");
             break;
         case '#':
-            mvprintw(x + 2, 2 * y + 2, "🟦");
+            mvprintw(x + 2, 2 * y + 4, "🟦");
             break;
         case '_':
-            mvprintw(x + 2, 2 * y + 2, "🟩");
+            mvprintw(x + 2, 2 * y + 4, "🟩");
             break;
         case '.':
-            mvprintw(x + 2, 2 * y + 2, "◽");
+            mvprintw(x + 2, 2 * y + 4, "◽");
             if(!fl)
             {
                 total_num++;
             }
             break;
         case 'E':
-            mvprintw(x + 2, 2 * y + 2, "👻");
+            mvprintw(x + 2, 2 * y + 4, "👻");
             break;
         case 'e':
-            mvprintw(x + 2, 2 * y + 2, "🥶");
+            mvprintw(x + 2, 2 * y + 4, "🥶");
             break;
         case '0':
-            mvprintw(x + 2, 2 * y + 2, "🟢");
+            mvprintw(x + 2, 2 * y + 4, "🟢");
             break;
         /*
 	case '@':
@@ -135,7 +135,7 @@ void Map::printMapElement(int x, int y, char element)
             break;
 	*/
 	default:
-            mvprintw(x, 2 * y, "ㅤ");
+            mvprintw(x + 2, 2 * y + 4, "ㅤ");
     }
 }
 /*
@@ -395,7 +395,7 @@ Menu::Menu(string filename)
     fin.close();
 }
 
-void Menu::show(int selected)
+void Menu::showWelcome(int selected)
 {
     int line_no = 0;
     for (string line: vals)
@@ -407,4 +407,18 @@ void Menu::show(int selected)
         mvprintw(line_no, 0, "%s", line.c_str());
         line_no++;
     }
+}
+
+void Menu::showInGame(int score, int lives)
+{
+    int line_no = 0;
+    attron(COLOR_PAIR(1));
+    for (string line: vals)
+    {
+        mvprintw(line_no, 0, "%s", line.c_str());
+        line_no++;
+    }
+    mvprintw(7, 94, "%5d", score);
+    mvprintw(9, 102, "%3d", lives);
+    //mvprintw(14, 100, "%5d", turns);
 }
