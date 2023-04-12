@@ -132,15 +132,9 @@ void Map::printMapElement(int x, int y, char element)
         case '4':
             mvprintw(x, 2 * y, "🍇");
             break;
-<<<<<<< HEAD
-	*/
-	default:
+	    default:
             mvprintw(x + 2, 2 * y + 4, "ㅤ");
-=======
-        default:
-            mvprintw(x, 2 * y, "ㅤ");
             break;
->>>>>>> added props
     }
 }
 /*
