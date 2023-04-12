@@ -69,6 +69,7 @@ void Map::show()
             printMapElement(ghost.x, ghost.y, 'e');
         else
             printMapElement(ghost.x, ghost.y, 'E');
+    fl = true;
     refresh();
 }
 
@@ -87,6 +88,10 @@ void Map::printMapElement(int x, int y, char element)
             break;
         case '.':
             mvprintw(x + 2, 2 * y + 2, "◽");
+            if(!fl)
+            {
+                total_num++;
+            }
             break;
         case 'E':
             mvprintw(x + 2, 2 * y + 2, "👻");
@@ -97,8 +102,40 @@ void Map::printMapElement(int x, int y, char element)
         case '0':
             mvprintw(x + 2, 2 * y + 2, "🟢");
             break;
-        default:
-            mvprintw(x + 2, 2 * y + 2, "ㅤ");
+        /*
+	case '@':
+            mvprintw(x, 2 * y, "🧲");
+	    break;
+	case '$':
+	    mvprintw(x, 2 * y, "🪙");
+	    break;
+	case '*':
+	    mvprintw(x, 2 * y, "🧊");
+	    break;
+	case '^':
+	    mvprintw(x, 2 * y, "🛹");
+	    break;
+	case '!':
+	    mvprintw(x, 2 * y, "📜");
+	    break;
+	case '?':
+	    mvprintw(x, 2 * y, "❓");
+	    break;
+	case '1':
+            mvprintw(x, 2 * y, "🍒");
+            break;
+	case '2':
+            mvprintw(x, 2 * y, "🍑");
+            break;
+	case '3':
+            mvprintw(x, 2 * y, "🍉");
+            break;
+	case '4':
+            mvprintw(x, 2 * y, "🍇");
+            break;
+	*/
+	default:
+            mvprintw(x, 2 * y, "ㅤ");
     }
 }
 /*
@@ -151,6 +188,51 @@ void printMenuElement(int x, string line)
 
 int Map::updateTile(int x, int y)
 {
+    /*int num;
+    switch(vals[x][y])
+    {
+    	case '0':
+	    num = 8;
+	    break;
+    	case '.':
+	    score += 5;
+	    num = 7;
+	    break;
+	case '@':
+	    num = 0;
+	    break;
+	case '$':
+	    num = 1;
+	    break;
+	case '*':
+	    num = 2;
+	    break;
+	case '^':
+	    num = 3;
+	    break;
+	case '!':
+	    num = 4;
+	    break;
+	case '?':
+	    num = 5;
+	    break;
+	case '1':
+	    score += 50;
+	    num = 9;
+	case '2':
+	    score += 75;
+	    num = 9;
+	case '3':
+	    score += 100;
+	    num = 9;
+	case '4':
+	    score += 150;
+	    num = 9;
+	default:
+	    num = 6;
+    }*/
+    //vals[x][y] = ' ';
+    //return num;
     if (vals[x][y] == '0')
     {
         vals[x][y] = ' ';
@@ -158,7 +240,7 @@ int Map::updateTile(int x, int y)
     }
     else if(vals[x][y] == '.')
     {
-        score += 2;
+        score += 5;
         vals[x][y] = ' ';
         return 0;
     }

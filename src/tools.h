@@ -33,6 +33,8 @@ public:
     void saveToFile(string filename);
     void readFromFile(string filename, PacMan &_pacman, vector<Ghost> &_ghosts);
     vector<string> vals;
+    int total_num = 0;
+    bool fl = false;
 };
 
 class Menu
