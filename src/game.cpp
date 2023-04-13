@@ -135,7 +135,7 @@ bool gameLoop()
     int dirx[4] = {-1, 1, 0, 0};//up down left right
     int diry[4] = {0, 0, -1, 1};
     
-    Map game_map = Map("/2_Monsters/map2.txt", pacman, ghosts);
+    Map game_map = Map("/bonus/map.txt", pacman, ghosts);
     pacman.linkMap(&game_map);
    
     game_map.vals[0][0] = '#';
@@ -177,7 +177,7 @@ bool gameLoop()
                         direction = 3;
                         break;
                 }
-            if(direction == -2){
+                if(direction == -2){
                 continue;
             }
             this_frame_time = chrono::high_resolution_clock::now();
