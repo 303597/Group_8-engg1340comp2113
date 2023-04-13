@@ -7,6 +7,7 @@
 
 using namespace std;
 
+//extern string username;
 extern int score;
 extern int dirx[]; //  = {0, 0, -1, 1}
 extern int diry[]; // = {-1, 1, 0, 0}// up, down, left, right
@@ -48,6 +49,8 @@ public:
 };
 
 //void printMenuElement(int x, string line);
+
+vector<pair<string, int>> getScoreRecords();
 
 string getExecutablePath();
 

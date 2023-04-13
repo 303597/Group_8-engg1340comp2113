@@ -3,6 +3,7 @@
 #include <ncurses.h>
 #include <vector>
 #include <string>
+#include <sstream>
 #include <fstream>
 #include <iostream>
 #include <filesystem>
@@ -434,7 +435,24 @@ void Menu::showInGame(int score, int lives)
         mvprintw(line_no, 0, "%s", line.c_str());
         line_no++;
     }
-    mvprintw(7, 94, "%5d", score);
-    mvprintw(9, 102, "%3d", lives);
+    mvprintw(19, 94, "%5d", score);
+    mvprintw(20, 94, "%5d", lives);
     //mvprintw(14, 100, "%5d", turns);
+}
+
+vector<pair<string, int>> getScoreRecords()
+{
+    ifstream fin(getExecutablePath() + "/../data/score_record.txt");
+    vector<pair<string, int>> histories;
+    
+    if (!fin.fail())
+    {
+        string history_username;
+        int history_score = 0;
+        while (fin >> history_username >> history_score)
+            histories.emplace_back(make_pair(history_username, history_score));
+		fin >> history_username >> history_score;
+	}
+    fin.close();
+    return histories;
 }

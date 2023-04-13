@@ -7,8 +7,6 @@
 #include <string>
 #include <ctime>
 
-bool start_game = true;
-
 void initialize()
 {
     setenv("TERMINFO", "/lib/terminfo", 1);
@@ -33,6 +31,9 @@ int main()
 
         if (operation == 0)
             gameLoop();
+        
+        if (operation == 1)
+            showTutorial();
 
         if (operation == 2)
             showHighScore();

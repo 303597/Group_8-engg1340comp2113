@@ -11,6 +11,8 @@ int welcomeLoop();
 
 bool gameLoop();
 
+void showTutorial();
+
 void showHighScore();
 
 #endif
