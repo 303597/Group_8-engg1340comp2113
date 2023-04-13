@@ -338,7 +338,7 @@ void checkCharacterCollision(PacMan &pacman, vector<Ghost> &ghosts, int &turns, 
 					turns = 0;
 				}
 				fruit_lasting_time = 0;
-				prop_lasting_time = 0;
+				prop_lasting_time = 20;
 				prop_turns = 0;
 				special = "none";
 				// player and all the ghosts reset
