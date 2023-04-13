@@ -43,7 +43,6 @@ void save()
 }
 
 bool check(int x,int y, vector<Ghost> &ghosts){
-    //mvprintw(19, 12, "HHHHHHHH");
     for (Ghost &ghost: ghosts)
     {
         if(x == ghost.start_x && y == ghost.start_y){
@@ -56,7 +55,6 @@ void generate_prop(Map &game_map, vector<Ghost> &ghosts, int &prop_lasting_time,
 {
 	char prop[6] = {'@', '$', '*', '^', '!', '?'};
     int num;
-    //mvprintw(14, 12, "HHHHHHH");
     if(fruit_lasting_time == 0)
     {
         num = rand() % 6; // generate random number from [0,5] 
@@ -135,7 +133,7 @@ bool gameLoop()
     int dirx[4] = {-1, 1, 0, 0};//up down left right
     int diry[4] = {0, 0, -1, 1};
     
-    Map game_map = Map("/bonus/map.txt", pacman, ghosts);
+    Map game_map = Map("/2_Monsters/map2.txt", pacman, ghosts);
     pacman.linkMap(&game_map);
    
     game_map.vals[0][0] = '#';
@@ -391,7 +389,7 @@ bool gameLoop()
         mvprintw(23, 104, "%d" ,turns);
         if(prop_lasting_time >= 10 * ghosts.size())
         {
-            mvprintw(24, 104, "%d", prop_lasting_time - 10 * ghosts.size());
+            mvprintw(24, 104, "%ld", prop_lasting_time - 10 * ghosts.size());
         }
         else if(prop_turns != 0)
         {
