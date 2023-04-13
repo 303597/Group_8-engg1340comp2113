@@ -222,7 +222,7 @@ bool gameLoop()
 		    {
 		        pacman.eaten_ghosts = 0;
 	    	}
-	        turns = 1; 
+	        turns = ghosts.size() * 15; 
 	        // reset count time and number of eaten ghosts to zero and count from start again
             for (Ghost &ghost: ghosts)
             {
@@ -391,8 +391,7 @@ bool gameLoop()
                 }
             }
         }
-        if(turns == ghosts.size() * 15){
-            turns = 0;
+        if(turns == 0){
 	        pacman.eaten_ghosts = 0; // reset the number of eaten ghosts to zero for the next round
             for (Ghost &ghost: ghosts)
             {
@@ -400,7 +399,7 @@ bool gameLoop()
             }
         }
         if(turns != 0){
-            turns++;
+            turns--;
         }
         if(prop_lasting_time != 0)
         {
@@ -414,6 +413,20 @@ bool gameLoop()
         {
             prop_turns--;
         }
+        mvprintw(23, 105, "%d" ,turns);
+        if(prop_lasting_time != 0)
+        {
+            mvprintw(24, 95, "%d", prop_lasting_time);
+        }
+        else if(prop_turns != 0)
+        {
+            mvprintw(24, 95, "%d", prop_turns);
+        }
+        else
+        {
+            mvprintw(24, 95, "%d", 0);
+        }
+        mvprintw(25, 95, "%d", fruit_lasting_time);
         checkCharacterCollision(pacman, ghosts, turns, direction, prop_lasting_time, fruit_lasting_time, prop_turns, special);
 
         for (Ghost &ghost: ghosts)
@@ -440,7 +453,9 @@ bool gameLoop()
             special = "none";
         }
 
-	refresh();
+        
+
+	    refresh();
 
         game_menu.showInGame(score, pacman.lives);
         game_map.show();
@@ -449,10 +464,10 @@ bool gameLoop()
         last_frame_time = this_frame_time;
         mvprintw(0, 0, "🟦"); // move cursor
         if (pacman.lives <= 0)
-	{
-	    save();
-            return false;
-	}
+        {
+            save();
+                return false;
+        }
     }
 }
 

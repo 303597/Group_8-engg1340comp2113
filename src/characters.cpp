@@ -345,5 +345,17 @@ void checkCharacterCollision(PacMan &pacman, vector<Ghost> &ghosts, int &turns, 
 			}
 		}
 	}
+	int fl = 0;
+	for(int i = 0; i < ghosts.size(); i++)
+	{
+		if(ghosts[i].in_counteratk_mode == true)
+		{
+			fl = 1;
+		}
+	}
+	if(fl == 0)
+	{
+		turns = 0;
+	}
 	// note: check counteratk mode, handle eat results
 }
