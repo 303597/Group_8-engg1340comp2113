@@ -186,7 +186,7 @@ void printMenuElement(int x, string line)
 }
 */
 
-int Map::updateTile(int x, int y, string special)
+int Map::updateTile(int x, int y, vector<Ghost> ghosts, string &special, int &prop_turns)
 {
     int num;
     switch(vals[x][y])
@@ -206,18 +206,28 @@ int Map::updateTile(int x, int y, string special)
 	        num = 7;
 	        break;
         case '@':
+            special = "magnet";
+            prop_turns = 10 * ghosts.size();
             num = 0;
             break;
         case '$':
+            special = "double_points";
+            prop_turns = 10 * ghosts.size();
             num = 1;
             break;
         case '*':
+            special = "frozen";
+            prop_turns = 6 * ghosts.size();
             num = 2;
             break;
         case '^':
+            special = "slow";
+            prop_turns = 8 * ghosts.size();
             num = 3;
             break;
         case '!':
+            special = "pass_bricks";
+            prop_turns = 14 * ghosts.size();
             num = 4;
             break;
         case '?':

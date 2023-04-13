@@ -255,7 +255,7 @@ void Ghost::move(int target_x, int target_y, double speed)
 			}// better chase the pac-man
 			else
 			{
-				poss[p] = 10 + sum; sum += 10;
+				poss[p] = 20 + sum; sum += 20;
 			}
 		}
 		else{
@@ -338,7 +338,7 @@ void checkCharacterCollision(PacMan &pacman, vector<Ghost> &ghosts, int &turns, 
 					turns = 0;
 				}
 				fruit_lasting_time = 0;
-				prop_lasting_time = 20;
+				prop_lasting_time = 10 * ghosts.size();
 				prop_turns = 0;
 				special = "none";
 				// player and all the ghosts reset
