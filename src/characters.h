@@ -24,7 +24,7 @@ class PacMan: public Character
 {
 public:
     using Character::Character;
-    void move(int direction);
+    void move(int direction, string special);
     int lives = 3;
     int eaten_ghosts = 0;
 };
@@ -39,6 +39,6 @@ public:
 };
 
 //void checkCharacterCollision(PacMan &pacman, vector<Ghost> &ghosts,int &turns, int &direction);
-void checkCharacterCollision(PacMan &pacman, vector<Ghost> &ghosts,int &turns, int &direction, int &prop_lasting_time, int &fruit_lasting_time, int &prop_turns); 
+void checkCharacterCollision(PacMan &pacman, vector<Ghost> &ghosts,int &turns, int &direction, int &prop_lasting_time, int &fruit_lasting_time, int &prop_turns, string &special); 
 
 #endif

@@ -19,7 +19,7 @@ void Character::linkMap(Map *_map)
 	map = _map;
 }
 
-void PacMan::move(int direction)
+void PacMan::move(int direction, string special)
 {
 	// note: check collision
 
@@ -46,6 +46,12 @@ void PacMan::move(int direction)
 		y_temp -= map->vals[x].size();
 	}
 	// deal with overflow;
+	if(special == "pass_bricks")
+	{
+		x = x_temp;
+		y = y_temp;
+		return;
+	}
 	if (map->vals[x_temp][y_temp] != '#')
 	{
 		x = x_temp;
@@ -284,7 +290,7 @@ void Ghost::move(int target_x, int target_y, double speed)
 	return;
 }
 
-void checkCharacterCollision(PacMan &pacman, vector<Ghost> &ghosts, int &turns, int &direction, int &prop_lasting_time, int &fruit_lasting_time, int &prop_turns)
+void checkCharacterCollision(PacMan &pacman, vector<Ghost> &ghosts, int &turns, int &direction, int &prop_lasting_time, int &fruit_lasting_time, int &prop_turns, string &special)
 {
 	for (int i = 0; i < ghosts.size(); ++i)
 	{
@@ -294,10 +300,18 @@ void checkCharacterCollision(PacMan &pacman, vector<Ghost> &ghosts, int &turns, 
 			if (ghosts[i].in_counteratk_mode)
 			{
 				pacman.eaten_ghosts++;
-				score += 50 * pacman.eaten_ghosts; // modify the extern score variable directly
+				if(special == "double_points")
+				{
+					score += 100 * pacman.eaten_ghosts;
+				}
+				else
+				{
+					score += 50 * pacman.eaten_ghosts; // modify the extern score variable directly
+				}
 				ghosts[i].x = ghosts[i].start_x;
 				ghosts[i].y = ghosts[i].start_y;
 				ghosts[i].in_counteratk_mode = false;
+				ghosts[i].speed -= 2;
 				// the eaten ghost reset to normal mode
 			}
 			else
@@ -320,11 +334,13 @@ void checkCharacterCollision(PacMan &pacman, vector<Ghost> &ghosts, int &turns, 
 					ghosts[j].x = ghosts[j].start_x;
 					ghosts[j].y = ghosts[j].start_y;
 					ghosts[j].in_counteratk_mode = false;
+					ghosts[j].speed -= 2;
 					turns = 0;
 				}
 				fruit_lasting_time = 0;
 				prop_lasting_time = 0;
 				prop_turns = 0;
+				special = "none";
 				// player and all the ghosts reset
 			}
 		}

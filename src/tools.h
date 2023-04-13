@@ -29,7 +29,7 @@ public:
     Map(string filename, PacMan &_pacman, vector<Ghost> &_ghosts);
     void show();
     bool isWall(int x, int y);
-    int updateTile(int x, int y); // return 0: no buff, 1: energizer
+    int updateTile(int x, int y, string special); // return 0: no buff, 1: energizer
     void saveToFile(string filename);
     void readFromFile(string filename, PacMan &_pacman, vector<Ghost> &_ghosts);
     vector<string> vals;

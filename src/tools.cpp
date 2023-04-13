@@ -103,34 +103,34 @@ void Map::printMapElement(int x, int y, char element)
             mvprintw(x + 2, 2 * y + 4, "🟢");
             break;
         case '@':
-            mvprintw(x, 2 * y, "🧲");
+            mvprintw(x + 2, 2 * y + 4, "🧲");
             break;
         case '$':
-            mvprintw(x, 2 * y, "💰");
+            mvprintw(x + 2, 2 * y + 4, "💰");
             break;
         case '*':
-            mvprintw(x, 2 * y, "🧊");
+            mvprintw(x + 2, 2 * y + 4, "🧊");
             break;
         case '^':
-            mvprintw(x, 2 * y, "🛹");
+            mvprintw(x + 2, 2 * y + 4, "🛹");
             break;
         case '!':
-            mvprintw(x, 2 * y, "📜");
+            mvprintw(x + 2, 2 * y + 4, "📜");
             break;
         case '?':
-            mvprintw(x, 2 * y, "❓");
+            mvprintw(x + 2, 2 * y + 4, "❓");
             break;
         case '1':
-            mvprintw(x, 2 * y, "🍒");
+            mvprintw(x + 2, 2 * y + 4, "🍒");
             break;
         case '2':
-            mvprintw(x, 2 * y, "🍑");
+            mvprintw(x + 2, 2 * y + 4, "🍑");
             break;
         case '3':
-            mvprintw(x, 2 * y, "🍉");
+            mvprintw(x + 2, 2 * y + 4, "🍉");
             break;
         case '4':
-            mvprintw(x, 2 * y, "🍇");
+            mvprintw(x + 2, 2 * y + 4, "🍇");
             break;
 	    default:
             mvprintw(x + 2, 2 * y + 4, "ㅤ");
@@ -185,55 +185,67 @@ void printMenuElement(int x, string line)
 }
 */
 
-int Map::updateTile(int x, int y)
+int Map::updateTile(int x, int y, string special)
 {
     int num;
     switch(vals[x][y])
     {
     	case '0':
-	    num = 8;
-	    break;
+	        num = 8;
+	        break;
     	case '.':
-	    score += 5;
-	    num = 7;
-	    break;
-	case '@':
-	    num = 0;
-	    break;
-	case '$':
-	    num = 1;
-	    break;
-	case '*':
-	    num = 2;
-	    break;
-	case '^':
-	    num = 3;
-	    break;
-	case '!':
-	    num = 4;
-	    break;
-	case '?':
-	    num = 5;
-	    break;
-	case '1':
-	    score += 50;
-	    num = 9;
-        break;
-	case '2':
-	    score += 75;
-	    num = 9;
-        break;
-	case '3':
-	    score += 100;
-	    num = 9;
-        break;
-	case '4':
-	    score += 150;
-	    num = 9;
-        break;
-	default:
-	    num = 6;
-        break;
+            if(special == "double_points")
+            {
+                score += 10;
+            }
+            else
+            {
+                score += 5;
+            }
+	        num = 7;
+	        break;
+        case '@':
+            num = 0;
+            break;
+        case '$':
+            num = 1;
+            break;
+        case '*':
+            num = 2;
+            break;
+        case '^':
+            num = 3;
+            break;
+        case '!':
+            num = 4;
+            break;
+        case '?':
+            num = 5;
+            break;
+        case '1':
+            score += 50;
+            num = 9;
+            break;
+        case '2':
+            score += 75;
+            num = 9;
+            break;
+        case '3':
+            score += 100;
+            num = 9;
+            break;
+        case '4':
+            score += 150;
+            num = 9;
+            break;
+        default:
+            num = 6;
+            break;
+    }
+    if(vals[x][y] == '#')
+    {
+        num = 6;
+        return num;
     }
     vals[x][y] = ' ';
     return num;
