@@ -413,20 +413,20 @@ bool gameLoop()
         {
             prop_turns--;
         }
-        mvprintw(23, 105, "%d" ,turns);
+        mvprintw(23, 104, "%d" ,turns);
         if(prop_lasting_time != 0)
         {
-            mvprintw(24, 95, "%d", prop_lasting_time);
+            mvprintw(24, 104, "%d", prop_lasting_time);
         }
         else if(prop_turns != 0)
         {
-            mvprintw(24, 95, "%d", prop_turns);
+            mvprintw(24, 104, "%d", prop_turns);
         }
         else
         {
-            mvprintw(24, 95, "%d", 0);
+            mvprintw(24, 104, "%d", 0);
         }
-        mvprintw(25, 95, "%d", fruit_lasting_time);
+        mvprintw(25, 104, "%d", fruit_lasting_time);
         checkCharacterCollision(pacman, ghosts, turns, direction, prop_lasting_time, fruit_lasting_time, prop_turns, special);
 
         for (Ghost &ghost: ghosts)
