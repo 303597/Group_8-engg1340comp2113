@@ -133,7 +133,20 @@ bool gameLoop()
     int dirx[4] = {-1, 1, 0, 0};//up down left right
     int diry[4] = {0, 0, -1, 1};
     
+    /*
     Map game_map = Map("/2_Monsters/map2.txt", pacman, ghosts);
+    */
+
+    //randomly choose a map to open
+    int x = 2 + rand() % (3);
+    int y = 1 + rand() % (3);
+    string filename;
+    string monster_no = to_string(x);
+    string map_no = to_string(y);
+    filename = "/" + monster_no + "_Monsters/map" + map_no + ".txt";
+	
+    Map game_map = Map(filename, pacman, ghosts);
+	
     pacman.linkMap(&game_map);
    
     game_map.vals[0][0] = '#';
