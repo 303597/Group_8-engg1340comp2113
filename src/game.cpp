@@ -140,30 +140,9 @@ bool gameLoop()
     //randomly choose a map to open
     int x = 2 + rand() % (3);
     int y = 1 + rand() % (3);
-
     string filename;
-
-    /*
-    //method1
-    stringstream stream1;
-    stream1 << x;
-    string monster_as_string;
-    stream1 >> monster_as_string;
-
-    filename += "/" + monster_as_string + "_Monsters/map";
-
-    stringstream stream2;
-    stream2 << y;
-    string map_as_string;
-    stream2 >> map_as_string;
-
-    filename += map_as_string + ".txt";
-    */
-
-    //method2
     string monster_no = to_string(x);
     string map_no = to_string(y);
-
     filename = "/" + monster_no + "_Monsters/map" + map_no + ".txt";
 	
     Map game_map = Map(filename, pacman, ghosts);
