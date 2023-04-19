@@ -21,7 +21,7 @@
 🟦                Tips                                                                                                🟦
 🟦                 1. Eat "◽" to obtain higher score. Eat all the "◽" to enter the next level.                        🟦
 🟦                 2. Monsters are chasing you, don't touch them!                                                     🟦
-🟦                 3. At the margen of the map, there will be magic doors. It will send you to another place.
+🟦                 3. At the margins of the map, there will be magic doors. They will send you to another place.
 🟦                 4. Special items have time limit.                                                             
 🟦                 5. Counterattack mode: Monsters become vulnerable and run away from you.                       
 🟦                 6.                                                                                        
