@@ -18,13 +18,15 @@ This is Group 8 of the course engg1340andcomp2113.
 2. Unique character design, each with its own personality.
 3. Diverse map design, increasing the fun and challenge of the game.
 4. Gradually increasing difficulty levels that require players to constantly improve their proficiency in this game.
+5. Abundant carefully-designed toolsets giving players refreshed game experience every time.
 
 ## Requirment Implementation
-1. Generation of random game sets or events
-2. Data structures for storing game status 
-3. Dynamic memory management 
-4. File input/output (e.g., for loading/saving game status) 
-5. Program codes in multiple files
+### 1. Generation of random game sets or events
+### 2. Data structures for storing game status 
+### 3. Dynamic memory management 
+### 4. File input/output
+File input and output are implemented in the game status storage. Game status is loaded by the readFromFile() and saved by the saveToFile() function under the Map class. All the information about the map coordinates and characters' status are stored in a specific file found by a get-path algorithm. When the player exits the game, data will be written to the file, and when restarting the game, previous data will be loaded from the file. Under the Map class, the coordinates of Pacman, ghosts, tools, and beans can be conveniently stored by simply saving the 2-dimensional vector of the map while characters' information is accessed via pointers.
+### 5. Program codes in multiple files
 
 ## Libraries
 
