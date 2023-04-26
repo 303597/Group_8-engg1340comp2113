@@ -28,7 +28,7 @@ The coordinates of the Pacman and ghosts are stored in the map's 2-D "vals" vect
 ### 4. File input/output
 File input and output are implemented in the game status storage. Game status is loaded by the readFromFile() and saved by the saveToFile() function under the Map class. All the information about the map coordinates and characters' status are stored in a specific file found by a get-path algorithm. When the player exits the game, data will be written to the file, and when restarting the game, previous data will be loaded from the file. Under the Map class, the coordinates of Pacman, ghosts, tools, and beans can be conveniently stored by simply saving the 2-dimensional vector of the map while characters' information is accessed via pointers.
 ### 5. Program codes in multiple files
-
+The game codes are split into different files sorted under different folders. The data folder contains a .txt file storing the records of players' scores. The map folder holds ten .txt files storing all the initial game maps. The ui folder stores all the designs of UI. The src folder contains C++ and header files storing the primary game code. Codes for character storage, game flow, and toolsets are separated. 
 ## Libraries
 
 ## Instructions
