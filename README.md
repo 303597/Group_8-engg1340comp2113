@@ -22,7 +22,8 @@ This is Group 8 of the course engg1340andcomp2113.
 
 ## Requirment Implementation
 ### 1. Generation of random game sets or events
-### 2. Data structures for storing game status 
+### 2. Data structures for storing game status
+The coordinates of the Pacman and ghosts are stored in the map's 2-D "vals" vector and updated by directly modifying the corresponding elements in the vector after every game loop. The parameters of the characters are stored in their classes, respectively. For example, the "Pacman" class stores variables including numbers of Pacman's lives and eaten ghosts.
 ### 3. Dynamic memory management 
 ### 4. File input/output
 File input and output are implemented in the game status storage. Game status is loaded by the readFromFile() and saved by the saveToFile() function under the Map class. All the information about the map coordinates and characters' status are stored in a specific file found by a get-path algorithm. When the player exits the game, data will be written to the file, and when restarting the game, previous data will be loaded from the file. Under the Map class, the coordinates of Pacman, ghosts, tools, and beans can be conveniently stored by simply saving the 2-dimensional vector of the map while characters' information is accessed via pointers.
