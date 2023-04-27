@@ -14,9 +14,9 @@ int welcomeLoop();
 
 void initializeGame();
 
-bool isMapCompleted(const string& filename);
+bool isMapCompleted(const string&);
 
-bool gameLoop(int level);
+bool gameLoop(int);
 
 void showTutorial();
 
