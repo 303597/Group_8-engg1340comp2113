@@ -52,7 +52,7 @@ void PacMan::move(int direction, string special)
 		y = y_temp;
 		return;
 	}
-	if (map->vals[x_temp][y_temp] != '#')
+	if (map->vals[x_temp][y_temp] != '#' && map->vals[x_temp][y_temp] != '_')
 	{
 		x = x_temp;
 		y = y_temp;
