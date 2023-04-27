@@ -69,16 +69,16 @@ void Ghost::move(int target_x, int target_y, double speed)
 		else{
 			x = x + 1; y = y;
 		}
-	}
-	/*else if(map->vals[x][y] == '_'){
-		if(x + 1 == start_x)
+	}//initializing
+	else if(map->vals[x][y] == '_'){
+		if(x + 1 == start_x){
 			x = x - 1; y = y;
 		}
 		else{
 			x = x + 1; y = y;
 		}
-	}//initializing*/
-	
+	}
+	return;
 	int co_x, co_y; // corresponding postions
 	int fl = 0, fx = 1, fy = 1;
 	int poss[4] = {1, 1, 1, 1}; // up down left right
