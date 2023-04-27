@@ -9,7 +9,7 @@ void save(); // declare the save function
 
 int welcomeLoop();
 
-bool gameLoop();
+bool gameLoop(int level);
 
 void showTutorial();
 

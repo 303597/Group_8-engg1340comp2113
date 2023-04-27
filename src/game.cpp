@@ -180,7 +180,7 @@ void initializeGame()
 {
     for (int level = 1; level <= 4; level++)
     {
-        
+
         bool game_result = gameLoop(level);
         if (!game_result)
             break;
@@ -215,9 +215,11 @@ bool gameLoop(int level)
     int x = 2 + rand() % (3);
     int y = 1 + rand() % (3);
     string filename;
-    string monster_no = to_string(x);
     string map_no = to_string(y);
-    filename = "/" + monster_no + "_Monsters/map" + map_no + ".txt";
+    if (level <= 3)
+        filename = "/" + to_string(level + 1) + "_Monsters/map" + map_no + ".txt";
+    else
+        filename = "/bonus/map.txt";
 	
     Map game_map = Map(filename, pacman, ghosts);
 	

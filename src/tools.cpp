@@ -202,6 +202,7 @@ int Map::updateTile(int x, int y, vector<Ghost> ghosts, string &special, int &pr
             else
             {
                 score += 5;
+                total_num--;
             }
 	        num = 7;
 	        break;
