@@ -134,7 +134,7 @@ void Map::printMapElement(int x, int y, char element)
             mvprintw(x + 2, 2 * y + 4, "🍇");
             break;
 	    default:
-            mvprintw(x + 2, 2 * y + 4, "ㅤ");
+            mvprintw(x + 2, 2 * y + 4, "  ");
             break;
     }
 }
