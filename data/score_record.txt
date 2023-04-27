@@ -1,5 +1,6 @@
 happysix 1110
 happysix 855
+astar 825
 Anonymous 615
 happysix 550
 astar 525
@@ -7,4 +8,3 @@ happysix 485
 happysix 425
 happysix 355
 j 100
-happysix 60

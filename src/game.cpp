@@ -199,11 +199,6 @@ bool gameLoop(int level)
     int turns = 0;
     double ghost_speed = 0.4;
     PacMan pacman; vector<Ghost> ghosts;
-    int prop_turns = 0, prop_lasting_time = 0, prop_type = -1, fruit_lasting_time;
-    int prop_pos_x = 0, prop_pos_y = 0, fruit_pos_x = 0, fruit_pos_y = 0;
-    int fruit_num;
-    char fruits[4] = {'1', '2', '3', '4'};
-    string special = "none";
     int dirx[4] = {-1, 1, 0, 0};//up down left right
     int diry[4] = {0, 0, -1, 1};
     
@@ -224,6 +219,15 @@ bool gameLoop(int level)
     Map game_map = Map(filename, pacman, ghosts);
 	
     pacman.linkMap(&game_map);
+
+    int prop_turns = 0, prop_lasting_time = 0, prop_type = -1, fruit_lasting_time = 0;
+    int prop_pos_x = game_map.vals.size() - 1;
+    int prop_pos_y = game_map.vals[prop_pos_x].size() - 1;
+    int fruit_pos_x = game_map.vals.size() - 1;
+    int fruit_pos_y = game_map.vals[fruit_pos_x].size() - 1;;
+    int fruit_num;
+    char fruits[4] = {'1', '2', '3', '4'};
+    string special = "none";
    
     game_map.vals[0][0] = '#';
     for (size_t i = 0; i < ghosts.size(); i++)
