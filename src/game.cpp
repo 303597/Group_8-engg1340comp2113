@@ -176,8 +176,19 @@ int pauseGame(Map& map)
     }
 }
 
+void initializeGame()
+{
+    for (int level = 1; level <= 4; level++)
+    {
+        
+        bool game_result = gameLoop(level);
+        if (!game_result)
+            break;
+    }
+}
+
 //void UI() //welcome, gamescore, end, user interfaces
-bool gameLoop()
+bool gameLoop(int level)
 {
     nodelay(stdscr, true); // don't wait until input
 
