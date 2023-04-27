@@ -254,7 +254,7 @@ int Map::updateTile(int x, int y, vector<Ghost> ghosts, string &special, int &pr
             num = 6;
             break;
     }
-    if(vals[x][y] == '#')
+    if(vals[x][y] == '#' || vals[x][y] == '_')
     {
         num = 6;
         return num;
