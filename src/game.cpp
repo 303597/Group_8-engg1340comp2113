@@ -180,11 +180,30 @@ void initializeGame()
 {
     for (int level = 1; level <= 4; level++)
     {
-
         bool game_result = gameLoop(level);
+        // if life == 0, game ends
         if (!game_result)
             break;
     }
+}
+
+//check whether a map is completed
+bool isMapCompleted(const string& filename) {
+    ifstream file(filename);
+    if (!file) {
+        cerr << "Error: could not open file " << filename << endl;
+        return false;
+    }
+    char ch = '.';
+    char c;
+    while (file >> noskipws >> c) {
+        if (c == ch) {
+            file.close();
+            return true;
+        }
+    }
+    file.close();
+    return false;
 }
 
 //void UI() //welcome, gamescore, end, user interfaces
@@ -206,16 +225,20 @@ bool gameLoop(int level)
     Map game_map = Map("/2_Monsters/map2.txt", pacman, ghosts);
     */
 
+   /*
     //randomly choose a map to open
     int x = 2 + rand() % (3);
-    int y = 1 + rand() % (3);
+   */
+
+    // randomly choose a map to open in a particular level
+    int y = 1 + rand() % (3); 
+    string map_no = to_string(y); 
     string filename;
-    string map_no = to_string(y);
     if (level <= 3)
         filename = "/" + to_string(level + 1) + "_Monsters/map" + map_no + ".txt";
     else
         filename = "/bonus/map.txt";
-	
+        
     Map game_map = Map(filename, pacman, ghosts);
 	
     pacman.linkMap(&game_map);
@@ -505,6 +528,14 @@ bool gameLoop(int level)
         {
             save();
                 return false;
+        }
+	else
+        {
+            bool result = isMapCompleted(filename);
+            if (result)
+            {
+                return true;
+            }
         }
     }
 }
