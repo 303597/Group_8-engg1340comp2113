@@ -32,7 +32,7 @@ int main()
         if (operation == 0);
             // Not implemented
         if (operation == 1)
-            gameLoop(1);
+            initializeGame();
         
         if (operation == 2)
             showTutorial();
