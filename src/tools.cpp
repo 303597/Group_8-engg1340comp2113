@@ -298,6 +298,8 @@ void Map::saveToFile(string filename)
     // pacman
     fout << "startx " << pacman->start_x << endl;
     fout << "starty " << pacman->start_y << endl;
+    fout << "x " << pacman->x << endl;
+    fout << "y " << pacman->y << endl;
     fout << "lives " << pacman->lives << endl;
     fout << "eatenghosts " << pacman->eaten_ghosts << endl;
 
@@ -307,6 +309,8 @@ void Map::saveToFile(string filename)
     {
         fout << "startx " << (*ghosts)[i].start_x << endl;
         fout << "starty " << (*ghosts)[i].start_y << endl;
+	fout << "x " << (*ghosts)[i].x << endl;
+	fout << "y " << (*ghosts)[i].x << endl;
     }
 
     // map
@@ -349,6 +353,10 @@ void Map::readFromFile(string filename, PacMan &_pacman, vector<Ghost> &_ghosts)
     getline(fin,line);
     pacman_start_y = read_line(line);
     _pacman = PacMan(pacman_start_x, pacman_start_y);
+    getline(fin,line);
+    pacman->x = read_line(line);
+    getline(fin,line);
+    pacman->y = read_line(line);
 
     getline(fin,line);
     _pacman.lives = read_line(line);
@@ -366,7 +374,11 @@ void Map::readFromFile(string filename, PacMan &_pacman, vector<Ghost> &_ghosts)
         getline(fin,line);
         ghost_start_y = read_line(line);
         _ghosts.emplace_back(Ghost(ghost_start_x, ghost_start_y));
-    }
+	getline(fin,line);
+        (*ghosts)[i].x = read_line(line);
+        getline(fin,line);
+        (*ghosts)[i].y = read_line(line);
+	}
 
     // vals
     while (getline(fin,line))
