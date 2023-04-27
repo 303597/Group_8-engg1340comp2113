@@ -191,7 +191,7 @@ void initializeGame()
 bool isMapCompleted(const string& filename) {
     ifstream file(filename);
     if (!file) {
-        cerr << "Error: could not open file " << filename << endl;
+        // cerr << "Error: could not open file " << filename << endl;
         return false;
     }
     char ch = '.';
