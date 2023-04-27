@@ -3,6 +3,7 @@ This is Group 8 of the course engg1340andcomp2113.
 
 
 ## Contributors
+Cao Nuanyu, Liu Yihan, Wu Haoyuan, Wu Lixin, Yang Liuqing
 
 ## Description
    "Pac-Man+" is a game created by imitating the classic game Pac-Man. In this game, players take on the role of the titular character, a yellow circle that moves through a maze while eating small cookies, large cookies, and fruits to score points and progress to the next level. Along the way, they must avoid being caught by  ghosts that continually chase after them, losing a life if caught. The game ends when all lives are lost. Difficulty increases as levels progress, with faster and more numerous ghosts.
@@ -22,6 +23,7 @@ This is Group 8 of the course engg1340andcomp2113.
 
 ## Requirment Implementation
 ### 1. Generation of random game sets or events
+The map of the maze at each level is random. The bonus tools are randomly generated and appear in random coordinates on the maze. The movements of the ghosts are also random in the directions towards the player.
 ### 2. Data structures for storing game status
 The coordinates of the Pacman and ghosts are stored in the map's 2-D "vals" vector and updated by directly modifying the corresponding elements in the vector after every game loop. The parameters of the characters are stored in their classes, respectively. For example, the "Pacman" class stores variables including numbers of Pacman's lives and eaten ghosts.
 ### 3. Dynamic memory management 
