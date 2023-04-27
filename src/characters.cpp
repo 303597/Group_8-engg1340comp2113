@@ -345,7 +345,7 @@ void checkCharacterCollision(PacMan &pacman, vector<Ghost> &ghosts, int &turns, 
 					ghosts[j].x = ghosts[j].start_x;
 					ghosts[j].y = ghosts[j].start_y;
 					ghosts[j].in_counteratk_mode = false;
-					ghosts[j].speed -= 2;
+					ghosts[j].speed -= 5;
 					turns = 0;
 				}
 				fruit_lasting_time = 0;
