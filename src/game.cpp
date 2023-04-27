@@ -2,7 +2,7 @@
 #include <string>
 #include <vector>
 #include <iostream>
-#include <ncurses.h>
+#include <cursesw.h>
 #include <filesystem>
 #include "tools.h"
 #include "characters.h"
@@ -51,6 +51,7 @@ bool check(int x,int y, vector<Ghost> &ghosts){
     }
     return false;
 }
+
 void generate_prop(Map &game_map, vector<Ghost> &ghosts, int &prop_lasting_time, int &prop_pos_x, int &prop_pos_y, int fruit_lasting_time)
 {
 	char prop[6] = {'@', '$', '*', '^', '!', '?'};
@@ -85,7 +86,7 @@ int welcomeLoop()
 {
     cbreak();
     
-    int selected = 0, line_no = 0;
+    int selected = 1, line_no = 0;
     bool confirmed = false;
     Menu start_menu("start_menu.txt");
     
@@ -111,6 +112,68 @@ int welcomeLoop()
         }
     }
     return selected;
+}
+
+int pauseLoop()
+{
+    int selected = 1, line_no = 0;
+    bool confirmed = false;
+    Menu start_menu("pause.txt");
+    
+    while (!confirmed)
+    {
+        start_menu.showWelcome(selected);
+        refresh();
+        int ch = getch();
+        switch (ch)
+        {
+            case 'w':
+            case KEY_UP:
+                selected = max(1, selected - 1);
+                break;
+            case 's':
+            case KEY_DOWN:
+                selected = min(4, selected + 1);
+                break;
+            case ' ':
+            case '\n':
+                confirmed = true;
+                break;
+            case 'p':
+                selected = 1;
+                confirmed = true;
+                break;
+        }
+    }
+    return selected;
+}
+
+int pauseGame(Map& map)
+{
+    nodelay(stdscr, false);
+    map.saveToFile("temp.txt");
+    while (true)
+    {
+        int operation = pauseLoop();
+
+        if (operation == 1)
+        {
+            nodelay(stdscr, true);
+            return 0;
+        }
+        
+        if (operation == 2)
+            showTutorial();
+
+        if (operation == 3)
+            showHighScore();
+        
+        if (operation == 4)
+        {
+            nodelay(stdscr, true);
+            return 1;
+        }
+    }
 }
 
 //void UI() //welcome, gamescore, end, user interfaces
@@ -188,9 +251,8 @@ bool gameLoop()
                         direction = 3;
                         break;
                 }
-                if(direction == -2){
-                continue;
-            }
+                if(direction == -2)
+                    continue;
             this_frame_time = chrono::high_resolution_clock::now();
         }
         switch (operation)
@@ -210,6 +272,11 @@ bool gameLoop()
             case 'd':
             case KEY_RIGHT:
                 direction = 3;
+                break;
+            case 'p':
+                int result = pauseGame(game_map);
+                if (result == 1)
+                    return false;
                 break;
         }
         pacman.move(direction, special);
@@ -428,6 +495,7 @@ bool gameLoop()
 void showTutorial()
 {
     cbreak();
+    nodelay(stdscr, false);
     
     ifstream fin(getExecutablePath() + "/../ui/tutorial.txt");
     if (fin.fail())
@@ -447,6 +515,7 @@ void showTutorial()
 void showHighScore()
 {
     cbreak();
+    nodelay(stdscr, false);
     
     ifstream fin(getExecutablePath() + "/../ui/high_scores.txt");
     if (fin.fail())

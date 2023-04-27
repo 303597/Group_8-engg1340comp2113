@@ -1,6 +1,6 @@
 #include "tools.h"
 #include "characters.h"
-#include <ncurses.h>
+#include <cursesw.h>
 #include <vector>
 #include <string>
 #include <sstream>
@@ -285,7 +285,7 @@ string getExecutablePath() // This solution to get the path of the execuatable i
 void Map::saveToFile(string filename)
 {
     ofstream fout;
-    fout.open(filename.c_str());
+    fout.open(getExecutablePath() + "/../data/" + filename);
     if (fout.fail())
     {
         cout << "Error in saving records." << endl;

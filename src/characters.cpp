@@ -6,7 +6,7 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
-#include <ncurses.h>
+#include <cursesw.h>
 
 Character::Character(int _start_x, int _start_y)
 {

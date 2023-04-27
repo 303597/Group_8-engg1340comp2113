@@ -2,7 +2,7 @@
 #include "game.h"
 #include "characters.h"
 #include <locale.h>
-#include <ncurses.h>
+#include <cursesw.h>
 #include <filesystem>
 #include <string>
 #include <ctime>
@@ -29,13 +29,15 @@ int main()
     {
         int operation = welcomeLoop();
 
-        if (operation == 0)
+        if (operation == 0);
+            // Not implemented
+        if (operation == 1)
             gameLoop();
         
-        if (operation == 1)
+        if (operation == 2)
             showTutorial();
 
-        if (operation == 2)
+        if (operation == 3)
             showHighScore();
         
         if (operation == 4)
