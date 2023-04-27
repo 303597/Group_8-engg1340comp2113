@@ -14,7 +14,7 @@ This is Group 8 of the course engg1340andcomp2113.
 4. There are several warp tunnels in the maze. The player can move from one warp tunnel to the other, quickly moving to different parts of the maze.
 
 ## Key Features
-1. Simple and easy-to-learn game rules that make it easy for everyone to get addicted.
+1. Simple and easy-to-learn game rules that make it easy for everyone to get started.
 2. Unique character design, each with its own personality.
 3. Diverse map design, increasing the fun and challenge of the game.
 4. Gradually increasing difficulty levels that require players to constantly improve their proficiency in this game.
