@@ -322,7 +322,7 @@ void checkCharacterCollision(PacMan &pacman, vector<Ghost> &ghosts, int &turns, 
 				ghosts[i].x = ghosts[i].start_x;
 				ghosts[i].y = ghosts[i].start_y;
 				ghosts[i].in_counteratk_mode = false;
-				ghosts[i].speed -= 2;
+				ghosts[i].speed -= 5;
 				// the eaten ghost reset to normal mode
 			}
 			else
