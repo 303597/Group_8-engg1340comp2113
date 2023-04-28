@@ -26,13 +26,13 @@ private:
     void printMapElement(int x, int y, char element);
 
 public:
-    //Map(vector<string> _vals, PacMan* _pacman, vector<Ghost*> ghosts);
-    Map(string filename, PacMan &_pacman, vector<Ghost> &_ghosts);
+    //Map(vector<string> _vals, PacMan &_pacman, vector<Ghost> &ghosts);
+    Map(string filename, PacMan &_pacman, vector<Ghost> &_ghosts, bool from_saved_data = false);
     void show();
     bool isWall(int x, int y);
     int updateTile(int x, int y, vector<Ghost> ghosts, string &special, int &prop_turns); // return 0: no buff, 1: energizer
     void saveToFile(string filename);
-    void readFromFile(string filename, PacMan &_pacman, vector<Ghost> &_ghosts);
+    //static Map readFromFile(string filename, PacMan &_pacman, vector<Ghost> &_ghosts);
     vector<string> vals;
     int total_num = 0;
     bool fl = false;
@@ -51,6 +51,10 @@ public:
 //void printMenuElement(int x, string line);
 
 vector<pair<string, int>> getScoreRecords();
+
+int read_line(string line);
+
+void clearSavedData(string filename);
 
 string getExecutablePath();
 

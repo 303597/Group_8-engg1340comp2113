@@ -9,14 +9,70 @@
 #include <filesystem>
 using namespace std;
 
-Map::Map(string filename, PacMan &_pacman, vector<Ghost> &_ghosts) // _pacman: passed by reference  pacman: belongs to Map
+Map::Map(string filename, PacMan &_pacman, vector<Ghost> &_ghosts, bool from_saved_data) // _pacman: passed by reference  pacman: belongs to Map
 {
-    ifstream fin(getExecutablePath() + "/../map/" + filename);
+    string path;
+    if (from_saved_data)
+        path = getExecutablePath() + "/../data/" + filename;
+    else
+        path = getExecutablePath() + "/../map/" + filename;
+    ifstream fin(path);
     if (fin.fail())
     {
         cout << "Failed to open file: " << filename << endl;
         return;
     }
+
+    if (from_saved_data)
+    {
+        string line;
+
+        getline(fin,line);
+        score = read_line(line);
+
+        // _pacman
+        int pacman_start_x, pacman_start_y;
+        getline(fin,line);
+        pacman_start_x = read_line(line);
+        getline(fin,line);
+        pacman_start_y = read_line(line);
+        _pacman = PacMan(pacman_start_x, pacman_start_y);
+        getline(fin,line);
+        _pacman.x = read_line(line); // Notice
+        getline(fin,line);
+        _pacman.y = read_line(line);
+
+        getline(fin,line);
+        _pacman.lives = read_line(line);
+        getline(fin,line);
+        _pacman.eaten_ghosts = read_line(line);
+
+        pacman = &_pacman; // Notice
+
+        // _ghosts
+        getline(fin,line);
+        int ghost_number = read_line(line);
+        for (int i=0; i<ghost_number; ++i)
+        {
+            int ghost_start_x, ghost_start_y;
+            getline(fin,line);
+            ghost_start_x = read_line(line);
+            getline(fin,line);
+            ghost_start_y = read_line(line);
+            _ghosts.emplace_back(Ghost(ghost_start_x, ghost_start_y));
+            getline(fin,line);
+            _ghosts.back().x = read_line(line);
+            getline(fin,line);
+            _ghosts.back().y = read_line(line);
+        }
+        ghosts = &_ghosts;
+
+        // vals
+        while (getline(fin,line))
+            vals.emplace_back(line);
+        return;
+    }
+
     string str;
     while (getline(fin, str))
         vals.emplace_back(str);
@@ -309,8 +365,8 @@ void Map::saveToFile(string filename)
     {
         fout << "startx " << (*ghosts)[i].start_x << endl;
         fout << "starty " << (*ghosts)[i].start_y << endl;
-	fout << "x " << (*ghosts)[i].x << endl;
-	fout << "y " << (*ghosts)[i].x << endl;
+	    fout << "x " << (*ghosts)[i].x << endl;
+	    fout << "y " << (*ghosts)[i].y << endl;
     }
 
     // map
@@ -331,7 +387,14 @@ int read_line(string line)
     return value;
 }
 
-void Map::readFromFile(string filename, PacMan &_pacman, vector<Ghost> &_ghosts)
+void clearSavedData(string filename)
+{
+    if (!filesystem::remove(getExecutablePath() + "/../data/" + filename))
+        cout << "Error deleting save file" << endl;
+}
+
+/*
+Map Map::readFromFile(string filename, PacMan& _pacman, vector<Ghost>& _ghosts)
 {
     ifstream fin;
     fin.open(filename.c_str());
@@ -341,88 +404,14 @@ void Map::readFromFile(string filename, PacMan &_pacman, vector<Ghost> &_ghosts)
         return;
     }
 
-    string line;
-
-    getline(fin,line);
-    score = read_line(line);
-
-    // _pacman
-    int pacman_start_x, pacman_start_y;
-    getline(fin,line);
-    pacman_start_x = read_line(line);
-    getline(fin,line);
-    pacman_start_y = read_line(line);
-    _pacman = PacMan(pacman_start_x, pacman_start_y);
-    getline(fin,line);
-    pacman->x = read_line(line);
-    getline(fin,line);
-    pacman->y = read_line(line);
-
-    getline(fin,line);
-    _pacman.lives = read_line(line);
-    getline(fin,line);
-    _pacman.eaten_ghosts = read_line(line);
-
-    // _ghosts
-    getline(fin,line);
-    int ghost_number = read_line(line);
-    for (int i=0; i<ghost_number; ++i)
-    {
-        int ghost_start_x, ghost_start_y;
-        getline(fin,line);
-        ghost_start_x = read_line(line);
-        getline(fin,line);
-        ghost_start_y = read_line(line);
-        _ghosts.emplace_back(Ghost(ghost_start_x, ghost_start_y));
-	getline(fin,line);
-        (*ghosts)[i].x = read_line(line);
-        getline(fin,line);
-        (*ghosts)[i].y = read_line(line);
-	}
-
-    // vals
-    while (getline(fin,line))
-        vals.emplace_back(line);
+    
 
     fin.close();
 
-    // read vals
-    int pacman_count = 0, ghost_count = 0;
-    for (size_t i = 0; i < vals.size(); i++)
-        for (size_t j = 0; j < vals[i].length(); j++)
-        {
-            if (vals[i][j] == 'o')
-            {
-                pacman_count++;
-                if (pacman_count != 1)
-                {
-                    cout << "ERROR: Map includes more than 1 pacman." << endl;
-                    return;
-                }
-                _pacman.x = i;
-                _pacman.y = j;
-                pacman = &_pacman;
-                vals[i][j] = ' ';
-            }
-            if (vals[i][j] == 'E' || vals[i][j] == 'e')
-            {
-                _ghosts[ghost_count].x = i;
-                _ghosts[ghost_count].y = j;
-                if (vals[i][j] == 'E')
-                    _ghosts[ghost_count].in_counteratk_mode = false;
-                else
-                    _ghosts[ghost_count].in_counteratk_mode = true;
-                ghost_count++;
-                vals[i][j] = ' ';
-            }
-        }
-    ghosts = &_ghosts;
-
     if (pacman_count < 1)
         cout << "ERROR: Map does not include pacman." << endl;
-
-    return;
 }
+*/
 
 Menu::Menu(string filename)
 {

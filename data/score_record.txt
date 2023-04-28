@@ -1,3 +1,5 @@
+happysix 1195
+happysix 1180
 happysix 1110
 happysix 855
 astar 825
@@ -6,5 +8,3 @@ happysix 550
 astar 525
 happysix 485
 happysix 425
-happysix 355
-j 100

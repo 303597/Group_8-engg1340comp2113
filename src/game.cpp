@@ -22,7 +22,7 @@ int score = 0; // initialize score to be zero
 //void save() //high score or map
 void save()
 {
-	bool need_update = false;
+    bool need_update = false;
     string username;
     vector<pair<string, int>> histories = getScoreRecords();
     const char *res = getenv("USER");
@@ -30,16 +30,16 @@ void save()
         username = "Anonymous";
     else
         username = res;
-	
+
     histories.emplace_back(make_pair(username, score));
     sort(histories.begin(), histories.end(), [](pair<string, int> x, pair<string, int> y) { return x.second > y.second; } );
 	// update the score record
     ofstream fout(getExecutablePath() + "/../data/score_record.txt");
     for (int i = 0; i < min((size_t)10, histories.size()); i++)
         fout << histories[i].first << " " << histories[i].second << endl;
-    fout.close();     
-	
-	score = 0; // reset score to zero after saving it
+    fout.close();
+
+    score = 0; // reset score to zero after saving it
 }
 
 bool check(int x,int y, vector<Ghost> &ghosts){
@@ -161,13 +161,13 @@ int pauseGame(Map& map)
             nodelay(stdscr, true);
             return 0;
         }
-        
+
         if (operation == 2)
             showTutorial();
 
         if (operation == 3)
             showHighScore();
-        
+
         if (operation == 4)
         {
             nodelay(stdscr, true);
@@ -176,18 +176,50 @@ int pauseGame(Map& map)
     }
 }
 
-void initializeGame()
+void initializeGame(string filename)
 {
     for (int level = 1; level <= 4; level++)
     {
-        bool game_result = gameLoop(level);
+        nodelay(stdscr, true); // don't wait until input
+
+        PacMan pacman; vector<Ghost> ghosts;
+        bool from_saved_data = true;
+        if (filename == "")
+        {
+            int y = 1 + rand() % (3); 
+            string map_no = to_string(y); 
+            if (level <= 3)
+                filename = "/" + to_string(level + 1) + "_Monsters/map" + map_no + ".txt";
+            else
+                filename = "/bonus/map.txt";
+            from_saved_data = false;
+        }
+        Map game_map = Map(filename, pacman, ghosts, from_saved_data);
+            
+            /*
+            Map game_map = Map("/2_Monsters/map2.txt", pacman, ghosts);
+            */
+
+            /*
+                //randomly choose a map to open
+                int x = 2 + rand() % (3);
+            */
+
+            // randomly choose a map to open in a particular level
+            
+        pacman.linkMap(&game_map);
+        int game_result = gameLoop(level, game_map, pacman, ghosts);
         // if life == 0, game ends
-        if (!game_result)
+        if (from_saved_data && (game_result == 0 || game_result == 1))
+            clearSavedData(filename);
+        if (game_result == 1 || game_result == 2)
             break;
+        from_saved_data = false;
     }
 }
 
 //check whether a map is completed
+/*
 bool isMapCompleted(const string& filename) {
     ifstream file(filename);
     if (!file) {
@@ -205,43 +237,16 @@ bool isMapCompleted(const string& filename) {
     file.close();
     return false;
 }
+*/
 
 //void UI() //welcome, gamescore, end, user interfaces
-bool gameLoop(int level)
+int gameLoop(int level, Map &game_map, PacMan &pacman, vector<Ghost> &ghosts)
 {
-    nodelay(stdscr, true); // don't wait until input
-
-    //int score = 0;
-    Menu game_menu("in_game.txt");
-
+    int dirx[4] = {-1, 1, 0, 0};//up down left right
+    int diry[4] = {0, 0, -1, 1};
     bool in_counteratk_mode = false;
     int turns = 0;
     double ghost_speed = 0.4;
-    PacMan pacman; vector<Ghost> ghosts;
-    int dirx[4] = {-1, 1, 0, 0};//up down left right
-    int diry[4] = {0, 0, -1, 1};
-    
-    /*
-    Map game_map = Map("/2_Monsters/map2.txt", pacman, ghosts);
-    */
-
-   /*
-    //randomly choose a map to open
-    int x = 2 + rand() % (3);
-   */
-
-    // randomly choose a map to open in a particular level
-    int y = 1 + rand() % (3); 
-    string map_no = to_string(y); 
-    string filename;
-    if (level <= 3)
-        filename = "/" + to_string(level + 1) + "_Monsters/map" + map_no + ".txt";
-    else
-        filename = "/bonus/map.txt";
-        
-    Map game_map = Map(filename, pacman, ghosts);
-	
-    pacman.linkMap(&game_map);
 
     int prop_turns = 0, prop_lasting_time = 0, prop_type = -1, fruit_lasting_time = 0;
     int prop_pos_x = game_map.vals.size() - 1;
@@ -252,6 +257,7 @@ bool gameLoop(int level)
     char fruits[4] = {'1', '2', '3', '4'};
     string special = "none";
    
+    Menu game_menu("in_game.txt");
     game_map.vals[0][0] = '#';
     for (size_t i = 0; i < ghosts.size(); i++)
         ghosts[i].linkMap(&game_map);
@@ -316,7 +322,7 @@ bool gameLoop(int level)
             case 'p':
                 int result = pauseGame(game_map);
                 if (result == 1)
-                    return false;
+                    return 2;
                 break;
         }
         pacman.move(direction, special);
@@ -527,15 +533,17 @@ bool gameLoop(int level)
         if (pacman.lives <= 0)
         {
             save();
-                return false;
+            return 1;
         }
 	else
         {
+            /*
             bool result = isMapCompleted(filename);
             if (result)
             {
                 return true;
             }
+            */
         }
     }
 }

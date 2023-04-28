@@ -29,8 +29,9 @@ int main()
     {
         int operation = welcomeLoop();
 
-        if (operation == 0);
-            // Not implemented
+        if (operation == 0)
+            initializeGame("temp.txt");
+
         if (operation == 1)
             initializeGame();
         

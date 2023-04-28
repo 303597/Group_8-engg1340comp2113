@@ -12,11 +12,11 @@ void save(); // declare the save function
 
 int welcomeLoop();
 
-void initializeGame();
+void initializeGame(string filename = "");
 
-bool isMapCompleted(const string&);
+//bool isMapCompleted(const string&);
 
-bool gameLoop(int);
+int gameLoop(int level, Map &game_map, PacMan &pacman, vector<Ghost> &ghosts);
 
 void showTutorial();
 
