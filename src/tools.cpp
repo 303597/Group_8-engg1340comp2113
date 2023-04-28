@@ -64,6 +64,8 @@ Map::Map(string filename, PacMan &_pacman, vector<Ghost> &_ghosts, bool from_sav
             _ghosts.back().x = read_line(line);
             getline(fin,line);
             _ghosts.back().y = read_line(line);
+	    getline(fin,line);
+	    _ghosts.back().speed = read_line(line);
         }
         ghosts = &_ghosts;
 
@@ -365,8 +367,9 @@ void Map::saveToFile(string filename)
     {
         fout << "startx " << (*ghosts)[i].start_x << endl;
         fout << "starty " << (*ghosts)[i].start_y << endl;
-	    fout << "x " << (*ghosts)[i].x << endl;
-	    fout << "y " << (*ghosts)[i].y << endl;
+	fout << "x " << (*ghosts)[i].x << endl;
+        fout << "y " << (*ghosts)[i].y << endl;
+	fout << "speed " << (*ghosts)[i].speed << endl;
     }
 
     // map
