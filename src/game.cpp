@@ -125,6 +125,106 @@ void initializeGame(string filename)
     }
 }
 
+
+Game::Game(string filename)
+{
+    string path;
+    path = getExecutablePath() + "/../data/" + filename;
+
+    ifstream fin(path);
+    if (fin.fail())
+    {
+        cout << "Failed to open file: " << filename << endl;
+        return;
+    }
+
+    string line;
+
+    getline(fin,line);
+    level = read_line<int>(line);
+    getline(fin,line);
+    score = read_line<int>(line);
+    getline(fin,line);
+    in_counteratk_mode = read_line<bool>(line);
+    getline(fin,line);
+    turns = read_line<int>(line);
+    getline(fin,line);
+    ghost_speed = read_line<int>(line);
+
+    
+    // _pacman
+    getline(fin,line);
+    int pacman_start_x = read_line<int>(line);
+    getline(fin,line);
+    int pacman_start_y = read_line<int>(line);
+    
+    pacman = PacMan(pacman_start_x,pacman_start_y);
+    
+    getline(fin,line);
+    pacman->x = read_line<int>(line);
+    getline(fin,line);
+    pacman->y = read_line<int>(line);
+    getline(fin,line);
+    pacman->lives = read_line<int>(line);
+    getline(fin,line);
+    pacman->eaten_ghosts = read_line<int>(line);
+
+    
+    // _ghosts
+    getline(fin,line);
+    int ghost_number = read_line<int>(line);
+    for (int i=0; i<ghost_number; ++i)
+    {
+        getline(fin,line);
+        int ghost_start_x = read_line<int>(line);
+        getline(fin,line);
+        int ghost_start_y = read_line<int>(line);
+        
+        (*ghosts).emplace_back(Ghost(ghost_start_x,ghost_start_y));
+        
+        getline(fin,line);
+        (*ghosts).back().x = read_line<int>(line);
+        getline(fin,line);
+        (*ghosts).back().y = read_line<int>(line);
+        getline(fin,line);
+        (*ghosts).back().speed = read_line<double>(line);
+        getline(fin,line);
+        (*ghosts).back().in_counteratk_mode = read_line<bool>(line);
+    }
+    
+    
+    // vals
+    while (getline(fin,line))
+        game_map->vals.emplace_back(line);
+       
+
+    // tools
+    getline(fin,line);
+    prop_type = read_line<int>(line);
+    getline(fin,line);
+    prop_turns = read_line<int>(line);
+    getline(fin,line);
+    prop_lasting_time = read_line<int>(line);
+    getline(fin,line);
+    prop_pos_x = read_line<int>(line);
+    getline(fin,line);
+    prop_pos_y = read_line<int>(line);
+
+    
+    // fruit
+    getline(fin,line);
+    fruit_num = read_line<int>(line);
+    getline(fin,line);
+    fruit_lasting_time = read_line<int>(line);
+    getline(fin,line);
+    fruit_pos_x = read_line<int>(line);
+    getline(fin,line);
+    fruit_pos_y = read_line<int>(line);   
+    
+    return;
+}
+
+
 int Game::pauseGame()
 {
     nodelay(stdscr, false);
@@ -155,8 +255,65 @@ int Game::pauseGame()
 
 void Game::saveToFile(string filename)
 {
-    // TO BE IMPLEMENTED
+    ofstream fout;
+    fout.open(getExecutablePath() + "/../data/" + filename);
+    if (fout.fail())
+    {
+        cout << "Error in saving records." << endl;
+        return;
+    }
+
+    fout << "level " << level << endl;
+    fout << "score " << score << endl;
+    fout << "in_counteratk " << in_counteratk_mode << endl;
+    fout << "turns " << turns << endl;
+    fout << "ghost_speed " << ghost_speed << endl;
+    
+    // pacman
+    fout << "pacman_startx " << pacman->start_x << endl;
+    fout << "pacman_starty " << pacman->start_y << endl;
+    fout << "pacman_x " << pacman->x << endl;
+    fout << "pacman_y " << pacman->y << endl;
+    fout << "pacman_lives " << pacman->lives << endl;
+    fout << "pacman_eatenghosts " << pacman->eaten_ghosts << endl;
+
+    // ghosts
+    fout << "ghostnumber " << ghosts->size() << endl;
+    for (int i=0; i<ghosts->size(); ++i)
+    {
+        fout << "ghost_startx " << (*ghosts)[i].start_x << endl;
+        fout << "ghost_starty " << (*ghosts)[i].start_y << endl;
+        fout << "ghost_x " << (*ghosts)[i].x << endl;
+        fout << "ghost_y " << (*ghosts)[i].y << endl;
+        fout << "ghost_speed " << (*ghosts)[i].speed << endl;
+        fout << "in_counteratk " << (*ghosts)[i].in_counteratk_mode << endl;
+    }
+
+    // map
+    for (size_t i=0; i < game_map->vals.size(); ++i)
+        fout << game_map->vals[i] << endl;
+
+        
+    // tools
+    fout << "prop_type " << prop_type << endl;
+    fout << "prop_turns " << prop_turns << endl;
+    fout << "prop_lasting_time " << prop_lasting_time << endl;
+    fout << "prop_x " << prop_pos_x << endl;
+    fout << "prop_y " << prop_pos_y << endl;
+    
+    
+    // fruit
+    fout << "fruit_num " << fruit_num << endl;
+    fout << "fruit_lasting_time " << fruit_lasting_time << endl;
+    fout << "fruit_x " << fruit_pos_x << endl;
+    fout << "fruit_y " << fruit_pos_y << endl;    
+    
+        
+    fout.close();
+    return;
+
 }
+
 
 void Game::showStatus()
 {
@@ -194,13 +351,14 @@ int Game::startGame() // TO BE DELETED
 {
     int dirx[4] = {-1, 1, 0, 0};//up down left right
     int diry[4] = {0, 0, -1, 1};
-
+    /*
     int prop_turns = 0, prop_lasting_time = 0, prop_type = -1, fruit_lasting_time = 0;
     int prop_pos_x = game_map->vals.size() - 1;
     int prop_pos_y = game_map->vals[prop_pos_x].size() - 1;
     int fruit_pos_x = game_map->vals.size() - 1;
     int fruit_pos_y = game_map->vals[fruit_pos_x].size() - 1;
     int fruit_num;
+    */
     char fruits[4] = {'1', '2', '3', '4'};
     string special = "none";
    
