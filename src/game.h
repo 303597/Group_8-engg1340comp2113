@@ -2,6 +2,7 @@
 #define GAME_H
 
 #include <string>
+#include <sstream>
 using namespace std;
 
 const double time_per_loop = 400; // milliseconds
