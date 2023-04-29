@@ -23,7 +23,7 @@ class Map
 private:
     PacMan* pacman;
     vector<Ghost>* ghosts;
-    void printMapElement(int x, int y, char element);
+    //void printMapElement(int x, int y, char element);
 
 public:
     //Map(vector<string> _vals, PacMan &_pacman, vector<Ghost> &ghosts);
@@ -57,5 +57,7 @@ int read_line(string line);
 void clearSavedData(string filename);
 
 string getExecutablePath();
+
+void printElement(int x, int y, char element);
 
 #endif

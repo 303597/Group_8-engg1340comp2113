@@ -301,6 +301,19 @@ void Ghost::move(int target_x, int target_y, double speed)
 	return;
 }
 
+void PacMan::show()
+{
+	printElement(x, y, 'o');
+}
+
+void Ghost::show()
+{
+	if (in_counteratk_mode)
+		printElement(x, y, 'e');
+	else
+		printElement(x, y, 'E');
+}
+
 void checkCharacterCollision(PacMan &pacman, vector<Ghost> &ghosts, int &turns, int &direction, int &prop_lasting_time, int &fruit_lasting_time, int &prop_turns, string &special)
 {
 	for (int i = 0; i < ghosts.size(); ++i)

@@ -12,16 +12,20 @@ class Game
 {
 private:
     int level;
-    Map* map;
+    Map* game_map;
     PacMan* pacman; vector<Ghost>* ghosts;
-    Menu* menu;
+    Menu* game_menu;
+    bool in_counteratk_mode = false;
+    int turns = 0;
+    double ghost_speed = 0.4;
     int updateTile(int x, int y, string &special, int &prop_turns);
     void showStatus();
     void saveToFile(string filename);
 public:
     Game(int level);
     Game(string filename);
-    void start();
+    int startGame();
+    int pauseGame();
 };
 
 void save(); // declare the save function
@@ -32,7 +36,7 @@ void initializeGame(string filename = "");
 
 //bool isMapCompleted(const string&);
 
-int gameLoop(int level, Map &game_map, PacMan &pacman, vector<Ghost> &ghosts);
+//int gameLoop(int level, Map &game_map, PacMan &pacman, vector<Ghost> &ghosts);
 
 void showTutorial();
 

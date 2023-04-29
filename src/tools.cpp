@@ -119,20 +119,14 @@ void Map::show()
     {
         for (size_t j = 0; j < vals[i].length(); j++)
         {
-            printMapElement(i, j, vals[i][j]);
+            printElement(i, j, vals[i][j]);
         }
     }
-    printMapElement(pacman->x, pacman->y, 'o');
-    for (Ghost ghost: *ghosts)
-        if (ghost.in_counteratk_mode)
-            printMapElement(ghost.x, ghost.y, 'e');
-        else
-            printMapElement(ghost.x, ghost.y, 'E');
+    
     fl = true;
-    refresh();
 }
 
-void Map::printMapElement(int x, int y, char element)
+void printElement(int x, int y, char element)
 {
     switch (element)
     {
@@ -147,10 +141,12 @@ void Map::printMapElement(int x, int y, char element)
             break;
         case '.':
             mvprintw(x + 2, 2 * y + 4, "◽");
+            /*
             if(!fl)
             {
                 total_num++;
             }
+            */
             break;
         case 'E':
             mvprintw(x + 2, 2 * y + 4, "👻");
@@ -196,53 +192,6 @@ void Map::printMapElement(int x, int y, char element)
             break;
     }
 }
-/*
-void printMenuElement(int x, string line)
-{
-    int posi = 0;
-    for (int i = 0; i < line.length(); i++)
-    {
-        switch (line[i])
-        {
-            case '#':
-                mvprintw(x, posi, "🟦");
-                posi += 2;
-                break;
-            case '{':
-                mvprintw(x, posi, "═");
-                posi++;
-                break;
-            case '}':
-                mvprintw(x, posi, "║");
-                posi++;
-                break;
-            case '%':
-                mvprintw(x, posi, "╔");
-                posi++;
-                break;
-            case '^':
-                mvprintw(x, posi, "╗");
-                posi++;
-                break;
-            case '&':
-                mvprintw(x, posi, "╚");
-                posi++;
-                break;
-            case '*':
-                mvprintw(x, posi, "╝");
-                posi++;
-                break;
-            case ' ':
-                mvprintw(x, posi, " ");
-                posi++;
-                break;
-            default:
-                mvprintw(x, posi, "%c", line[i]);
-                posi++;
-        }
-    }
-}
-*/
 
 int Map::updateTile(int x, int y, vector<Ghost> ghosts, string &special, int &prop_turns)
 {
@@ -340,7 +289,6 @@ string getExecutablePath() // This solution to get the path of the execuatable i
     return str.substr(0, str.rfind('/'));
 }
 
-
 void Map::saveToFile(string filename)
 {
     ofstream fout;
@@ -395,26 +343,6 @@ void clearSavedData(string filename)
     if (!filesystem::remove(getExecutablePath() + "/../data/" + filename))
         cout << "Error deleting save file" << endl;
 }
-
-/*
-Map Map::readFromFile(string filename, PacMan& _pacman, vector<Ghost>& _ghosts)
-{
-    ifstream fin;
-    fin.open(filename.c_str());
-    if (fin.fail())
-    {
-        cout << "Error in opening file " << filename << endl;
-        return;
-    }
-
-    
-
-    fin.close();
-
-    if (pacman_count < 1)
-        cout << "ERROR: Map does not include pacman." << endl;
-}
-*/
 
 Menu::Menu(string filename)
 {

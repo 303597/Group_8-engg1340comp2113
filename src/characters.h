@@ -25,6 +25,7 @@ class PacMan: public Character
 public:
     using Character::Character;
     void move(int direction, string special);
+    void show();
     int lives = 3;
     int eaten_ghosts = 0;
 };
@@ -34,6 +35,7 @@ class Ghost: public Character
 public:
     using Character::Character;
     void move(int target_x, int target_y, double ghost_speed);
+    void show();
     bool in_counteratk_mode = false;
     double speed = 0.0;
 };

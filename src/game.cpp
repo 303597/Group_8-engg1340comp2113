@@ -7,6 +7,7 @@
 #include "tools.h"
 #include "characters.h"
 #include "game.h"
+#include "ui.h"
 #include <fstream>
 #include <stdlib.h>
 #include <string>
@@ -82,100 +83,6 @@ void generate_prop(Map &game_map, vector<Ghost> &ghosts, int &prop_lasting_time,
     return;
 }
 
-int welcomeLoop()
-{
-    cbreak();
-    
-    int selected = 1, line_no = 0;
-    bool confirmed = false;
-    Menu start_menu("start_menu.txt");
-    
-    while (!confirmed)
-    {
-        start_menu.showWelcome(selected);
-        refresh();
-        int ch = getch();
-        switch (ch)
-        {
-            case 'w':
-            case KEY_UP:
-                selected = max(0, selected - 1);
-                break;
-            case 's':
-            case KEY_DOWN:
-                selected = min(4, selected + 1);
-                break;
-            case ' ':
-            case '\n':
-                confirmed = true;
-                break;
-        }
-    }
-    return selected;
-}
-
-int pauseLoop()
-{
-    int selected = 1, line_no = 0;
-    bool confirmed = false;
-    Menu start_menu("pause.txt");
-    
-    while (!confirmed)
-    {
-        start_menu.showWelcome(selected);
-        refresh();
-        int ch = getch();
-        switch (ch)
-        {
-            case 'w':
-            case KEY_UP:
-                selected = max(1, selected - 1);
-                break;
-            case 's':
-            case KEY_DOWN:
-                selected = min(4, selected + 1);
-                break;
-            case ' ':
-            case '\n':
-                confirmed = true;
-                break;
-            case 'p':
-                selected = 1;
-                confirmed = true;
-                break;
-        }
-    }
-    return selected;
-}
-
-int pauseGame(Map& map)
-{
-    nodelay(stdscr, false);
-    map.saveToFile("temp.txt");
-    while (true)
-    {
-        int operation = pauseLoop();
-
-        if (operation == 1)
-        {
-            nodelay(stdscr, true);
-            return 0;
-        }
-
-        if (operation == 2)
-            showTutorial();
-
-        if (operation == 3)
-            showHighScore();
-
-        if (operation == 4)
-        {
-            nodelay(stdscr, true);
-            return 1;
-        }
-    }
-}
-
 void initializeGame(string filename)
 {
     for (int level = 1; level <= 4; level++)
@@ -218,6 +125,49 @@ void initializeGame(string filename)
     }
 }
 
+int Game::pause()
+{
+    nodelay(stdscr, false);
+    saveToFile("temp.txt");
+    while (true)
+    {
+        int operation = pauseLoop();
+
+        if (operation == 1)
+        {
+            nodelay(stdscr, true);
+            return 0;
+        }
+
+        if (operation == 2)
+            showTutorial();
+
+        if (operation == 3)
+            showHighScore();
+
+        if (operation == 4)
+        {
+            nodelay(stdscr, true);
+            return 1;
+        }
+    }
+}
+
+void Game::saveToFile(string filename)
+{
+    // TO BE IMPLEMENTED
+}
+
+void Game::showStatus()
+{
+    game_menu->showInGame(score, pacman->lives);
+    game_map->show();
+    pacman->show();
+    for (Ghost &ghost: (*ghosts))
+        ghost.show();
+    refresh();
+}
+
 //check whether a map is completed
 /*
 bool isMapCompleted(const string& filename) {
@@ -240,32 +190,29 @@ bool isMapCompleted(const string& filename) {
 */
 
 //void UI() //welcome, gamescore, end, user interfaces
-int gameLoop(int level, Map &game_map, PacMan &pacman, vector<Ghost> &ghosts) // TO BE DELETED
+int Game::startGame() // TO BE DELETED
 {
     int dirx[4] = {-1, 1, 0, 0};//up down left right
     int diry[4] = {0, 0, -1, 1};
-    bool in_counteratk_mode = false;
-    int turns = 0;
-    double ghost_speed = 0.4;
 
     int prop_turns = 0, prop_lasting_time = 0, prop_type = -1, fruit_lasting_time = 0;
-    int prop_pos_x = game_map.vals.size() - 1;
-    int prop_pos_y = game_map.vals[prop_pos_x].size() - 1;
-    int fruit_pos_x = game_map.vals.size() - 1;
-    int fruit_pos_y = game_map.vals[fruit_pos_x].size() - 1;;
+    int prop_pos_x = game_map->vals.size() - 1;
+    int prop_pos_y = game_map->vals[prop_pos_x].size() - 1;
+    int fruit_pos_x = game_map->vals.size() - 1;
+    int fruit_pos_y = game_map->vals[fruit_pos_x].size() - 1;;
     int fruit_num;
     char fruits[4] = {'1', '2', '3', '4'};
     string special = "none";
    
     Menu game_menu("in_game.txt");
-    game_map.vals[0][0] = '#';
-    for (size_t i = 0; i < ghosts.size(); i++)
-        ghosts[i].linkMap(&game_map);
-    game_menu.showInGame(score, pacman.lives);
-    game_map.show();
-    int ghost_rand = rand() % ghosts.size();
-    int fruit_x = game_map.vals.size() - 1;
-    int fruit_y = game_map.vals[fruit_x].size() - 1;
+    game_map->vals[0][0] = '#';
+    for (Ghost &ghost: *ghosts)
+        ghost.linkMap(game_map);
+    
+    showStatus();
+    int ghost_rand = rand() % (*ghosts).size();
+    int fruit_x = game_map->vals.size() - 1;
+    int fruit_y = game_map->vals[fruit_x].size() - 1;
 
     auto last_frame_time = chrono::high_resolution_clock::now(), this_frame_time = last_frame_time;
 
@@ -320,35 +267,35 @@ int gameLoop(int level, Map &game_map, PacMan &pacman, vector<Ghost> &ghosts) //
                 direction = 3;
                 break;
             case 'p':
-                int result = pauseGame(game_map);
+                int result = pauseGame();
                 if (result == 1)
                     return 2;
                 break;
         }
-        pacman.move(direction, special);
-        if (score >= ghosts.size()*150 && prop_lasting_time == 0)
+        pacman->move(direction, special);
+        if (score >= ghosts->size()*150 && prop_lasting_time == 0)
         {
-            generate_prop(game_map, ghosts, prop_lasting_time, prop_pos_x, prop_pos_y, fruit_lasting_time);
+            generate_prop(*game_map, *ghosts, prop_lasting_time, prop_pos_x, prop_pos_y, fruit_lasting_time);
         }
-        if(score >= game_map.total_num * 5 / 3 + 50 * ghosts.size() / 3)
+        if(score >= game_map->total_num * 5 / 3 + 50 * ghosts->size() / 3)
         {
             ghost_speed = 0.8;
         }
-        if(score >= game_map.total_num * 10 / 3 + 100 * ghosts.size() / 3)
+        if(score >= game_map->total_num * 10 / 3 + 100 * ghosts->size() / 3)
         {
             ghost_speed = 1.0;
         }
-        int tile_info = game_map.updateTile(pacman.x, pacman.y, ghosts, special, prop_turns);
+        int tile_info = game_map->updateTile(pacman->x, pacman->y, *ghosts, special, prop_turns);
         if (tile_info == 8)
         {
 	        // if the pacman eats another super bean before the effect of the former super bean ends
 	        if (turns > 0)
 		    {
-		        pacman.eaten_ghosts = 0;
+		        pacman->eaten_ghosts = 0;
 	    	}
-	        turns = ghosts.size() * 15; 
+	        turns = ghosts->size() * 15; 
 	        // reset count time and number of eaten ghosts to zero and count from start again
-            for (Ghost &ghost: ghosts)
+            for (Ghost &ghost: *ghosts)
             {
                 ghost.in_counteratk_mode = true;
             }
@@ -377,34 +324,34 @@ int gameLoop(int level, Map &game_map, PacMan &pacman, vector<Ghost> &ghosts) //
                             {
                                 break;
                             }
-                            fruit_x = rand() % game_map.vals.size();
-                            fruit_y = rand() % game_map.vals[fruit_x].size();
+                            fruit_x = rand() % game_map->vals.size();
+                            fruit_y = rand() % game_map->vals[fruit_x].size();
                         }
-                        fruit_lasting_time = 10 * ghosts.size() + fruit_num*5;
+                        fruit_lasting_time = 10 * ghosts->size() + fruit_num*5;
                         break;
                     case 2:
                         for(int i = 0; i < 4; i++)
                         {
-                            if(game_map.vals[ghosts[ghost_rand].x + dirx[i]][ghosts[ghost_rand].y + diry[i]] != '#')
+                            if(game_map->vals[ghosts[ghost_rand].x + dirx[i]][ghosts[ghost_rand].y + diry[i]] != '#')
                             {
                                 fruit_x = ghosts[ghost_rand].x + dirx[i];
                                 fruit_y = ghosts[ghost_rand].y + diry[i];
                             }
                         }
-                        fruit_lasting_time = 10 * ghosts.size();
+                        fruit_lasting_time = 10 * ghosts->size();
                         break;
                     case 3:
                         fruit_x = ghosts[ghost_rand].start_x;
                         fruit_y = ghosts[ghost_rand].start_y;
-                        fruit_lasting_time = 8 * ghosts.size();
+                        fruit_lasting_time = 8 * ghosts->size();
                         break;
                     }
                     fruit_pos_y = fruit_y;
-                    game_map.vals[fruit_x][fruit_y] = fruits[fruit_num];
-                    fruit_x = game_map.vals.size() - 1;
-                    fruit_y = game_map.vals[fruit_x].size() - 1;
+                    game_map->vals[fruit_x][fruit_y] = fruits[fruit_num];
+                    fruit_x = game_map->vals.size() - 1;
+                    fruit_y = game_map->vals[fruit_x].size() - 1;
                 }
-                prop_lasting_time = 10 * ghosts.size(); 
+                prop_lasting_time = 10 * ghosts->size(); 
                 tile_info = 6;
         }
 
@@ -462,8 +409,8 @@ int gameLoop(int level, Map &game_map, PacMan &pacman, vector<Ghost> &ghosts) //
             }
         }
         if(turns == 0){
-	        pacman.eaten_ghosts = 0; // reset the number of eaten ghosts to zero for the next round
-            for (Ghost &ghost: ghosts)
+	        pacman->eaten_ghosts = 0; // reset the number of eaten ghosts to zero for the next round
+            for (Ghost &ghost: *ghosts)
             {
                 ghost.in_counteratk_mode = false;
             }
@@ -486,36 +433,35 @@ int gameLoop(int level, Map &game_map, PacMan &pacman, vector<Ghost> &ghosts) //
         
         checkCharacterCollision(pacman, ghosts, turns, direction, prop_lasting_time, fruit_lasting_time, prop_turns, special);
 
-        for (Ghost &ghost: ghosts)
+        for (Ghost &ghost: *ghosts)
         {
             if(ghost.speed >= 1.0)
             {
                 ghost.speed -= 1.0;
-                ghost.move(pacman.x, pacman.y, ghost_speed);
+                ghost.move(pacman->x, pacman->y, ghost_speed);
             }
         }
 
         checkCharacterCollision(pacman, ghosts, turns, direction, prop_lasting_time, fruit_lasting_time, prop_turns, special);
 
-        if(prop_lasting_time == 10 * ghosts.size())
+        if(prop_lasting_time == 10 * ghosts->size())
         {
-            game_map.vals[prop_pos_x][prop_pos_y] = ' ';
+            game_map->vals[prop_pos_x][prop_pos_y] = ' ';
         }
         if(fruit_lasting_time == 0)
         {
-            game_map.vals[fruit_pos_x][fruit_pos_y] = ' ';
+            game_map->vals[fruit_pos_x][fruit_pos_y] = ' ';
         }
         if(prop_turns == 0)
         {
             special = "none";
         }
 
-        game_menu.showInGame(score, pacman.lives);
-        game_map.show();
+        showStatus();
         mvprintw(23, 104, "%d" ,turns);
-        if(prop_lasting_time >= 10 * ghosts.size())
+        if(prop_lasting_time >= 10 * ghosts->size())
         {
-            mvprintw(24, 104, "%ld", prop_lasting_time - 10 * ghosts.size());
+            mvprintw(24, 104, "%ld", prop_lasting_time - 10 * ghosts->size());
         }
         else if(prop_turns != 0)
         {
@@ -530,7 +476,7 @@ int gameLoop(int level, Map &game_map, PacMan &pacman, vector<Ghost> &ghosts) //
         refresh();
         last_frame_time = this_frame_time;
         mvprintw(0, 0, "🟦"); // move cursor
-        if (pacman.lives <= 0)
+        if (pacman->lives <= 0)
         {
             save();
             return 1;
@@ -546,56 +492,4 @@ int gameLoop(int level, Map &game_map, PacMan &pacman, vector<Ghost> &ghosts) //
             */
         }
     }
-}
-
-void showTutorial()
-{
-    cbreak();
-    nodelay(stdscr, false);
-    
-    ifstream fin(getExecutablePath() + "/../ui/tutorial.txt");
-    if (fin.fail())
-        cout << "Error opening file." << endl;
-    
-    string line;
-    int line_no = 0;
-    while (getline(fin, line))
-    {
-        mvprintw(line_no, 0, "%s", line.c_str());
-        line_no++;
-    }
-    refresh();
-    getch();
-}
-
-void showHighScore()
-{
-    cbreak();
-    nodelay(stdscr, false);
-    
-    ifstream fin(getExecutablePath() + "/../ui/high_scores.txt");
-    if (fin.fail())
-        cout << "Error opening file." << endl;
-    
-    string line;
-    int line_no = 0;
-    while (getline(fin, line))
-    {
-        mvprintw(line_no, 0, "%s", line.c_str());
-        line_no++;
-    }
-    line_no = 15;
-    vector<pair<string, int>> histories = getScoreRecords();
-    if (histories.size() == 0)
-        mvprintw(line_no, 49, "No score record yet.");
-    for (int i = 0; i < min((size_t)10, histories.size()); i++)
-    {
-        mvprintw(line_no, 19, "%d", i + 1);
-        mvprintw(line_no, 34, "%s", histories[i].first.c_str());
-        mvprintw(line_no, 59, "%5d", histories[i].second);
-        mvprintw(line_no, 84, "1");
-        line_no++;
-    }
-    refresh();
-    getch();
 }

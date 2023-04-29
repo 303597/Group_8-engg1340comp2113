@@ -23,7 +23,7 @@ void initialize()
 
 int main()
 {
-    initialize();   
+    initialize();
 
     while (true)
     {
