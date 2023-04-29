@@ -92,6 +92,7 @@ void initializeGame(string filename)
         bool from_saved_data = true;
         if (filename == "") from_saved_data = false;
         Game game = from_saved_data ? Game(filename) : Game(level);
+	 /*
         if (filename == "")
         {
             int y = 1 + rand() % (3); 
@@ -104,11 +105,10 @@ void initializeGame(string filename)
         }
         // Map game_map = Map(filename, pacman, ghosts, from_saved_data);
             
-            /*
+            
             Map game_map = Map("/2_Monsters/map2.txt", pacman, ghosts);
-            */
+            
 
-            /*
                 //randomly choose a map to open
                 int x = 2 + rand() % (3);
             */
@@ -125,6 +125,57 @@ void initializeGame(string filename)
     }
 }
 
+
+Game::Game(int level)
+{
+    string path, filename;
+    int y = 1 + rand() % (3); 
+    string map_no = to_string(y); 
+    if (level <= 3)
+        filename = to_string(level + 1) + "_Monsters/map" + map_no + ".txt";
+    else
+        filename = "bonus/map.txt";
+    path = getExecutablePath() + "/../map/" + filename;
+    
+    ifstream fin(path);
+    if (fin.fail())
+    {
+        cout << "Failed to open file: " << filename << endl;
+        return;
+    }
+    
+    string str;
+    while (getline(fin, str))
+        game_map->vals.emplace_back(str);
+        
+    int pacman_count = 0, ghost_count = 0;
+    for (size_t i = 0; i < game_map->vals.size(); i++)
+        for (size_t j = 0; j < game_map->vals[i].length(); j++)
+        {
+            if (vals[i][j] == 'o')
+            {
+                pacman_count++;
+                if (pacman_count != 1)
+                {
+                    cout << "ERROR: Map includes more than 1 pac-man." << endl;
+                    return;
+                }
+                *pacman = PacMan(i, j); // to be changed
+                vals[i][j] = ' ';
+            }
+            if (vals[i][j] == 'E')
+            {
+                ghost_count++;
+		(*ghosts).emplace_back(Ghost(i, j)); // to be changed
+                vals[i][j] = ' ';
+                //ghosts.emplace_back(&_ghosts.back());
+                //ghosts.emplace_back(new Ghost(i, j, this));
+            }
+        }
+
+    if (pacman_count < 1)
+        cout << "ERROR: Map does not include pac-man starting point." << endl;
+}
 
 Game::Game(string filename)
 {
@@ -158,7 +209,7 @@ Game::Game(string filename)
     getline(fin,line);
     int pacman_start_y = read_line<int>(line);
     
-    pacman = PacMan(pacman_start_x,pacman_start_y);
+    *pacman = PacMan(pacman_start_x,pacman_start_y); // to be changed
     
     getline(fin,line);
     pacman->x = read_line<int>(line);
@@ -180,7 +231,7 @@ Game::Game(string filename)
         getline(fin,line);
         int ghost_start_y = read_line<int>(line);
         
-        (*ghosts).emplace_back(Ghost(ghost_start_x,ghost_start_y));
+        (*ghosts).emplace_back(Ghost(ghost_start_x,ghost_start_y)); // to be changed
         
         getline(fin,line);
         (*ghosts).back().x = read_line<int>(line);
