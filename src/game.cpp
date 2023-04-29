@@ -20,8 +20,7 @@ using namespace std;
 
 int score = 0; // initialize score to be zero
 
-//void save() //high score or map
-void save()
+void saveScoreRecord() // save high score
 {
     bool need_update = false;
     string username;
@@ -91,6 +90,8 @@ void initializeGame(string filename)
 
         PacMan pacman; vector<Ghost> ghosts;
         bool from_saved_data = true;
+        if (filename == "") from_saved_data = false;
+        Game game = from_saved_data ? Game(filename) : Game(level);
         if (filename == "")
         {
             int y = 1 + rand() % (3); 
@@ -101,7 +102,7 @@ void initializeGame(string filename)
                 filename = "/bonus/map.txt";
             from_saved_data = false;
         }
-        Map game_map = Map(filename, pacman, ghosts, from_saved_data);
+        // Map game_map = Map(filename, pacman, ghosts, from_saved_data);
             
             /*
             Map game_map = Map("/2_Monsters/map2.txt", pacman, ghosts);
@@ -114,8 +115,7 @@ void initializeGame(string filename)
 
             // randomly choose a map to open in a particular level
             
-        pacman.linkMap(&game_map);
-        int game_result = gameLoop(level, game_map, pacman, ghosts);
+        int game_result = game.startGame();
         // if life == 0, game ends
         if (from_saved_data && (game_result == 0 || game_result == 1))
             clearSavedData(filename);
@@ -125,7 +125,7 @@ void initializeGame(string filename)
     }
 }
 
-int Game::pause()
+int Game::pauseGame()
 {
     nodelay(stdscr, false);
     saveToFile("temp.txt");
@@ -199,7 +199,7 @@ int Game::startGame() // TO BE DELETED
     int prop_pos_x = game_map->vals.size() - 1;
     int prop_pos_y = game_map->vals[prop_pos_x].size() - 1;
     int fruit_pos_x = game_map->vals.size() - 1;
-    int fruit_pos_y = game_map->vals[fruit_pos_x].size() - 1;;
+    int fruit_pos_y = game_map->vals[fruit_pos_x].size() - 1;
     int fruit_num;
     char fruits[4] = {'1', '2', '3', '4'};
     string special = "none";
@@ -320,7 +320,7 @@ int Game::startGame() // TO BE DELETED
                     case 1:
                         while(1)
                         {
-                            if(!(fruit_x == 0 && fruit_y == 0) && game_map.vals[fruit_x][fruit_y] == ' ' && !check(fruit_x, fruit_y, ghosts))
+                            if(!(fruit_x == 0 && fruit_y == 0) && game_map->vals[fruit_x][fruit_y] == ' ' && !check(fruit_x, fruit_y, ghosts))
                             {
                                 break;
                             }
@@ -332,17 +332,17 @@ int Game::startGame() // TO BE DELETED
                     case 2:
                         for(int i = 0; i < 4; i++)
                         {
-                            if(game_map->vals[ghosts[ghost_rand].x + dirx[i]][ghosts[ghost_rand].y + diry[i]] != '#')
+                            if(game_map->vals[(*ghosts)[ghost_rand].x + dirx[i]][(*ghosts)[ghost_rand].y + diry[i]] != '#')
                             {
-                                fruit_x = ghosts[ghost_rand].x + dirx[i];
-                                fruit_y = ghosts[ghost_rand].y + diry[i];
+                                fruit_x = (*ghosts)[ghost_rand].x + dirx[i];
+                                fruit_y = (*ghosts)[ghost_rand].y + diry[i];
                             }
                         }
                         fruit_lasting_time = 10 * ghosts->size();
                         break;
                     case 3:
-                        fruit_x = ghosts[ghost_rand].start_x;
-                        fruit_y = ghosts[ghost_rand].start_y;
+                        fruit_x = (*ghosts)[ghost_rand].start_x;
+                        fruit_y = (*ghosts)[ghost_rand].start_y;
                         fruit_lasting_time = 8 * ghosts->size();
                         break;
                     }
@@ -362,34 +362,34 @@ int Game::startGame() // TO BE DELETED
             {
                 for(int b = -1; b <= 1; b++)
                 {
-                    xx = pacman.x + a; yy = pacman.y + b;
+                    xx = pacman->x + a; yy = pacman->y + b;
                     if (xx < 0)
                     {
-                        xx += game_map.vals.size();
+                        xx += game_map->vals.size();
                     }
-                    else if (xx > game_map.vals.size() - 1)
+                    else if (xx > game_map->vals.size() - 1)
                     {
-                        xx -= game_map.vals.size();
+                        xx -= game_map->vals.size();
                     }
                     if (yy < 0)
                     {
-                        yy += game_map.vals[pacman.x].size();
+                        yy += game_map->vals[pacman->x].size();
                     }
-                    else if (yy > game_map.vals[pacman.x].size() - 1)
+                    else if (yy > game_map->vals[pacman->x].size() - 1)
                     {
-                        yy -= game_map.vals[pacman.x].size();
+                        yy -= game_map->vals[pacman->x].size();
                     }
                     // deal with overflow;
-                    if(game_map.vals[xx][yy] == '.')
+                    if(game_map->vals[xx][yy] == '.')
                     {
                         score += 5;
-                        game_map.vals[xx][yy] = ' ';
+                        game_map->vals[xx][yy] = ' ';
                     }
                 }
             }
         }
 
-        for (Ghost &ghost: ghosts)
+        for (Ghost &ghost: *ghosts)
         {
             if(ghost.in_counteratk_mode == true)
             {
@@ -478,7 +478,7 @@ int Game::startGame() // TO BE DELETED
         mvprintw(0, 0, "🟦"); // move cursor
         if (pacman->lives <= 0)
         {
-            save();
+            saveScoreRecord();
             return 1;
         }
 	else

@@ -21,6 +21,7 @@ private:
     int updateTile(int x, int y, string &special, int &prop_turns);
     void showStatus();
     void saveToFile(string filename);
+    void checkCharacterCollision();
 public:
     Game(int level);
     Game(string filename);
