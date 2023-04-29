@@ -42,17 +42,17 @@ void saveScoreRecord() // save high score
     score = 0; // reset score to zero after saving it
 }
 
-bool check(int x,int y, vector<Ghost> &ghosts){
-    for (Ghost &ghost: ghosts)
+bool check(int x,int y, vector<Ghost*> ghosts){
+    for (Ghost* ghost: ghosts)
     {
-        if(x == ghost.start_x && y == ghost.start_y){
+        if(x == ghost->start_x && y == ghost->start_y){
             return true;
         }
     }
     return false;
 }
 
-void generate_prop(Map &game_map, vector<Ghost> &ghosts, int &prop_lasting_time, int &prop_pos_x, int &prop_pos_y, int fruit_lasting_time)
+void generate_prop(Map &game_map, vector<Ghost*> ghosts, int &prop_lasting_time, int &prop_pos_x, int &prop_pos_y, int fruit_lasting_time)
 {
 	char prop[6] = {'@', '$', '*', '^', '!', '?'};
     int num;
@@ -88,21 +88,13 @@ void initializeGame(string filename)
     {
         nodelay(stdscr, true); // don't wait until input
 
-        PacMan pacman; vector<Ghost> ghosts;
         bool from_saved_data = true;
-        if (filename == "") from_saved_data = false;
-        Game game = from_saved_data ? Game(filename) : Game(level);
-	 /*
         if (filename == "")
-        {
-            int y = 1 + rand() % (3); 
-            string map_no = to_string(y); 
-            if (level <= 3)
-                filename = "/" + to_string(level + 1) + "_Monsters/map" + map_no + ".txt";
-            else
-                filename = "/bonus/map.txt";
             from_saved_data = false;
-        }
+        Game game = from_saved_data ? Game(filename) : Game(level);
+        if (from_saved_data)
+            level = game.level;
+        /*
         // Map game_map = Map(filename, pacman, ghosts, from_saved_data);
             
             
@@ -125,7 +117,7 @@ void initializeGame(string filename)
     }
 }
 
-
+/*
 Game::Game(int level)
 {
     string path, filename;
@@ -145,6 +137,7 @@ Game::Game(int level)
     }
     
     string str;
+    vector<string> vals;
     while (getline(fin, str))
         game_map->vals.emplace_back(str);
         
@@ -166,16 +159,18 @@ Game::Game(int level)
             if (vals[i][j] == 'E')
             {
                 ghost_count++;
-		(*ghosts).emplace_back(Ghost(i, j)); // to be changed
+		        ghosts.emplace_back(new Ghost(i, j)); // to be changed
                 vals[i][j] = ' ';
                 //ghosts.emplace_back(&_ghosts.back());
                 //ghosts.emplace_back(new Ghost(i, j, this));
             }
         }
+    game_map = new Map(vals);
 
     if (pacman_count < 1)
         cout << "ERROR: Map does not include pac-man starting point." << endl;
 }
+*/
 
 Game::Game(string filename)
 {
@@ -209,7 +204,7 @@ Game::Game(string filename)
     getline(fin,line);
     int pacman_start_y = read_line<int>(line);
     
-    *pacman = PacMan(pacman_start_x,pacman_start_y); // to be changed
+    pacman = new PacMan(pacman_start_x,pacman_start_y);
     
     getline(fin,line);
     pacman->x = read_line<int>(line);
@@ -220,7 +215,6 @@ Game::Game(string filename)
     getline(fin,line);
     pacman->eaten_ghosts = read_line<int>(line);
 
-    
     // _ghosts
     getline(fin,line);
     int ghost_number = read_line<int>(line);
@@ -231,24 +225,18 @@ Game::Game(string filename)
         getline(fin,line);
         int ghost_start_y = read_line<int>(line);
         
-        (*ghosts).emplace_back(Ghost(ghost_start_x,ghost_start_y)); // to be changed
+        ghosts.emplace_back(new Ghost(ghost_start_x,ghost_start_y)); // to be changed
         
         getline(fin,line);
-        (*ghosts).back().x = read_line<int>(line);
+        ghosts.back()->x = read_line<int>(line);
         getline(fin,line);
-        (*ghosts).back().y = read_line<int>(line);
+        ghosts.back()->y = read_line<int>(line);
         getline(fin,line);
-        (*ghosts).back().speed = read_line<double>(line);
+        ghosts.back()->speed = read_line<double>(line);
         getline(fin,line);
-        (*ghosts).back().in_counteratk_mode = read_line<bool>(line);
+        ghosts.back()->in_counteratk_mode = read_line<bool>(line);
     }
     
-    
-    // vals
-    while (getline(fin,line))
-        game_map->vals.emplace_back(line);
-       
-
     // tools
     getline(fin,line);
     prop_type = read_line<int>(line);
@@ -260,7 +248,6 @@ Game::Game(string filename)
     prop_pos_x = read_line<int>(line);
     getline(fin,line);
     prop_pos_y = read_line<int>(line);
-
     
     // fruit
     getline(fin,line);
@@ -270,9 +257,13 @@ Game::Game(string filename)
     getline(fin,line);
     fruit_pos_x = read_line<int>(line);
     getline(fin,line);
-    fruit_pos_y = read_line<int>(line);   
+    fruit_pos_y = read_line<int>(line);
     
-    return;
+    // vals
+    vector<string> vals;
+    while (getline(fin,line))
+        vals.emplace_back(line);
+    game_map = new Map(vals); // Notice
 }
 
 
@@ -329,22 +320,17 @@ void Game::saveToFile(string filename)
     fout << "pacman_eatenghosts " << pacman->eaten_ghosts << endl;
 
     // ghosts
-    fout << "ghostnumber " << ghosts->size() << endl;
-    for (int i=0; i<ghosts->size(); ++i)
+    fout << "ghostnumber " << ghosts.size() << endl;
+    for (int i=0; i<ghosts.size(); ++i)
     {
-        fout << "ghost_startx " << (*ghosts)[i].start_x << endl;
-        fout << "ghost_starty " << (*ghosts)[i].start_y << endl;
-        fout << "ghost_x " << (*ghosts)[i].x << endl;
-        fout << "ghost_y " << (*ghosts)[i].y << endl;
-        fout << "ghost_speed " << (*ghosts)[i].speed << endl;
-        fout << "in_counteratk " << (*ghosts)[i].in_counteratk_mode << endl;
+        fout << "ghost_startx " << ghosts[i]->start_x << endl;
+        fout << "ghost_starty " << ghosts[i]->start_y << endl;
+        fout << "ghost_x " << ghosts[i]->x << endl;
+        fout << "ghost_y " << ghosts[i]->y << endl;
+        fout << "ghost_speed " << ghosts[i]->speed << endl;
+        fout << "in_counteratk " << ghosts[i]->in_counteratk_mode << endl;
     }
 
-    // map
-    for (size_t i=0; i < game_map->vals.size(); ++i)
-        fout << game_map->vals[i] << endl;
-
-        
     // tools
     fout << "prop_type " << prop_type << endl;
     fout << "prop_turns " << prop_turns << endl;
@@ -357,22 +343,22 @@ void Game::saveToFile(string filename)
     fout << "fruit_num " << fruit_num << endl;
     fout << "fruit_lasting_time " << fruit_lasting_time << endl;
     fout << "fruit_x " << fruit_pos_x << endl;
-    fout << "fruit_y " << fruit_pos_y << endl;    
-    
-        
+    fout << "fruit_y " << fruit_pos_y << endl; 
+
+    // map
+    for (size_t i=0; i < game_map->vals.size(); ++i)
+        fout << game_map->vals[i] << endl;
+
     fout.close();
-    return;
-
 }
-
 
 void Game::showStatus()
 {
     game_menu->showInGame(score, pacman->lives);
     game_map->show();
     pacman->show();
-    for (Ghost &ghost: (*ghosts))
-        ghost.show();
+    for (Ghost* ghost: ghosts)
+        ghost->show();
     refresh();
 }
 
@@ -397,35 +383,158 @@ bool isMapCompleted(const string& filename) {
 }
 */
 
-//void UI() //welcome, gamescore, end, user interfaces
-int Game::startGame() // TO BE DELETED
+Game::Game(int _level)
+{
+    level = _level;
+
+    string map_no = to_string(1 + rand() % 3), filename;
+    if (level <= 3)
+        filename = "/" + to_string(level + 1) + "_Monsters/map" + map_no + ".txt";
+    else
+        filename = "/bonus/map.txt";
+    ifstream fin(getExecutablePath() + "/../map/" + filename);
+    if (fin.fail())
+    {
+        cout << "Failed to open file: " << filename << endl;
+        return;
+    }
+
+    string str;
+    vector<string> vals;
+    while (getline(fin, str))
+        vals.emplace_back(str);
+
+    int pacman_count = 0, ghost_count = 0;
+    for (size_t i = 0; i < vals.size(); i++)
+    {
+        for (size_t j = 0; j < vals[i].length(); j++)
+        {
+            if (vals[i][j] == 'o')
+            {
+                pacman_count++;
+                if (pacman_count != 1)
+                {
+                    cout << "ERROR: Map includes more than 1 pac-man." << endl;
+                    return;
+                }
+                pacman = new PacMan(i, j);
+                vals[i][j] = ' ';
+            }
+            if (vals[i][j] == 'E')
+            {
+                ghost_count++;
+                ghosts.emplace_back(new Ghost(i, j));
+                vals[i][j] = ' ';
+            }
+        }
+    }
+    game_map = new Map(vals);
+
+    prop_pos_x = game_map->vals.size() - 1; prop_pos_y = game_map->vals[prop_pos_x].size() - 1;
+    fruit_pos_x = game_map->vals.size() - 1; fruit_pos_y = game_map->vals[fruit_pos_x].size() - 1;
+
+    if (pacman_count < 1)
+        cout << "ERROR: Map does not include pac-man starting point." << endl;
+}
+
+void Game::checkCharacterCollision()
+{
+    for (int i = 0; i < ghosts.size(); ++i)
+	{
+		if (ghosts[i]->x == pacman->x && ghosts[i]->y == pacman->y)
+		{
+			// determine the mode of the ghost
+			if (ghosts[i]->in_counteratk_mode)
+			{
+				pacman->eaten_ghosts++;
+				if(special == "double_points")
+				{
+					score += 100 * pacman->eaten_ghosts;
+				}
+				else
+				{
+					score += 50 * pacman->eaten_ghosts; // modify the extern score variable directly
+				}
+				ghosts[i]->x = ghosts[i]->start_x;
+				ghosts[i]->y = ghosts[i]->start_y;
+				ghosts[i]->in_counteratk_mode = false;
+				ghosts[i]->speed -= 5;
+				// the eaten ghost reset to normal mode
+			}
+			else
+			{
+				pacman->lives--;
+				direction = -2;
+				if (pacman->lives == 0)
+				{
+					//mvprintw(12, 12, "%d", score);
+					refresh();
+					nodelay(stdscr, false);
+					mvprintw(13, 12, "Press any key to quit.");
+					getch();
+					return; // player dies
+				}
+				pacman->x = pacman->start_x;
+				pacman->y = pacman->start_y;
+				for (int j = 0; j < ghosts.size(); ++j)
+				{
+					ghosts[j]->x = ghosts[j]->start_x;
+					ghosts[j]->y = ghosts[j]->start_y;
+					ghosts[j]->in_counteratk_mode = false;
+					ghosts[j]->speed -= 5;
+					turns = 0;
+				}
+				fruit_lasting_time = 0;
+				prop_lasting_time = 10 * ghosts.size();
+				prop_turns = 0;
+				special = "none";
+				// player and all the ghosts reset
+			}
+		}
+	}
+	int fl = 0;
+	for(int i = 0; i < ghosts.size(); i++)
+	{
+		if(ghosts[i]->in_counteratk_mode == true)
+		{
+			fl = 1;
+		}
+	}
+	if(fl == 0)
+	{
+		turns = 0;
+	}
+	// note: check counteratk mode, handle eat results
+}
+
+int Game::startGame()
 {
     int dirx[4] = {-1, 1, 0, 0};//up down left right
     int diry[4] = {0, 0, -1, 1};
+
     /*
-    int prop_turns = 0, prop_lasting_time = 0, prop_type = -1, fruit_lasting_time = 0;
-    int prop_pos_x = game_map->vals.size() - 1;
-    int prop_pos_y = game_map->vals[prop_pos_x].size() - 1;
-    int fruit_pos_x = game_map->vals.size() - 1;
-    int fruit_pos_y = game_map->vals[fruit_pos_x].size() - 1;
-    int fruit_num;
+    prop_turns = 0, prop_lasting_time = 0, prop_type = -1, fruit_lasting_time = 0;
+    prop_pos_x = game_map->vals.size() - 1;
+    prop_pos_y = game_map->vals[prop_pos_x].size() - 1;
+    fruit_pos_x = game_map->vals.size() - 1;
+    fruit_pos_y = game_map->vals[fruit_pos_x].size() - 1;
     */
+
     char fruits[4] = {'1', '2', '3', '4'};
-    string special = "none";
    
-    Menu game_menu("in_game.txt");
+    game_menu = new Menu("in_game.txt");
     game_map->vals[0][0] = '#';
-    for (Ghost &ghost: *ghosts)
-        ghost.linkMap(game_map);
+    pacman->linkMap(game_map);
+    for (Ghost* ghost: ghosts)
+        ghost->linkMap(game_map);
     
     showStatus();
-    int ghost_rand = rand() % (*ghosts).size();
+    int ghost_rand = rand() % ghosts.size();
     int fruit_x = game_map->vals.size() - 1;
     int fruit_y = game_map->vals[fruit_x].size() - 1;
 
     auto last_frame_time = chrono::high_resolution_clock::now(), this_frame_time = last_frame_time;
 
-    int direction = -2;
     while (true)
     {
         int operation = 0;
@@ -451,6 +560,11 @@ int Game::startGame() // TO BE DELETED
                     case 'd':
                     case KEY_RIGHT:
                         direction = 3;
+                        break;
+                    case 'p':
+                        int result = pauseGame();
+                        if (result == 1)
+                            return 2;
                         break;
                 }
                 if(direction == -2)
@@ -482,19 +596,20 @@ int Game::startGame() // TO BE DELETED
                 break;
         }
         pacman->move(direction, special);
-        if (score >= ghosts->size()*150 && prop_lasting_time == 0)
+        
+        if (score >= ghosts.size()*150 && prop_lasting_time == 0)
         {
-            generate_prop(*game_map, *ghosts, prop_lasting_time, prop_pos_x, prop_pos_y, fruit_lasting_time);
+            generate_prop(*game_map, ghosts, prop_lasting_time, prop_pos_x, prop_pos_y, fruit_lasting_time);
         }
-        if(score >= game_map->total_num * 5 / 3 + 50 * ghosts->size() / 3)
+        if(score >= game_map->total_num * 5 / 3 + 50 * ghosts.size() / 3)
         {
             ghost_speed = 0.8;
         }
-        if(score >= game_map->total_num * 10 / 3 + 100 * ghosts->size() / 3)
+        if(score >= game_map->total_num * 10 / 3 + 100 * ghosts.size() / 3)
         {
             ghost_speed = 1.0;
         }
-        int tile_info = game_map->updateTile(pacman->x, pacman->y, *ghosts, special, prop_turns);
+        int tile_info = game_map->updateTile(pacman->x, pacman->y, ghosts, special, prop_turns);
         if (tile_info == 8)
         {
 	        // if the pacman eats another super bean before the effect of the former super bean ends
@@ -502,11 +617,11 @@ int Game::startGame() // TO BE DELETED
 		    {
 		        pacman->eaten_ghosts = 0;
 	    	}
-	        turns = ghosts->size() * 15; 
+	        turns = ghosts.size() * 15; 
 	        // reset count time and number of eaten ghosts to zero and count from start again
-            for (Ghost &ghost: *ghosts)
+            for (Ghost* ghost: ghosts)
             {
-                ghost.in_counteratk_mode = true;
+                ghost->in_counteratk_mode = true;
             }
         }
         else if(tile_info == 9)
@@ -536,23 +651,23 @@ int Game::startGame() // TO BE DELETED
                             fruit_x = rand() % game_map->vals.size();
                             fruit_y = rand() % game_map->vals[fruit_x].size();
                         }
-                        fruit_lasting_time = 10 * ghosts->size() + fruit_num*5;
+                        fruit_lasting_time = 10 * ghosts.size() + fruit_num*5;
                         break;
                     case 2:
                         for(int i = 0; i < 4; i++)
                         {
-                            if(game_map->vals[(*ghosts)[ghost_rand].x + dirx[i]][(*ghosts)[ghost_rand].y + diry[i]] != '#')
+                            if(game_map->vals[ghosts[ghost_rand]->x + dirx[i]][ghosts[ghost_rand]->y + diry[i]] != '#')
                             {
-                                fruit_x = (*ghosts)[ghost_rand].x + dirx[i];
-                                fruit_y = (*ghosts)[ghost_rand].y + diry[i];
+                                fruit_x = ghosts[ghost_rand]->x + dirx[i];
+                                fruit_y = ghosts[ghost_rand]->y + diry[i];
                             }
                         }
-                        fruit_lasting_time = 10 * ghosts->size();
+                        fruit_lasting_time = 10 * ghosts.size();
                         break;
                     case 3:
-                        fruit_x = (*ghosts)[ghost_rand].start_x;
-                        fruit_y = (*ghosts)[ghost_rand].start_y;
-                        fruit_lasting_time = 8 * ghosts->size();
+                        fruit_x = ghosts[ghost_rand]->start_x;
+                        fruit_y = ghosts[ghost_rand]->start_y;
+                        fruit_lasting_time = 8 * ghosts.size();
                         break;
                     }
                     fruit_pos_y = fruit_y;
@@ -560,7 +675,7 @@ int Game::startGame() // TO BE DELETED
                     fruit_x = game_map->vals.size() - 1;
                     fruit_y = game_map->vals[fruit_x].size() - 1;
                 }
-                prop_lasting_time = 10 * ghosts->size(); 
+                prop_lasting_time = 10 * ghosts.size(); 
                 tile_info = 6;
         }
 
@@ -598,30 +713,30 @@ int Game::startGame() // TO BE DELETED
             }
         }
 
-        for (Ghost &ghost: *ghosts)
+        for (Ghost* ghost: ghosts)
         {
-            if(ghost.in_counteratk_mode == true)
+            if(ghost->in_counteratk_mode == true)
             {
                 ghost_speed = 0.6;
             }
             if(special == "slow")
             {
-                ghost.speed += ghost_speed * 0.5;
+                ghost->speed += ghost_speed * 0.5;
             }
             else if(special == "frozen")
             {
-                ghost.speed += 0;
+                ghost->speed += 0;
             }
             else
             {
-                ghost.speed += ghost_speed;
+                ghost->speed += ghost_speed;
             }
         }
         if(turns == 0){
 	        pacman->eaten_ghosts = 0; // reset the number of eaten ghosts to zero for the next round
-            for (Ghost &ghost: *ghosts)
+            for (Ghost* ghost: ghosts)
             {
-                ghost.in_counteratk_mode = false;
+                ghost->in_counteratk_mode = false;
             }
         }
         if(turns != 0){
@@ -640,20 +755,20 @@ int Game::startGame() // TO BE DELETED
             prop_turns--;
         }
         
-        checkCharacterCollision(pacman, ghosts, turns, direction, prop_lasting_time, fruit_lasting_time, prop_turns, special);
+        checkCharacterCollision();
 
-        for (Ghost &ghost: *ghosts)
+        for (Ghost* ghost: ghosts)
         {
-            if(ghost.speed >= 1.0)
+            if(ghost->speed >= 1.0)
             {
-                ghost.speed -= 1.0;
-                ghost.move(pacman->x, pacman->y, ghost_speed);
+                ghost->speed -= 1.0;
+                ghost->move(pacman->x, pacman->y, ghost_speed);
             }
         }
 
-        checkCharacterCollision(pacman, ghosts, turns, direction, prop_lasting_time, fruit_lasting_time, prop_turns, special);
+        checkCharacterCollision();
 
-        if(prop_lasting_time == 10 * ghosts->size())
+        if(prop_lasting_time == 10 * ghosts.size())
         {
             game_map->vals[prop_pos_x][prop_pos_y] = ' ';
         }
@@ -668,9 +783,9 @@ int Game::startGame() // TO BE DELETED
 
         showStatus();
         mvprintw(23, 104, "%d" ,turns);
-        if(prop_lasting_time >= 10 * ghosts->size())
+        if(prop_lasting_time >= 10 * ghosts.size())
         {
-            mvprintw(24, 104, "%ld", prop_lasting_time - 10 * ghosts->size());
+            mvprintw(24, 104, "%ld", prop_lasting_time - 10 * ghosts.size());
         }
         else if(prop_turns != 0)
         {

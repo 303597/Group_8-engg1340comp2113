@@ -9,123 +9,16 @@
 #include <filesystem>
 using namespace std;
 
-/*
-Map::Map(string filename, PacMan &_pacman, vector<Ghost> &_ghosts, bool from_saved_data) // _pacman: passed by reference  pacman: belongs to Map
+Map::Map(vector<string> _vals)
 {
-    string path;
-    if (from_saved_data)
-        path = getExecutablePath() + "/../data/" + filename;
-    else
-        path = getExecutablePath() + "/../map/" + filename;
-    ifstream fin(path);
-    if (fin.fail())
-    {
-        cout << "Failed to open file: " << filename << endl;
-        return;
-    }
-
-    if (from_saved_data)
-    {
-        string line;
-
-        getline(fin,line);
-        score = read_line(line);
-
-        // _pacman
-        int pacman_start_x, pacman_start_y;
-        getline(fin,line);
-        pacman_start_x = read_line(line);
-        getline(fin,line);
-        pacman_start_y = read_line(line);
-        _pacman = PacMan(pacman_start_x, pacman_start_y);
-        getline(fin,line);
-        _pacman.x = read_line(line); // Notice
-        getline(fin,line);
-        _pacman.y = read_line(line);
-
-        getline(fin,line);
-        _pacman.lives = read_line(line);
-        getline(fin,line);
-        _pacman.eaten_ghosts = read_line(line);
-
-        pacman = &_pacman; // Notice
-
-        // _ghosts
-        getline(fin,line);
-        int ghost_number = read_line(line);
-        for (int i=0; i<ghost_number; ++i)
-        {
-            int ghost_start_x, ghost_start_y;
-            getline(fin,line);
-            ghost_start_x = read_line(line);
-            getline(fin,line);
-            ghost_start_y = read_line(line);
-            _ghosts.emplace_back(Ghost(ghost_start_x, ghost_start_y));
-            getline(fin,line);
-            _ghosts.back().x = read_line(line);
-            getline(fin,line);
-            _ghosts.back().y = read_line(line);
-	    getline(fin,line);
-	    _ghosts.back().speed = read_line(line);
-        }
-        ghosts = &_ghosts;
-
-        // vals
-        while (getline(fin,line))
-            vals.emplace_back(line);
-        return;
-    }
-
-    string str;
-    while (getline(fin, str))
-        vals.emplace_back(str);
-
-    int pacman_count = 0, ghost_count = 0;
-    for (size_t i = 0; i < vals.size(); i++)
-        for (size_t j = 0; j < vals[i].length(); j++)
-        {
-            if (vals[i][j] == 'o')
-            {
-                pacman_count++;
-                if (pacman_count != 1)
-                {
-                    cout << "ERROR: Map includes more than 1 pac-man." << endl;
-                    return;
-                }
-                _pacman = PacMan(i, j);
-                pacman = &_pacman;
-                vals[i][j] = ' ';
-            }
-            if (vals[i][j] == 'E')
-            {
-                ghost_count++;
-                _ghosts.emplace_back(Ghost(i, j));
-                vals[i][j] = ' ';
-                //ghosts.emplace_back(&_ghosts.back());
-                //ghosts.emplace_back(new Ghost(i, j, this));
-            }
-        }
-    ghosts = &_ghosts;
-    if (pacman_count < 1)
-        cout << "ERROR: Map does not include pac-man starting point." << endl;
+    vals = _vals;
 }
-//Map::Map(vector<string> _vals)
-//{
-//    vals = _vals;
-//}
-*/
 
 void Map::show()
 {
     for (size_t i = 0; i < vals.size(); i++)
-    {
         for (size_t j = 0; j < vals[i].length(); j++)
-        {
             printElement(i, j, vals[i][j]);
-        }
-    }
-    
-    fl = true;
 }
 
 void printElement(int x, int y, char element)
@@ -195,7 +88,7 @@ void printElement(int x, int y, char element)
     }
 }
 
-int Map::updateTile(int x, int y, vector<Ghost> ghosts, string &special, int &prop_turns)
+int Map::updateTile(int x, int y, vector<Ghost*> ghosts, string &special, int &prop_turns)
 {
     int num;
     switch(vals[x][y])
@@ -292,6 +185,7 @@ string getExecutablePath() // This solution to get the path of the execuatable i
 }
 
 /*
+/*
 void Map::saveToFile(string filename)
 {
     ofstream fout;
@@ -330,7 +224,9 @@ void Map::saveToFile(string filename)
     fout.close();
     return;
 }
+*/
 
+/*
 int read_line(string line)
 {
     istringstream record(line);
@@ -340,6 +236,7 @@ int read_line(string line)
     record >> value;
     return value;
 }
+*/
 */
 
 void clearSavedData(string filename)

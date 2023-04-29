@@ -41,6 +41,6 @@ public:
 };
 
 //void checkCharacterCollision(PacMan &pacman, vector<Ghost> &ghosts,int &turns, int &direction);
-void checkCharacterCollision(PacMan &pacman, vector<Ghost> &ghosts,int &turns, int &direction, int &prop_lasting_time, int &fruit_lasting_time, int &prop_turns, string &special); 
+//void checkCharacterCollision(PacMan &pacman, vector<Ghost> &ghosts,int &turns, int &direction, int &prop_lasting_time, int &fruit_lasting_time, int &prop_turns, string &special); 
 
 #endif

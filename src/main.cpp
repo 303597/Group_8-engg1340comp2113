@@ -1,6 +1,7 @@
 #include "tools.h"
 #include "game.h"
 #include "characters.h"
+#include "ui.h"
 #include <locale.h>
 #include <cursesw.h>
 #include <filesystem>

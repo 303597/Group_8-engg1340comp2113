@@ -1,27 +1,44 @@
-Score 205
-startx 3
-starty 10
-x 1
-y 11
-lives 3
-eatenghosts 0
+level 1
+score 20
+in_counteratk 0
+turns 0
+ghost_speed 0.4
+pacman_startx 7
+pacman_starty 6
+pacman_x 7
+pacman_y 7
+pacman_lives 3
+pacman_eatenghosts 0
 ghostnumber 2
-startx 5
-starty 7
-x 5
-y 11
-startx 5
-starty 8
-x 5
-y 12
-# #### ## #### #
-#.0..#.##.#    #
-##.#.#.##.# # ##
-#  #......  #  #
-# ###.#__# ### #
-# ....#  #     #
-# ###.#### ###.#
-#  #       .#..#
-## # # ## #.#.##
-#    # ## #..0.#
-# #### ## ####  
+ghost_startx 5
+ghost_starty 7
+ghost_x 3
+ghost_y 8
+ghost_speed 0.2
+in_counteratk 0
+ghost_startx 5
+ghost_starty 8
+ghost_x 3
+ghost_y 7
+ghost_speed 0.2
+in_counteratk 0
+prop_type -1
+prop_turns 0
+prop_lasting_time 0
+prop_x 10
+prop_y 15
+fruit_num -1
+fruit_lasting_time 0
+fruit_x 10
+fruit_y 15
+# ############ #
+#..0...##......#
+#.#.##.##.##.#.#
+#...#......#...#
+#.###.#__#.###.#
+#.....#  #.....#
+#.###.####.###.#
+#...#.     #...#
+#.#.##.##.##.#.#
+#......##...0..#
+# ############  
