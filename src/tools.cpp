@@ -237,7 +237,6 @@ int read_line(string line)
     return value;
 }
 */
-*/
 
 void clearSavedData(string filename)
 {
