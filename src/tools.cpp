@@ -9,6 +9,7 @@
 #include <filesystem>
 using namespace std;
 
+/*
 Map::Map(string filename, PacMan &_pacman, vector<Ghost> &_ghosts, bool from_saved_data) // _pacman: passed by reference  pacman: belongs to Map
 {
     string path;
@@ -112,6 +113,7 @@ Map::Map(string filename, PacMan &_pacman, vector<Ghost> &_ghosts, bool from_sav
 //{
 //    vals = _vals;
 //}
+*/
 
 void Map::show()
 {
@@ -289,6 +291,7 @@ string getExecutablePath() // This solution to get the path of the execuatable i
     return str.substr(0, str.rfind('/'));
 }
 
+/*
 void Map::saveToFile(string filename)
 {
     ofstream fout;
@@ -337,6 +340,7 @@ int read_line(string line)
     record >> value;
     return value;
 }
+*/
 
 void clearSavedData(string filename)
 {
