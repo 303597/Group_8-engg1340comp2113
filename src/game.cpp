@@ -240,7 +240,7 @@ bool isMapCompleted(const string& filename) {
 */
 
 //void UI() //welcome, gamescore, end, user interfaces
-int gameLoop(int level, Map &game_map, PacMan &pacman, vector<Ghost> &ghosts)
+int gameLoop(int level, Map &game_map, PacMan &pacman, vector<Ghost> &ghosts) // TO BE DELETED
 {
     int dirx[4] = {-1, 1, 0, 0};//up down left right
     int diry[4] = {0, 0, -1, 1};

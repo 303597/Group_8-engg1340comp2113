@@ -27,11 +27,11 @@ private:
 
 public:
     //Map(vector<string> _vals, PacMan &_pacman, vector<Ghost> &ghosts);
-    Map(string filename, PacMan &_pacman, vector<Ghost> &_ghosts, bool from_saved_data = false);
-    void show();
+    Map(string filename, PacMan &_pacman, vector<Ghost> &_ghosts, bool from_saved_data = false); // TO BE MODIFIED
+    void show(); // TO BE CALLED BY GAME
     bool isWall(int x, int y);
-    int updateTile(int x, int y, vector<Ghost> ghosts, string &special, int &prop_turns); // return 0: no buff, 1: energizer
-    void saveToFile(string filename);
+    int updateTile(int x, int y, vector<Ghost> ghosts, string &special, int &prop_turns); // TO BE DELETED // return 0: no buff, 1: energizer
+    void saveToFile(string filename); // TO BE DELETED
     //static Map readFromFile(string filename, PacMan &_pacman, vector<Ghost> &_ghosts);
     vector<string> vals;
     int total_num = 0;

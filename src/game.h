@@ -8,6 +8,22 @@ const double time_per_loop = 400; // milliseconds
 
 extern int score; // declare a score variable that can be modified in other files
 
+class Game
+{
+private:
+    int level;
+    Map* map;
+    PacMan* pacman; vector<Ghost>* ghosts;
+    Menu* menu;
+    int updateTile(int x, int y, string &special, int &prop_turns);
+    void showStatus();
+    void saveToFile(string filename);
+public:
+    Game(int level);
+    Game(string filename);
+    void start();
+};
+
 void save(); // declare the save function
 
 int welcomeLoop();
