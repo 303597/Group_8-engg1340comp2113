@@ -9,7 +9,7 @@ const double time_per_loop = 300; // milliseconds
 
 extern int score; // declare a score variable that can be modified in other files
 
-extern int total_num;
+//extern int total_num;
 
 template <typename T> T read_line(string line)
 {

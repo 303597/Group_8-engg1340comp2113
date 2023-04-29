@@ -12,6 +12,13 @@ using namespace std;
 Map::Map(vector<string> _vals)
 {
     vals = _vals;
+    total_num = 0;
+    for (int i = 0; i < vals.size(); i++)
+        for (int j = 0; j < vals[i].size(); j++)
+            if (vals[i][j] == '.' || vals[i][j] == '0')
+                {
+                    total_num++;
+                }
 }
 
 void Map::show()
@@ -95,6 +102,7 @@ int Map::updateTile(int x, int y, vector<Ghost*> ghosts, string &special, int &p
     {
     	case '0':
 	        num = 8;
+            total_num--;
 	        break;
     	case '.':
             if(special == "double_points")
@@ -104,9 +112,9 @@ int Map::updateTile(int x, int y, vector<Ghost*> ghosts, string &special, int &p
             else
             {
                 score += 5;
-                total_num--;
-		//cookie_count--;
             }
+            total_num--;
+		//cookie_count--;
 	        num = 7;
 	        break;
         case '@':
@@ -185,7 +193,6 @@ string getExecutablePath() // This solution to get the path of the execuatable i
     return str.substr(0, str.rfind('/'));
 }
 
-/*
 /*
 void Map::saveToFile(string filename)
 {
@@ -284,18 +291,18 @@ void Menu::showInGame(int score, int lives)
     //mvprintw(14, 100, "%5d", turns);
 }
 
-vector<pair<string, int>> getScoreRecords()
+vector<ScoreRecord> getScoreRecords()
 {
     ifstream fin(getExecutablePath() + "/../data/score_record.txt");
-    vector<pair<string, int>> histories;
+    vector<ScoreRecord> histories;
     
     if (!fin.fail())
     {
         string history_username;
-        int history_score = 0;
-        while (fin >> history_username >> history_score)
-            histories.emplace_back(make_pair(history_username, history_score));
-		fin >> history_username >> history_score;
+        int history_score = 0, level_obtained = 0;
+        while (fin >> history_username >> history_score >> level_obtained)
+            histories.emplace_back(ScoreRecord{history_username, history_score, level_obtained});
+		//fin >> history_username >> history_score;
 	}
     fin.close();
     return histories;

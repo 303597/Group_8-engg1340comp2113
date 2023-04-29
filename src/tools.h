@@ -20,9 +20,9 @@ class Ghost;
 
 class Map
 {
-private:
-    PacMan* pacman;
-    vector<Ghost>* ghosts;
+//private:
+    //PacMan* pacman;
+    //vector<Ghost>* ghosts;
     //void printMapElement(int x, int y, char element);
 
 public:
@@ -47,9 +47,21 @@ public:
     void showInGame(int score, int lives);
 };
 
+struct ScoreRecord
+{
+    string username;
+    int score, level;
+    bool operator<(ScoreRecord &x)
+    {
+        if (score == x.score)
+            return level < x.level;
+        return score < x.score;
+    }
+};
+
 //void printMenuElement(int x, string line);
 
-vector<pair<string, int>> getScoreRecords();
+vector<ScoreRecord> getScoreRecords();
 
 int read_line(string line);
 

@@ -20,26 +20,26 @@ using namespace std;
 
 int score = 0; // initialize score to be zero
 
-int total_num;
+//int total_num;
 
 
-void saveScoreRecord() // save high score
+void saveScoreRecord(int level) // save high score
 {
     bool need_update = false;
     string username;
-    vector<pair<string, int>> histories = getScoreRecords();
+    vector<ScoreRecord> histories = getScoreRecords();
     const char *res = getenv("USER");
     if (res == NULL)
         username = "Anonymous";
     else
         username = res;
 
-    histories.emplace_back(make_pair(username, score));
-    sort(histories.begin(), histories.end(), [](pair<string, int> x, pair<string, int> y) { return x.second > y.second; } );
+    histories.emplace_back(ScoreRecord{username, score, level});
+    sort(histories.rbegin(), histories.rend());
 	// update the score record
     ofstream fout(getExecutablePath() + "/../data/score_record.txt");
     for (int i = 0; i < min((size_t)10, histories.size()); i++)
-        fout << histories[i].first << " " << histories[i].second << endl;
+        fout << histories[i].username << " " << histories[i].score << " " << histories[i].level << endl;
     fout.close();
 
     score = 0; // reset score to zero after saving it
@@ -87,13 +87,13 @@ void generate_prop(Map &game_map, vector<Ghost*> ghosts, int &prop_lasting_time,
 
 void initializeGame(string filename)
 {
+    bool from_saved_data = true;
+    if (filename == "")
+            from_saved_data = false;
     for (int level = 1; level <= 4; level++)
     {
         nodelay(stdscr, true); // don't wait until input
 
-        bool from_saved_data = true;
-        if (filename == "")
-            from_saved_data = false;
         Game game = from_saved_data ? Game(filename) : Game(level);
         if (from_saved_data)
             level = game.level;
@@ -207,7 +207,7 @@ Game::Game(string filename)
     getline(fin,line);
     int pacman_start_y = read_line<int>(line);
     
-    pacman = new PacMan(pacman_start_x,pacman_start_y);
+    pacman = new PacMan(pacman_start_x, pacman_start_y);
     
     getline(fin,line);
     pacman->x = read_line<int>(line);
@@ -228,7 +228,7 @@ Game::Game(string filename)
         getline(fin,line);
         int ghost_start_y = read_line<int>(line);
         
-        ghosts.emplace_back(new Ghost(ghost_start_x,ghost_start_y)); // to be changed
+        ghosts.emplace_back(new Ghost(ghost_start_x,ghost_start_y));
         
         getline(fin,line);
         ghosts.back()->x = read_line<int>(line);
@@ -409,7 +409,6 @@ Game::Game(int _level)
 
     int pacman_count = 0, ghost_count = 0;
     //cookie_count = 0; // add this to game.h, set as public
-    total_num = 0;
     for (size_t i = 0; i < vals.size(); i++)
     {
         for (size_t j = 0; j < vals[i].length(); j++)
@@ -432,10 +431,6 @@ Game::Game(int _level)
                 vals[i][j] = ' ';
             }
 	    // to be implemented
-            if (vals[i][j] == '.')
-            {
-                total_num++;
-            }
         }
     }
     game_map = new Map(vals);
@@ -812,10 +807,11 @@ int Game::startGame()
         mvprintw(0, 0, "🟦"); // move cursor
         if (pacman->lives <= 0)
         {
-            saveScoreRecord();
+            saveScoreRecord(level);
             return 1;
         }
-	if (total_num == 0)
+        //mvprintw(35, 10, "Total num: %d", game_map->total_num);
+	if (game_map->total_num == 0)
         {
             return 0;
         }
