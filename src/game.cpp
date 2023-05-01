@@ -20,6 +20,9 @@ using namespace std;
 
 int score = 0; // initialize score to be zero
 
+//int total_num = 0;
+
+
 void saveScoreRecord() // save high score
 {
     bool need_update = false;
@@ -406,7 +409,7 @@ Game::Game(int _level)
 
     int pacman_count = 0, ghost_count = 0;
     //cookie_count = 0; // add this to game.h, set as public
-    total_num = 0; // add this to game.h, set as public
+    total_num = 0;
     for (size_t i = 0; i < vals.size(); i++)
     {
         for (size_t j = 0; j < vals[i].length(); j++)
