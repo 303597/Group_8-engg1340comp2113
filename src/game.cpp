@@ -20,7 +20,7 @@ using namespace std;
 
 int score = 0; // initialize score to be zero
 
-//int total_num = 0;
+int total_num;
 
 
 void saveScoreRecord() // save high score
