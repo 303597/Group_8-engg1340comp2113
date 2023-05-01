@@ -5,8 +5,6 @@
 #include <string>
 #include "characters.h"
 
-#include "game.h"
-
 using namespace std;
 
 //extern string username;
