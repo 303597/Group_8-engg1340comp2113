@@ -7,6 +7,9 @@
 #include <fstream>
 #include <iostream>
 #include <filesystem>
+
+#include <game.h>
+
 using namespace std;
 
 Map::Map(vector<string> _vals)
@@ -104,7 +107,8 @@ int Map::updateTile(int x, int y, vector<Ghost*> ghosts, string &special, int &p
             else
             {
                 score += 5;
-                total_num--;
+                //total_num--;
+		cookie_count--;
             }
 	        num = 7;
 	        break;
