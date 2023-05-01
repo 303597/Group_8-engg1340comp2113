@@ -4,13 +4,13 @@ FLAGS = -I lib/ncurses-6.4/include -I lib/ncurses-6.4/include/ncursesw -L lib/nc
 bin/ui.o: src/ui.cpp src/tools.h
 	g++ -c $< $(FLAGS) -o $@  
 
-bin/tools.o: src/tools.cpp src/characters.h src/tools.h src/game.h
+bin/tools.o: src/tools.cpp src/characters.h src/tools.h
 	g++ -c $< $(FLAGS) -o $@ 
 
 bin/characters.o: src/characters.cpp src/characters.h src/tools.h
 	g++ -c $< $(FLAGS) -o $@
 
-bin/game.o: src/game.cpp src/tools.h src/characters.h src/game.h src/ui.h
+bin/game.o: src/game.cpp src/tools.h src/characters.h src/game.h
 	g++ -c $< $(FLAGS) -o $@
 
 bin/main.o: src/main.cpp src/tools.h src/characters.h src/game.h
