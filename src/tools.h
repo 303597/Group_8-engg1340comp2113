@@ -7,8 +7,6 @@
 
 using namespace std;
 
-int total_num;
-
 //extern string username;
 extern int score;
 extern int dirx[]; //  = {0, 0, -1, 1}
@@ -35,7 +33,7 @@ public:
     //void saveToFile(string filename);
     //static Map readFromFile(string filename, PacMan &_pacman, vector<Ghost> &_ghosts);
     vector<string> vals;
-    //int total_num = 0;
+    int total_num = 0;
     bool fl = false;
 };
 
