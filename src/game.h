@@ -41,6 +41,7 @@ private:
     int fruit_pos_x = 0, fruit_pos_y = 0;
     
 public:
+    int cookie_count = 0;
     int level = 0;
     Game(int _level);
     Game(string filename);
