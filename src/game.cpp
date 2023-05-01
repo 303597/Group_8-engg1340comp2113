@@ -405,7 +405,8 @@ Game::Game(int _level)
         vals.emplace_back(str);
 
     int pacman_count = 0, ghost_count = 0;
-    cookie_count = 0; // add this to game.h, set as public
+    //cookie_count = 0; // add this to game.h, set as public
+    total_num = 0; // add this to game.h, set as public
     for (size_t i = 0; i < vals.size(); i++)
     {
         for (size_t j = 0; j < vals[i].length(); j++)
@@ -430,7 +431,7 @@ Game::Game(int _level)
 	    // to be implemented
             if (vals[i][j] == '.')
             {
-                cookie_count++;
+                total_num++;
             }
         }
     }
@@ -811,7 +812,7 @@ int Game::startGame()
             saveScoreRecord();
             return 1;
         }
-	if (cookie_count == 0)
+	if (total_num == 0)
         {
             return 0;
         }
