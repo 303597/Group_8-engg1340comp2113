@@ -23,9 +23,9 @@ Cao Nuanyu, Liu Yihan, Wu Haoyuan, Wu Lixin, Yang Liuqing
 
 ## Requirement Implementation
 ### 1. Generation of random game sets or events
-a)	The map of the maze at each level is random. Each level has 3 different maps. At the beginning of each game, the program will select a random map under that level where the player is currently on. Then the game starts. 
-b)	The bonus tools are randomly generated and appear in random coordinates on the maze.
-c)	The movement of ghosts is partially random. They do not move in a fixed direction at each step, but are roughly close to the player's current position.
+* The map of the maze at each level is random. Each level has 3 different maps. At the beginning of each game, the program will select a random map under that level where the player is currently on. Then the game starts.<br>
+* The bonus tools are randomly generated and appear in random coordinates on the maze.<br>
+* The movement of ghosts is partially random. They do not move in a fixed direction at each step, but are roughly close to the player's current position.<br>
 
 ### 2. Data structures for storing game status
 The coordinates of the Pacman and ghosts are stored in the map's 2-D "vals" vector and updated by directly modifying the corresponding elements in the vector after every game loop. The parameters of the characters are stored in their classes, respectively. For example, the "Pacman" class stores variables including numbers of Pacman's lives and eaten ghosts.
