@@ -23,18 +23,39 @@ Cao Nuanyu, Liu Yihan, Wu Haoyuan, Wu Lixin, Yang Liuqing
 
 ## Requirement Implementation
 ### 1. Generation of random game sets or events
+
 * The map of the maze at each level is random. Each level has 3 different maps. At the beginning of each game, the program will select a random map under that level where the player is currently on. Then the game starts.<br>
 * The bonus tools are randomly generated and appear in random coordinates on the maze.<br>
 * The movement of ghosts is partially random. They do not move in a fixed direction at each step, but are roughly close to the player's current position.<br>
 
 ### 2. Data structures for storing game status
+
 The coordinates of the Pacman and ghosts are stored in the map's 2-D "vals" vector and updated by directly modifying the corresponding elements in the vector after every game loop. The parameters of the characters are stored in their classes, respectively. For example, the "Pacman" class stores variables including numbers of Pacman's lives and eaten ghosts.
+
 ### 3. Dynamic memory management
+
 The information of pacman and ghosts are stored and updated in dynamic memory. In class Game, pacman and each ghost are allocated with new memory when initializing them under class constructors, and memory spaces are deleted everytime game terminates.
+
 ### 4. File input/output
+
 File input and output are implemented in the game status storage. Game status is loaded by the constructor Game::Game() and saved by the saveToFile() function under class Game. All the information about the map coordinates and characters' status are stored in "temp.txt" under the data folder. When the player exits the game, data will be written to the file, and when restarting the game, previous data will be loaded from the file. 
+
 ### 5. Program codes in multiple files
-The game codes are split into different files sorted under different folders. The data folder contains a .txt file storing the records of players' scores. The map folder holds ten .txt files storing all the initial game maps. The ui folder stores all the designs of UI. The src folder contains C++ and header files storing the primary game code. Codes for character storage, game flow, and toolsets are separated. 
+
+Program codes are split into different files according to their functions and sorted under different folders.<br>
+* The ***data*** folder contains a .txt file storing the records of players' scores. 
+* The ***map*** folder holds ten .txt files storing all the initial game maps. <br>
+Maps are divided into three levels, each level contains three .txt files under it. <br>
+In addition, there is a bonus map.
+* The ***src*** folder contains C++ and header files storing the primary game code. <br>
+It contains 5 parts in total: <br>
+characters.cpp & characters.h – supports characteristics of ghosts and players <br>
+game.cpp & game.h – supports game flow <br>
+main.cpp – Integrate the code needed to run the entire game <br>
+tools.cpp & tools.h – supports some of the functions often used in games including MapShow, ScoreUpdate, GetFilePath, etc.<br>
+ui.cpp & ui.h – supports operations related with ui <br>
+* The ***ui*** folder stores all the designs of UI. <br>
+Including the Start Menu, How to Play, High Scores, In_Game window, and Pause window.
 
 ## Libraries
 C++ libraries: ctime, cstdlib, iostream, vector, cmath, sstream, fstream...
