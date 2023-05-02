@@ -58,8 +58,12 @@ ui.cpp & ui.h – Supports operations related with ui <br>
 Including the Start Menu window, How to Play window, High Scores window, In_Game window, and Pause window.
 
 ## Libraries
-C++ libraries: ctime, cstdlib, iostream, vector, cmath, sstream, fstream...
-Additional library: ncurses-6.4
+
+* C++ libraries being used include: <br>
+ctime, chrono, iostream, fstream, sstream, filesystem, cstdlib, vector, string, cmath, algorithm
+
+* Additional library being used include: <br>
+ncurses-6.4
 
 ## Instructions
 // Compilation and executions
