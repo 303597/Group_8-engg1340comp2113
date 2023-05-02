@@ -55,7 +55,7 @@ bool check(int x,int y, vector<Ghost*> ghosts){
     return false;
 }
 
-void generate_prop(Map &game_map, vector<Ghost*> ghosts, int &prop_lasting_time, int &prop_pos_x, int &prop_pos_y, int fruit_lasting_time)
+void generate_prop(Map* game_map, vector<Ghost*> ghosts, int &prop_lasting_time, int &prop_pos_x, int &prop_pos_y, int fruit_lasting_time)
 {
 	char prop[6] = {'@', '$', '*', '^', '!', '?'};
     int num;
@@ -67,21 +67,22 @@ void generate_prop(Map &game_map, vector<Ghost*> ghosts, int &prop_lasting_time,
     {
         num = rand() % 5; // exclude '?'
     }
-    int x = game_map.vals.size() - 1;
-    int y = game_map.vals[x].size() - 1;
+    int x = -1;
+    int y = -1;
 	while(1)
 	{
-        if(!(x == 0 && y == 0) && game_map.vals[x][y] == ' ' && !check(x, y, ghosts))
+        if(!(x == -1 && y == -1) && game_map->vals[x][y] == ' ' && !check(x, y, ghosts))
         {
             break;
         }
-		x = rand() % game_map.vals.size();
-		y = rand() % game_map.vals[x].size(); // generate postion
+		x = rand() % game_map->vals.size();
+		y = rand() % game_map->vals[x].size(); // generate postion
 	}
-	game_map.vals[x][y] = prop[num];
+	game_map->vals[x][y] = prop[num];
 	prop_lasting_time = 20 * ghosts.size();
     prop_pos_x = x;
     prop_pos_y = y;
+    //mvprintw(35, 10, "%d %d %d", x, y, num);
     return;
 }
 
@@ -442,6 +443,15 @@ Game::Game(int _level)
         cout << "ERROR: Map does not include pac-man starting point." << endl;
 }
 
+Game::~Game()
+{
+    delete game_map;
+    delete pacman;
+    for (int i = 0; i < ghosts.size(); i++)
+        delete ghosts[i];
+    delete game_menu;
+}
+
 void Game::checkCharacterCollision()
 {
     for (int i = 0; i < ghosts.size(); ++i)
@@ -604,7 +614,7 @@ int Game::startGame()
         
         if (score >= ghosts.size()*150 && prop_lasting_time == 0)
         {
-            generate_prop(*game_map, ghosts, prop_lasting_time, prop_pos_x, prop_pos_y, fruit_lasting_time);
+            generate_prop(game_map, ghosts, prop_lasting_time, prop_pos_x, prop_pos_y, fruit_lasting_time);
         }
         if(score >= game_map->total_num * 5 / 3 + 50 * ghosts.size() / 3)
         {

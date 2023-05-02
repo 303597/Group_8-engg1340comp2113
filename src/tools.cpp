@@ -307,3 +307,13 @@ vector<ScoreRecord> getScoreRecords()
     fin.close();
     return histories;
 }
+
+string& Map::operator[](int index)
+{
+    return vals[index];
+}
+
+size_t Map::size()
+{
+    return vals.size();
+}

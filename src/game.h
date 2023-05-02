@@ -49,6 +49,7 @@ public:
     Game(string filename);
     int startGame();
     int pauseGame();
+    ~Game();
 };
 
 void save(); // declare the save function

@@ -35,6 +35,8 @@ public:
     vector<string> vals;
     int total_num = 0;
     bool fl = false;
+    string& operator[](int index);
+    size_t size();
 };
 
 class Menu
