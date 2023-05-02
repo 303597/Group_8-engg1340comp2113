@@ -79,7 +79,7 @@ void generate_prop(Map* game_map, vector<Ghost*> ghosts, int &prop_lasting_time,
 		y = rand() % game_map->vals[x].size(); // generate postion
 	}
 	game_map->vals[x][y] = prop[num];
-	prop_lasting_time = 20 * ghosts.size();
+	prop_lasting_time = 14 * ghosts.size();
     prop_pos_x = x;
     prop_pos_y = y;
     //mvprintw(35, 10, "%d %d %d", x, y, num);
@@ -436,8 +436,8 @@ Game::Game(int _level)
     }
     game_map = new Map(vals);
 
-    prop_pos_x = game_map->vals.size() - 1; prop_pos_y = game_map->vals[prop_pos_x].size() - 1;
-    fruit_pos_x = game_map->vals.size() - 1; fruit_pos_y = game_map->vals[fruit_pos_x].size() - 1;
+    prop_pos_x = ghosts[0]->start_x; prop_pos_y = ghosts[0]->start_y;
+    fruit_pos_x = ghosts[0]->start_x + 2; fruit_pos_y = ghosts[0]->start_y;
 
     if (pacman_count < 1)
         cout << "ERROR: Map does not include pac-man starting point." << endl;
@@ -500,7 +500,7 @@ void Game::checkCharacterCollision()
 					turns = 0;
 				}
 				fruit_lasting_time = 0;
-				prop_lasting_time = 10 * ghosts.size();
+				prop_lasting_time = 4 * ghosts.size();
 				prop_turns = 0;
 				special = "none";
 				// player and all the ghosts reset
@@ -690,7 +690,7 @@ int Game::startGame()
                     fruit_x = game_map->vals.size() - 1;
                     fruit_y = game_map->vals[fruit_x].size() - 1;
                 }
-                prop_lasting_time = 10 * ghosts.size(); 
+                prop_lasting_time = 4 * ghosts.size(); 
                 tile_info = 6;
         }
 
@@ -783,7 +783,7 @@ int Game::startGame()
 
         checkCharacterCollision();
 
-        if(prop_lasting_time == 10 * ghosts.size())
+        if(prop_lasting_time == 4 * ghosts.size())
         {
             game_map->vals[prop_pos_x][prop_pos_y] = ' ';
         }
@@ -798,9 +798,9 @@ int Game::startGame()
 
         showStatus();
         mvprintw(23, 104, "%d" ,turns);
-        if(prop_lasting_time >= 10 * ghosts.size())
+        if(prop_lasting_time >= 4 * ghosts.size())
         {
-            mvprintw(24, 104, "%ld", prop_lasting_time - 10 * ghosts.size());
+            mvprintw(24, 104, "%ld", prop_lasting_time - 4 * ghosts.size());
         }
         else if(prop_turns != 0)
         {
