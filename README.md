@@ -49,13 +49,13 @@ Maps are divided into three levels, each level contains three .txt files under i
 In addition, there is a bonus map.
 * The ***src*** folder contains C++ and header files storing the primary game code. <br>
 It contains 5 parts in total: <br>
-characters.cpp & characters.h – supports characteristics of ghosts and players <br>
-game.cpp & game.h – supports game flow <br>
+characters.cpp & characters.h – Supports characteristics of ghosts and players <br>
+game.cpp & game.h – Supports game flow <br>
 main.cpp – Integrate the code needed to run the entire game <br>
-tools.cpp & tools.h – supports some of the functions often used in games including MapShow, ScoreUpdate, GetFilePath, etc.<br>
-ui.cpp & ui.h – supports operations related with ui <br>
+tools.cpp & tools.h – Supports some of the functions often used in games including MapShow, ScoreUpdate, GetFilePath, etc.<br>
+ui.cpp & ui.h – Supports operations related with ui <br>
 * The ***ui*** folder stores all the designs of UI. <br>
-Including the Start Menu, How to Play, High Scores, In_Game window, and Pause window.
+Including the Start Menu window, How to Play window, High Scores window, In_Game window, and Pause window.
 
 ## Libraries
 C++ libraries: ctime, cstdlib, iostream, vector, cmath, sstream, fstream...
