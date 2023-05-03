@@ -14,7 +14,7 @@
 ##                 ——  ——  ——        ——  ——  ——                                                                       ##
 ##                ##########################################################################################          ##
 ##                Items                                                                                               ##
-##                # Wall     · Cookie    & Ghost    O Super Bean    $ Vulnerable Ghost    // Ghost Home               ##
+##                # Wall     · Cookie    && Ghost    O Super Bean    &* Vulnerable Ghost    // Ghost Home               ##
 ##                                                                                                                    ##
 ##                $ Magnet   ~ Freeze    v Slow     》 Through Wall  ? Random Bonus        F Fruits                   ##
 ##                ##########################################################################################          ##
