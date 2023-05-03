@@ -14,7 +14,7 @@
 ##                 ——  ——  ——        ——  ——  ——                                                                       ##
 ##                ##########################################################################################          ##
 ##                Items                                                                                               ##
-##                # Wall     · Cookie    && Ghost    O Super Bean    &* Vulnerable Ghost    // Ghost Home               ##
+##                # Wall     · Cookie    && Ghost    O Super Bean    &* Vulnerable Ghost    // Ghost Home             ##
 ##                                                                                                                    ##
 ##                $ Magnet   ~ Freeze    v Slow     》 Through Wall  ? Random Bonus        F Fruits                   ##
 ##                ##########################################################################################          ##
@@ -25,7 +25,7 @@
 ##                4. Special items have time limit.                                                                   ##
 ##                5. Capitalize on special items.                                                                     ##
 ##                6. Eat as many fruits as possible.                                                                  ##
-##                7. Press left and right repeatedly if you want to stay in place.                                    ##
+##                7. Hit the wall if you want to stay in place.                                                       ##
 ##                8. If you don't take any action after hitting a wall, you will stay still.                          ##
 ##                                                                                                                    ##
 ##                                                                                       Press any key to go back     ##
