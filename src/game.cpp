@@ -726,6 +726,7 @@ int Game::startGame()
                     {
                         score += 5;
                         game_map->vals[xx][yy] = ' ';
+                        game_map->cookie_num--;
                     }
                 }
             }
