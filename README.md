@@ -6,12 +6,12 @@ This is Group 8 of the course engg1340andcomp2113.
 Cao Nuanyu, Liu Yihan, Wu Haoyuan, Wu Lixin, Yang Liuqing
 
 ## Description
-"Pac-Man+" is a game created by imitating the classic game Pac-Man. In this game, players take on the role of the titular character, a yellow circle 🟡 that moves through a maze while eating small cookies, large cookies, and fruits to score points and progress to the next level. Along the way, they must avoid being caught by  ghosts that continually chase after them, losing a life if caught. The game ends when all three lives are lost. Difficulty increases as levels progress, with faster and more numerous ghosts.
+"Pac-Man+" is a game created by imitating the classic game Pac-Man. In this game, players take on the role of the titular character, a yellow circle(🟡) that moves through a maze while eating small cookies(◽), large cookies(🟢), and fruits(🍒/🍑/🍉/🍇) to score points and progress to the next level. Along the way, they must avoid being caught by  ghosts(👻) that continually chase after them, losing a life if caught. The game ends when all three lives are lost. Difficulty increases as levels progress, with faster and more numerous ghosts.
 
 ## Game Rules
 1. At the beginning of the game, the player controls the role to move through the maze and eat all the cookies and fruits. Eating fruits can earn additional points. As the game progresses, fruits become more valuable.
 2. There are several ghosts in the maze that constantly chase after the player. If the player is caught by a ghost, he loses a life. When all lives are lost, the game ends.
-3. There are several big cookies in the maze. If the player eats it, all the ghosts become vulnerable. The player can eat the vulnerable ghosts to obtain extra socres, and the ghost eaten will return to the starting point and wait to recover. The counter-attack mode lasts 30 turns for the Pacman.
+3. There are several big cookies in the maze. If the player eats it, all the ghosts become vulnerable(🥶). The player can eat the vulnerable ghosts to obtain extra socres, and the ghost eaten will return to the starting point and wait to recover. The counter-attack mode lasts 30 turns for the Pacman.
 4. There are several warp tunnels in the maze. The player can move from one warp tunnel to the other, quickly moving to different parts of the maze.
 
 ## Key Features
