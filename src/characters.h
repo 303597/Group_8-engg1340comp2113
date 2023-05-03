@@ -37,6 +37,7 @@ public:
     void move(int target_x, int target_y, double ghost_speed);
     void show();
     bool in_counteratk_mode = false;
+    int type;
     double speed = 0.0;
 };
 

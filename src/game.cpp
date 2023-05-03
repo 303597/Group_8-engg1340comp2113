@@ -405,6 +405,7 @@ Game::Game(int _level)
 
     string str;
     vector<string> vals;
+    int cnt = 0;
     while (getline(fin, str))
         vals.emplace_back(str);
 
@@ -429,6 +430,8 @@ Game::Game(int _level)
             {
                 ghost_count++;
                 ghosts.emplace_back(new Ghost(i, j));
+                ghosts[cnt]->type = cnt;
+                cnt++;
                 vals[i][j] = ' ';
             }
 	    // to be implemented
