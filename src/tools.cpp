@@ -19,6 +19,9 @@ Map::Map(vector<string> _vals)
                 {
                     cookie_num++;
                 }
+    mvprintw(5, 104, "%d", cookie_num);
+    mvprintw(6, 104, "DDDDDD");
+    refresh();
 }
 
 void Map::show()

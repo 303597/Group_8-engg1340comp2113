@@ -438,7 +438,7 @@ Game::Game(int _level)
         }
     }
     game_map = new Map(vals);
-
+    
     prop_pos_x = ghosts[0]->start_x; prop_pos_y = ghosts[0]->start_y;
     fruit_pos_x = ghosts[0]->start_x; fruit_pos_y = ghosts[0]->start_y;
 
@@ -700,9 +700,9 @@ int Game::startGame()
         if(special == "magnet")
         {
             int xx, yy;
-            for(int a = -1; a <= 1; a++)
+            for(int a = -2; a <= 2; a++)
             {
-                for(int b = -1; b <= 1; b++)
+                for(int b = -2; b <= 2; b++)
                 {
                     xx = pacman->x + a; yy = pacman->y + b;
                     if (xx < 0)
@@ -811,7 +811,7 @@ int Game::startGame()
         }
 
         showStatus();
-        mvprintw(23, 104, "%d" ,turns);
+        mvprintw(23, 104, "%d" ,game_map->cookie_num);
         if(prop_lasting_time >= 4 * ghosts.size())
         {
             mvprintw(24, 104, "%ld", prop_lasting_time - 4 * ghosts.size());
