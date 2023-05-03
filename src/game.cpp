@@ -440,7 +440,7 @@ Game::Game(int _level)
     game_map = new Map(vals);
 
     prop_pos_x = ghosts[0]->start_x; prop_pos_y = ghosts[0]->start_y;
-    fruit_pos_x = ghosts[0]->start_x + 2; fruit_pos_y = ghosts[0]->start_y;
+    fruit_pos_x = ghosts[0]->start_x; fruit_pos_y = ghosts[0]->start_y;
 
     if (pacman_count < 1)
         cout << "ERROR: Map does not include pac-man starting point." << endl;
@@ -615,7 +615,7 @@ int Game::startGame()
         }
         pacman->move(direction, special);
         
-        if (score >= ghosts.size()*150 && prop_lasting_time == 0)
+        if (score >= ghosts.size()*150 && prop_lasting_time == 0 && prop_turns == 0)
         {
             generate_prop(game_map, ghosts, prop_lasting_time, prop_pos_x, prop_pos_y, fruit_lasting_time);
         }
