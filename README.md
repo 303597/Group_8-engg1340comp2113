@@ -6,12 +6,12 @@ This is Group 8 of the course engg1340andcomp2113.
 Cao Nuanyu, Liu Yihan, Wu Haoyuan, Wu Lixin, Yang Liuqing
 
 ## Description
-"Pac-Man+" is a game created by imitating the classic game Pac-Man. In this game, players take on the role of the titular character, a yellow circle that moves through a maze while eating small cookies, large cookies, and fruits to score points and progress to the next level. Along the way, they must avoid being caught by  ghosts that continually chase after them, losing a life if caught. The game ends when all lives are lost. Difficulty increases as levels progress, with faster and more numerous ghosts.
+"Pac-Man+" is a game created by imitating the classic game Pac-Man. In this game, players take on the role of the titular character, a yellow circle 🟡 that moves through a maze while eating small cookies, large cookies, and fruits to score points and progress to the next level. Along the way, they must avoid being caught by  ghosts that continually chase after them, losing a life if caught. The game ends when all three lives are lost. Difficulty increases as levels progress, with faster and more numerous ghosts.
 
 ## Game Rules
 1. At the beginning of the game, the player controls the role to move through the maze and eat all the cookies and fruits. Eating fruits can earn additional points. As the game progresses, fruits become more valuable.
 2. There are several ghosts in the maze that constantly chase after the player. If the player is caught by a ghost, he loses a life. When all lives are lost, the game ends.
-3. There are several big cookies in the maze. If the player eats it, all the ghosts become vulnerable. The player can eat the ghosts obtaining extra socres, and the ghost eaten will return to the starting point and wait to recover.
+3. There are several big cookies in the maze. If the player eats it, all the ghosts become vulnerable. The player can eat the vulnerable ghosts to obtain extra socres, and the ghost eaten will return to the starting point and wait to recover. The counter-attack mode lasts 30 turns for the Pacman.
 4. There are several warp tunnels in the maze. The player can move from one warp tunnel to the other, quickly moving to different parts of the maze.
 
 ## Key Features
@@ -20,6 +20,7 @@ Cao Nuanyu, Liu Yihan, Wu Haoyuan, Wu Lixin, Yang Liuqing
 3. Diverse map design, increasing the fun and challenge of the game.
 4. Gradually increasing difficulty levels that require players to constantly improve their proficiency in this game.
 5. Abundant carefully-designed toolsets giving players refreshed game experience every time.
+6. The high score board records the top players, adding competeing challenge. 
 
 ## Requirement Implementation
 ### 1. Generation of random game sets or events
@@ -63,7 +64,10 @@ Including the Start Menu window, How to Play window, High Scores window, In_Game
 ctime, chrono, iostream, fstream, sstream, filesystem, cstdlib, vector, string, cmath, algorithm
 
 * Additional library being used include: <br>
-ncurses-6.4
+ncurses-6.4 <br>
+<sub>The library ncurses is used to write user interfaces in a terminal-independent manner. It enables interactive console-based applications with text formatting and keyboard input features. <br>
+Ncurses is mainly used to read keyboard input and output text to the terminal screen. For instance, the getch() function is used to read user input from the keyboard. It waits for the user to press a key and returns the corresponding ASCII code of the key pressed. It helps implement single-key actions, including moving the Pacman in the maze map and selecting an option from the game menu. <br>
+Ncurses also optimizes screen changes to reduce the latency experienced when using remote shells. The refresh() function is used to update the physical screen with the content of the virtual screen in the welcomeLoop(). Any changes to the virtual screen will not be immediately visible on the physical screen until refresh() is called. After the user has provided input and the program has updated the virtual screen accordingly, refresh() is called to display the updated content on the physical screen.</sub>
 
 ## Instructions
 // Compilation and executions
