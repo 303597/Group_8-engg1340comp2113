@@ -12,12 +12,12 @@ using namespace std;
 Map::Map(vector<string> _vals)
 {
     vals = _vals;
-    total_num = 0;
+    cookie_num = 0;
     for (int i = 0; i < vals.size(); i++)
         for (int j = 0; j < vals[i].size(); j++)
             if (vals[i][j] == '.' || vals[i][j] == '0')
                 {
-                    total_num++;
+                    cookie_num++;
                 }
 }
 
@@ -46,7 +46,7 @@ void printElement(int x, int y, char element)
             /*
             if(!fl)
             {
-                total_num++;
+                cookie_num++;
             }
             */
             break;
@@ -102,7 +102,7 @@ int Map::updateTile(int x, int y, vector<Ghost*> ghosts, string &special, int &p
     {
     	case '0':
 	        num = 8;
-            total_num--;
+            cookie_num--;
 	        break;
     	case '.':
             if(special == "double_points")
@@ -113,7 +113,7 @@ int Map::updateTile(int x, int y, vector<Ghost*> ghosts, string &special, int &p
             {
                 score += 5;
             }
-            total_num--;
+            cookie_num--;
 		//cookie_count--;
 	        num = 7;
 	        break;

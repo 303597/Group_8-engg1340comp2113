@@ -60,7 +60,7 @@ void PacMan::move(int direction, string special)
 	return;
 }
 
-void Ghost::move(int target_x, int target_y, double speed)
+void Ghost::move(int target_x, int target_y, double speed, int ghost_num)
 {
 	if(x == start_x && y == start_y){
 		if(map->vals[x-1][y] == '_'){
@@ -233,17 +233,17 @@ void Ghost::move(int target_x, int target_y, double speed)
 					{
 						if(poss[1-p] != 0)
 						{
-							poss[1-p] = 20 + sum; sum += 20;
+							poss[1-p] = 10 * ghost_num + sum; sum += 10 * ghost_num;
 						}
-						poss[p] = 3 + sum; sum += 3;
+						poss[p] = 2 * ghost_num + sum; sum += 2 * ghost_num;
 						continue;
 					}// better chase the pac-man
 				}
-				poss[p] = 103 + sum; sum += 103;
+				poss[p] = 30 * ghost_num + sum; sum += 30 * ghost_num;
 			}
 			else
 			{
-				poss[p] = 10 + sum; sum += 10;
+				poss[p] = 8 * ghost_num + sum; sum += 5 * ghost_num;
 			}
 		}
 		else if (hori == p)
@@ -256,21 +256,21 @@ void Ghost::move(int target_x, int target_y, double speed)
 					{
 						if(poss[5-p] != 0)
 						{
-							poss[5-p] = 20 + sum; sum += 20;
+							poss[5-p] = 10 * ghost_num + sum; sum += 10 * ghost_num;
 						}
-						poss[p] = 3 + sum; sum += 3;
+						poss[p] = 2 * ghost_num + sum; sum += 2 * ghost_num;
 						continue;
 					}// better chase the pac-man
 				}
-				poss[p] = 103 + sum; sum += 103;
+				poss[p] = 30 * ghost_num + sum; sum += 30 * ghost_num;
 			}// better chase the pac-man
 			else
 			{
-				poss[p] = 20 + sum; sum += 20;
+				poss[p] = 8 * ghost_num + sum; sum += 8 * ghost_num;
 			}
 		}
 		else{
-			poss[p] = 1 + sum; sum += 1;
+			poss[p] = ghost_num + sum; sum += ghost_num;
 		}
 	}
 	int num = rand() % sum; // generate a random number range [0, sum-1]

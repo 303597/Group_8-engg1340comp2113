@@ -619,11 +619,11 @@ int Game::startGame()
         {
             generate_prop(game_map, ghosts, prop_lasting_time, prop_pos_x, prop_pos_y, fruit_lasting_time);
         }
-        if(score >= game_map->total_num * 5 / 3 + 50 * ghosts.size() / 3)
+        if(score >= game_map->cookie_num * 5 / 3 + 50 * ghosts.size() / 3)
         {
             ghost_speed = 0.8;
         }
-        if(score >= game_map->total_num * 10 / 3 + 100 * ghosts.size() / 3)
+        if(score >= game_map->cookie_num * 10 / 3 + 100 * ghosts.size() / 3)
         {
             ghost_speed = 1.0;
         }
@@ -777,10 +777,21 @@ int Game::startGame()
 
         for (Ghost* ghost: ghosts)
         {
-            if(ghost->speed >= 1.0)
+            if(ghost->type % 2 == 1)
             {
-                ghost->speed -= 1.0;
-                ghost->move(pacman->x, pacman->y, ghost_speed);
+                if(ghost->speed >= 1.0)
+                {
+                    ghost->speed -= 1.0;
+                    ghost->move(pacman->x, pacman->y, ghost_speed, ghosts.size());
+                }
+            }
+            else
+            {
+                if(ghost->speed >= 1.5)
+                {
+                    ghost->speed -= 1.5;
+                    ghost->move(pacman->x, pacman->y, ghost_speed, ghosts.size());
+                }
             }
         }
 
@@ -824,7 +835,7 @@ int Game::startGame()
             return 1;
         }
         //mvprintw(35, 10, "Total num: %d", game_map->total_num);
-	if (game_map->total_num == 0)
+	if (game_map->cookie_num == 0)
         {
             return 0;
         }

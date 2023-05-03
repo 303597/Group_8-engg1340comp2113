@@ -33,7 +33,7 @@ public:
     //void saveToFile(string filename);
     //static Map readFromFile(string filename, PacMan &_pacman, vector<Ghost> &_ghosts);
     vector<string> vals;
-    int total_num = 0;
+    int cookie_num = 0;
     bool fl = false;
     string& operator[](int index);
     size_t size();
