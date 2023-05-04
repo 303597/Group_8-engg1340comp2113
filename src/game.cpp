@@ -645,6 +645,7 @@ int Game::startGame()
             	generate_prop(game_map, ghosts, prop_lasting_time, prop_pos_x, prop_pos_y, fruit_lasting_time);
 	    	prop_pos_xall[lev] = prop_pos_x;
 		prop_pos_yall[lev] = prop_pos_y;
+		lev_already = level;
 	    }
         }
         if(level_score >= game_map->cookie_num * 5 / 3 + 50 * ghosts.size() / 3)
