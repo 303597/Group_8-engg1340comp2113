@@ -815,7 +815,7 @@ int Game::startGame()
         }
 
         showStatus();
-        mvprintw(23, 104, "%d" ,game_map->cookie_num);
+        mvprintw(23, 104, "%d" ,turns);
         if(prop_lasting_time >= 4 * ghosts.size())
         {
             mvprintw(24, 104, "%ld", prop_lasting_time - 4 * ghosts.size());
