@@ -47,7 +47,10 @@ The information of pacman and ghosts are stored and updated in dynamic memory. I
 
 ### 4. File input/output
 
-File input and output are implemented in the game status storage. Game status is loaded by the constructor Game::Game() and saved by the saveToFile() function under class Game. All the information about the map coordinates and characters' status are stored in "temp.txt" under the data folder. When the player exits the game, data will be written to the file, and when restarting the game, previous data will be loaded from the file. 
+* File input and output are implemented in the game status storage. 
+* Game status is loaded by the constructor ***Game::Game()*** and saved by the ***saveToFile()*** function under class Game. 
+* All the information about the map coordinates and characters' status are stored in ***"temp.txt"*** under the data folder.  <br>
+When the player exits the game, data will be written to the file, and when restarting the game, previous data will be loaded from the file.
 
 ### 5. Program codes in multiple files
 
