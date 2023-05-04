@@ -48,7 +48,10 @@ File input and output are implemented in the game status storage. Game status is
 ### 5. Program codes in multiple files
 
 Program codes are split into different files according to their functions and sorted under different folders.<br>
-* The ***data*** folder contains a .txt file storing the records of players' scores. 
+* The ***data*** folder contains three .txt files storing the records needed for the game to proceed. <br>
+score_record.txt – Stores records of players' scores. <br>
+temp.txt - Save the half-finished game progress for further reloading the progress when the game is back up and running. <br>
+config.txt - Save the player's system settings and decide whether the game interface will be displayed in emoji or ASCII code. <br>
 * The ***map*** folder holds ten .txt files storing all the initial game maps. <br>
 Maps are divided into three levels, each level contains three .txt files under it. <br>
 In addition, there is a bonus map.
