@@ -857,7 +857,8 @@ int Game::startGame()
         }
 
         showStatus();
-        mvprintw(24, 108, "%d" ,turns);
+        mvprintw(19, 98, "%5d", level);
+	mvprintw(24, 108, "%d", turns);
         if(prop_lasting_time >= 4 * ghosts.size())
         {
             mvprintw(25, 108, "%ld", prop_lasting_time - 4 * ghosts.size());

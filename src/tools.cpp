@@ -37,7 +37,70 @@ void printElement(int x, int y, char element)
 {
     if (ascii)
     {
-        
+        switch (element)
+    	{
+		case 'o':
+		    mvprintw(x + 2, 2 * y + 4, "OO");
+		    break;
+		case '#':
+		    mvprintw(x + 2, 2 * y + 4, "##");
+		    break;
+		case '_':
+		    mvprintw(x + 2, 2 * y + 4, "//");
+		    break;
+		case '.':
+		    mvprintw(x + 2, 2 * y + 4, "··");
+		    /*
+		    if(!fl)
+		    {
+			cookie_num++;
+		    }
+		    */
+		    break;
+		case 'E':
+		    mvprintw(x + 2, 2 * y + 4, "&&");
+		    break;
+		case 'e':
+		    mvprintw(x + 2, 2 * y + 4, "&*");
+		    break;
+		case '0':
+		    mvprintw(x + 2, 2 * y + 4, "oo");
+		    break;
+		case '@':
+		    mvprintw(x + 2, 2 * y + 4, "UU");
+		    break;
+		case '$':
+		    mvprintw(x + 2, 2 * y + 4, "$$");
+		    break;
+		case '*':
+		    mvprintw(x + 2, 2 * y + 4, "~~");
+		    break;
+		case '^':
+		    mvprintw(x + 2, 2 * y + 4, "vv");
+		    break;
+		case '!':
+		    mvprintw(x + 2, 2 * y + 4, "》》");
+		    break;
+		case '?':
+		    mvprintw(x + 2, 2 * y + 4, "??");
+		    break;
+		case '1':
+		    mvprintw(x + 2, 2 * y + 4, "FF");
+		    break;
+		case '2':
+		    mvprintw(x + 2, 2 * y + 4, "FF");
+		    break;
+		case '3':
+		    mvprintw(x + 2, 2 * y + 4, "FF");
+		    break;
+		case '4':
+		    mvprintw(x + 2, 2 * y + 4, "FF");
+		    break;
+		default:
+		    mvprintw(x + 2, 2 * y + 4, "  ");
+		    break;
+	}
+	return;
     }
     switch (element)
     {

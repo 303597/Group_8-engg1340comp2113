@@ -14,9 +14,9 @@
 ##                 ——  ——  ——        ——  ——  ——                                                                       ##
 ##                ##########################################################################################          ##
 ##                Items                                                                                               ##
-##                # Wall     · Cookie    && Ghost    O Super Bean    &* Vulnerable Ghost    // Ghost Home             ##
+##                # Wall     · Cookie    && Ghost    o Super Bean    &* Vulnerable Ghost    // Ghost Home             ##
 ##                                                                                                                    ##
-##                $ Magnet   ~ Freeze    v Slow     》 Through Wall  ? Random Bonus        F Fruits                   ##
+##                U Magnet   ~ Freeze    v Slow     》 Through Wall  ? Random Bonus        F Fruits                   ##
 ##                ##########################################################################################          ##
 ##                Tips                                                                                                ##
 ##                1. Eat "·" to obtain higher score. Eat all the "·" to enter the next level.                         ##
