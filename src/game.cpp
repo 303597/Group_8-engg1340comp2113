@@ -202,7 +202,7 @@ Game::Game(string filename, PacMan &_pacman)
     getline(fin,line);
     turns = read_line<int>(line);
     getline(fin,line);
-    ghost_speed = read_line<int>(line);
+    ghost_speed = read_line<double>(line);
 
     
     // _pacman
