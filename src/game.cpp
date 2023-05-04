@@ -20,10 +20,8 @@ using namespace std;
 
 int score = 0; // initialize score to be zero
 
-//int total_num;
-
-
-void saveScoreRecord(int level) // save high score
+// This function saves the player's score
+void saveScoreRecord(int level)
 {
     bool need_update = false;
     string username;
@@ -55,6 +53,7 @@ bool check(int x,int y, vector<Ghost*> ghosts){
     return false;
 }
 
+// This function generates tool's random position
 void generate_prop(Map* game_map, vector<Ghost*> ghosts, int &prop_lasting_time, int &prop_pos_x, int &prop_pos_y, int fruit_lasting_time)
 {
 	char prop[6] = {'@', '$', '*', '^', '!', '?'};
@@ -86,6 +85,7 @@ void generate_prop(Map* game_map, vector<Ghost*> ghosts, int &prop_lasting_time,
     return;
 }
 
+// This function randomly chooses a map to open in a particular level
 void initializeGame(string filename)
 {
     bool from_saved_data = true;
@@ -100,18 +100,12 @@ void initializeGame(string filename)
         if (from_saved_data)
             level = game.level;
         /*
-        // Map game_map = Map(filename, pacman, ghosts, from_saved_data);
-            
-            
+        // Map game_map = Map(filename, pacman, ghosts, from_saved_data);   
             Map game_map = Map("/2_Monsters/map2.txt", pacman, ghosts);
-            
-
                 //randomly choose a map to open
                 int x = 2 + rand() % (3);
             */
 
-            // randomly choose a map to open in a particular level
-            
         int game_result = game.startGame();
         // if life == 0, game ends
         if (from_saved_data && (game_result == 0 || game_result == 1))
@@ -177,6 +171,7 @@ Game::Game(int level)
 }
 */
 
+// This Game constructor loads data from the saved file
 Game::Game(string filename, PacMan &_pacman)
 {
     string path;
@@ -302,6 +297,7 @@ int Game::pauseGame()
     }
 }
 
+// This function saves data to the tempt.txt
 void Game::saveToFile(string filename)
 {
     ofstream fout;
@@ -390,6 +386,7 @@ bool isMapCompleted(const string& filename) {
 }
 */
 
+// This Game constructor starts game according to the level
 Game::Game(int _level, PacMan &_pacman)
 {
     level = _level;
@@ -458,6 +455,7 @@ Game::~Game()
     delete game_menu;
 }
 
+// Thsi function checks positions of Pacman and ghosts, and updates relative variables according 
 void Game::checkCharacterCollision()
 {
     for (int i = 0; i < ghosts.size(); ++i)
@@ -528,6 +526,7 @@ void Game::checkCharacterCollision()
 	// note: check counteratk mode, handle eat results
 }
 
+// This is the game loop of one turn
 int Game::startGame()
 {
     int dirx[4] = {-1, 1, 0, 0};//up down left right
@@ -846,15 +845,12 @@ int Game::startGame()
 	/*
 	else
         {
-            
             bool result = isMapCompleted(filename);
             if (result)
             {
                 return true;
-            }
-            
+            } 
         }
 	*/
-
     }
 }
