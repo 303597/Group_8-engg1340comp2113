@@ -559,8 +559,8 @@ int Game::startGame()
     */
 
     char fruits[4] = {'1', '2', '3', '4'};
-   
-    game_menu = new Menu("in_game.txt");
+		string filename666 = ascii ? "in_game_ascii.txt" : "in_game.txt";
+    game_menu = new Menu(filename666);
     game_map->vals[0][0] = '#';
     pacman->linkMap(game_map);
     for (Ghost* ghost: ghosts)
