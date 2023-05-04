@@ -27,7 +27,7 @@
 ##                                                                               |                                      ##
 ##                                                                               |                                      ##
 ##                                                                               |      Press [P] to pause              ##
-##                                                                               |      Press [T] to view tutorial      ##
+##                                                                               |                                      ##
 ##                                                                               |                                      ##
 ##                                                                               |                                      ##
 ##                                                                               |                                      ##

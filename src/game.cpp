@@ -91,6 +91,7 @@ void initializeGame(string filename)
     bool from_saved_data = true;
     if (filename == "")
             from_saved_data = false;
+    score = 0;
     PacMan pacman = PacMan();
     for (int level = 1; level <= 4; level++)
     {
@@ -533,7 +534,7 @@ int Game::startGame()
     int dirx[4] = {-1, 1, 0, 0};//up down left right
     int diry[4] = {0, 0, -1, 1};
 
-    double time_per_loop = max(150, 400 - 50 * level);
+    double time_per_loop = max(200, 600 - 100 * level); // milliseconds
 
     /*
     prop_turns = 0, prop_lasting_time = 0, prop_type = -1, fruit_lasting_time = 0;

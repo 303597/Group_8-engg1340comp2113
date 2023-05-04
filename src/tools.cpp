@@ -35,6 +35,10 @@ void Map::show()
 // This function outprints the corresponding emojis
 void printElement(int x, int y, char element)
 {
+    if (ascii)
+    {
+        
+    }
     switch (element)
     {
         case 'o':
