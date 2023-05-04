@@ -35,7 +35,11 @@ Yang Liuqing: 3035974339
 
 ### 2. Data structures for storing game status
 
-The coordinates of the Pacman and ghosts are stored in the map's 2-D "vals" vector and updated by directly modifying the corresponding elements in the vector after every game loop. The parameters of the characters are stored in their classes, respectively. For example, the "Pacman" class stores variables including numbers of Pacman's lives and eaten ghosts.
+* Coordinates of the Pacman and ghosts <br>
+The coordinates of the Pacman and ghosts are stored in the map's 2-D "vals" vector and updated by directly modifying the corresponding elements in the vector after every game loop.  <br>
+* Parameters of the characters <br>
+The parameters of the characters are stored in their classes, respectively.  <br>
+For example, the "Pacman" class stores variables including numbers of Pacman's lives and eaten ghosts. <br>
 
 ### 3. Dynamic memory management
 
