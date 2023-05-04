@@ -812,7 +812,7 @@ int Game::startGame()
                 if(ghost->speed >= 1.3)
                 {
                     ghost->speed -= 1.3;
-                    ghost->moveBFS(pacman->x, pacman->y, ghosts.size());
+                    ghost->moveBFS(pacman->x, pacman->y);
                 }
             }
         }
