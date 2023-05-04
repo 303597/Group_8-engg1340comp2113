@@ -10,7 +10,7 @@ int config()
     if (!fin.fail())
     {
         if (fin >> ascii_saved)
-            return ascii_saved ? 4 : 3;
+            return ascii_saved ? 1 : 0;
     }
     fin.close();
 
