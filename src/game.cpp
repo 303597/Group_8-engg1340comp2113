@@ -602,11 +602,6 @@ int Game::startGame()
                     case KEY_RIGHT:
                         direction = 3;
                         break;
-                    case 'p':
-                        int result = pauseGame();
-                        if (result == 1)
-                            return 2;
-                        break;
                 }
                 if(direction == -2)
                     continue;
