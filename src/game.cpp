@@ -19,6 +19,7 @@
 using namespace std;
 
 int score = 0; // initialize score to be zero
+int level_score = 0; // initial score each level
 
 // This function saves the player's score
 void saveScoreRecord(int level)
@@ -41,6 +42,7 @@ void saveScoreRecord(int level)
     fout.close();
 
     score = 0; // reset score to zero after saving it
+    level_score = 0; // reset level score
 }
 
 bool check(int x,int y, vector<Ghost*> ghosts){
@@ -92,6 +94,7 @@ void initializeGame(string filename)
     if (filename == "")
             from_saved_data = false;
     score = 0;
+    level_score = 0;
     PacMan pacman = PacMan();
     for (int level = 1; level <= 4; level++)
     {
@@ -113,6 +116,7 @@ void initializeGame(string filename)
             clearSavedData(filename);
         if (game_result == 1 || game_result == 2)
             break;
+        level_score = 0;
         from_saved_data = false;
     }
 }
@@ -191,6 +195,8 @@ Game::Game(string filename, PacMan &_pacman)
     level = read_line<int>(line);
     getline(fin,line);
     score = read_line<int>(line);
+    getline(fin,line);
+    level_score = read_line<int>(line);
     getline(fin,line);
     in_counteratk_mode = read_line<bool>(line);
     getline(fin,line);
@@ -316,6 +322,7 @@ void Game::saveToFile(string filename)
 
     fout << "level " << level << endl;
     fout << "score " << score << endl;
+    fout << "level_score" << level_score <<endl;
     fout << "in_counteratk " << in_counteratk_mode << endl;
     fout << "turns " << turns << endl;
     fout << "ghost_speed " << ghost_speed << endl;
@@ -476,11 +483,13 @@ void Game::checkCharacterCollision()
 				if(special == "double_points")
 				{
 					score += 100 * pacman->eaten_ghosts;
+                    level_score += 100 * pacman->eaten_ghosts;
 				}
 				else
 				{
 					score += 50 * pacman->eaten_ghosts; // modify the extern score variable directly
-				}
+                    level_score += 50 * pacman->eaten_ghosts;
+                }
 				ghosts[i]->x = ghosts[i]->start_x;
 				ghosts[i]->y = ghosts[i]->start_y;
 				ghosts[i]->in_counteratk_mode = false;
@@ -630,11 +639,11 @@ int Game::startGame()
         {
             generate_prop(game_map, ghosts, prop_lasting_time, prop_pos_x, prop_pos_y, fruit_lasting_time);
         }
-        if(score >= game_map->cookie_num * 5 / 3 + 50 * ghosts.size() / 3)
+        if(level_score >= game_map->cookie_num * 5 / 3 + 50 * ghosts.size() / 3)
         {
             ghost_speed = 0.8;
         }
-        if(score >= game_map->cookie_num * 10 / 3 + 100 * ghosts.size() / 3)
+        if(level_score >= game_map->cookie_num * 10 / 3 + 100 * ghosts.size() / 3)
         {
             ghost_speed = 1.0;
         }
@@ -736,6 +745,7 @@ int Game::startGame()
                     if(game_map->vals[xx][yy] == '.')
                     {
                         score += 5;
+                        level_score += 5;
                         game_map->vals[xx][yy] = ' ';
                         game_map->cookie_num--;
                     }
