@@ -39,11 +39,14 @@ private:
     int prop_type = -1, prop_turns = 0, prop_lasting_time = 0;
     int fruit_num = -1, fruit_lasting_time = 0;
     int prop_pos_x = 0, prop_pos_y = 0;
+    int prop_pos_xall[20];
+    int prop_pos_yall[20];
     int fruit_pos_x = 0, fruit_pos_y = 0;
     
 public:
     //int cookie_count = 0;
     int level = 0;
+    int lev_already = level;
     Game(int _level, PacMan &_pacman);
     Game(string filename, PacMan &_pacman);
     int startGame();

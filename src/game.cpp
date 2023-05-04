@@ -244,8 +244,8 @@ Game::Game(string filename, PacMan &_pacman)
         ghosts.back()->y = read_line<int>(line);
         getline(fin,line);
         ghosts.back()->speed = read_line<double>(line);
-	getline(fin,line);
-	ghosts.back()->type = read_line<int>(line);
+	    getline(fin,line);
+	    ghosts.back()->type = read_line<int>(line);
         getline(fin,line);
         ghosts.back()->in_counteratk_mode = read_line<bool>(line);
 	// Add ghost type
@@ -259,10 +259,14 @@ Game::Game(string filename, PacMan &_pacman)
     getline(fin,line);
     prop_lasting_time = read_line<int>(line);
     getline(fin,line);
-    prop_pos_x = read_line<int>(line);
-    getline(fin,line);
-    prop_pos_y = read_line<int>(line);
-    
+    special = read_line<string>(line);
+    for(int lev = 1; lev <= level; lev++)
+    {
+        getline(fin,line);
+        prop_pos_xall[lev] = read_line<int>(line);
+        getline(fin,line);
+        prop_pos_yall[lev] = read_line<int>(line);
+    }
     // fruit
     getline(fin,line);
     fruit_num = read_line<int>(line);
@@ -345,16 +349,19 @@ void Game::saveToFile(string filename)
         fout << "ghost_y " << ghosts[i]->y << endl;
         fout << "ghost_speed " << ghosts[i]->speed << endl;
         fout << "ghost_type " << ghosts[i]->type << endl;
-	fout << "in_counteratk " << ghosts[i]->in_counteratk_mode << endl;
+	    fout << "in_counteratk " << ghosts[i]->in_counteratk_mode << endl;
     }
 
     // tools
     fout << "prop_type " << prop_type << endl;
     fout << "prop_turns " << prop_turns << endl;
     fout << "prop_lasting_time " << prop_lasting_time << endl;
-    fout << "prop_x " << prop_pos_x << endl;
-    fout << "prop_y " << prop_pos_y << endl;
-    
+    fout << "special " << special <<endl;
+    for(int lev = 1; lev <= level; lev++)
+    {
+        fout << "prop_x_" << lev << " " << prop_pos_xall[lev] << endl;
+        fout << "prop_y_" << lev << " " << prop_pos_yall[lev] << endl;
+    }
     
     // fruit
     fout << "fruit_num " << fruit_num << endl;
@@ -570,9 +577,6 @@ int Game::startGame()
     int ghost_rand = rand() % ghosts.size();
     int fruit_x = game_map->vals.size() - 1;
     int fruit_y = game_map->vals[fruit_x].size() - 1;
-    int prop_pos_xall[20];
-    int prop_pos_yall[20];
-    int lev_already = level;
 
     auto last_frame_time = chrono::high_resolution_clock::now(), this_frame_time = last_frame_time;
 
@@ -637,10 +641,10 @@ int Game::startGame()
 	{
 	    for(int lev = 1; lev <= level; lev++)
 	    {
-            	generate_prop(game_map, ghosts, prop_lasting_time, prop_pos_x, prop_pos_y, fruit_lasting_time);
+            generate_prop(game_map, ghosts, prop_lasting_time, prop_pos_x, prop_pos_y, fruit_lasting_time);
 	    	prop_pos_xall[lev] = prop_pos_x;
-		prop_pos_yall[lev] = prop_pos_y;
-		lev_already = level;
+		    prop_pos_yall[lev] = prop_pos_y;
+		    lev_already = level;
 	    }
         }
         if(level_score >= game_map->cookie_num * 5 / 3 + 50 * ghosts.size() / 3)
@@ -672,7 +676,7 @@ int Game::startGame()
         }
         else if(tile_info <= 5 && tile_info >= 0)
         {
-	    lev_already--;
+	        lev_already--;
             prop_type = tile_info;
 	    /*for(int lev = 1; lev <= level; lev++)
 	    {
@@ -816,14 +820,14 @@ int Game::startGame()
 
         for (Ghost* ghost: ghosts)
         {
-	    if(ghost->in_counteratk_mode)
-	    {
-		if(ghost->speed >= 1.0)
+            if(ghost->in_counteratk_mode)
+            {
+                if(ghost->speed >= 1.0)
                 {
                     ghost->speed -= 1.0;
                     ghost->move(pacman->x, pacman->y, ghosts.size());
                 }
-	    }
+            }
             if(ghost->type % 2 == 1)
             {
                 if(ghost->speed >= 1.0)
@@ -862,7 +866,7 @@ int Game::startGame()
 
         showStatus();
         mvprintw(19, 98, "%5d", level);
-	mvprintw(24, 108, "%d", turns);
+	    mvprintw(24, 108, "%d", turns);
         if(prop_lasting_time >= 4 * ghosts.size())
         {
             mvprintw(25, 108, "%ld", prop_lasting_time - 4 * ghosts.size());
