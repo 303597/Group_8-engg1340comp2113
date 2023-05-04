@@ -820,6 +820,14 @@ int Game::startGame()
 
         for (Ghost* ghost: ghosts)
         {
+	    if(ghost->in_counteratk_mode)
+	    {
+		if(ghost->speed >= 1.0)
+                {
+                    ghost->speed -= 1.0;
+                    ghost->move(pacman->x, pacman->y, ghosts.size());
+                }
+	    }
             if(ghost->type % 2 == 1)
             {
                 if(ghost->speed >= 1.0)
