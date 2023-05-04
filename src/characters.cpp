@@ -23,10 +23,9 @@ void Character::linkMap(Map *_map)
 	map = _map;
 }
 
+// This function realizes move of Pacman and deals with situation of overflow
 void PacMan::move(int direction, string special)
 {
-	// note: check collision
-
 	int dirx[] = {-1, 1, 0, 0};
 	int diry[] = {0, 0, -1, 1};
 
@@ -49,7 +48,7 @@ void PacMan::move(int direction, string special)
 	{
 		y_temp -= map->vals[x].size();
 	}
-	// deal with overflow;
+	
 	if(special == "pass_bricks")
 	{
 		x = x_temp;
@@ -64,6 +63,7 @@ void PacMan::move(int direction, string special)
 	return;
 }
 
+// This function realizes the move of ghosts - chase after Pacman in normal mode and run away in counter-attack mode
 void Ghost::move(int target_x, int target_y, int ghost_num)
 {
 	if(x == start_x && y == start_y){
