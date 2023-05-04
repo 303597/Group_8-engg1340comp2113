@@ -43,7 +43,7 @@ For example, the "Pacman" class stores variables including numbers of Pacman's l
 
 ### 3. Dynamic memory management
 
-The information of pacman and ghosts are stored and updated in dynamic memory.  <br>
+* The information of pacman and ghosts are stored and updated in dynamic memory.  <br>
 In class Game, pacman and each ghost are allocated with new memory when initializing them under class constructors, and memory spaces are deleted everytime game terminates.
 
 ### 4. File input/output
