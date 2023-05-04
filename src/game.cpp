@@ -322,7 +322,7 @@ void Game::saveToFile(string filename)
 
     fout << "level " << level << endl;
     fout << "score " << score << endl;
-    fout << "level_score" << level_score <<endl;
+    fout << "level_score " << level_score <<endl;
     fout << "in_counteratk " << in_counteratk_mode << endl;
     fout << "turns " << turns << endl;
     fout << "ghost_speed " << ghost_speed << endl;
@@ -344,7 +344,7 @@ void Game::saveToFile(string filename)
         fout << "ghost_x " << ghosts[i]->x << endl;
         fout << "ghost_y " << ghosts[i]->y << endl;
         fout << "ghost_speed " << ghosts[i]->speed << endl;
-        fout << "ghost_type" << ghosts[i]->type << endl;
+        fout << "ghost_type " << ghosts[i]->type << endl;
 	fout << "in_counteratk " << ghosts[i]->in_counteratk_mode << endl;
     }
 
