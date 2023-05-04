@@ -533,6 +533,8 @@ int Game::startGame()
     int dirx[4] = {-1, 1, 0, 0};//up down left right
     int diry[4] = {0, 0, -1, 1};
 
+    double time_per_loop = max(150, 400 - 50 * level);
+
     /*
     prop_turns = 0, prop_lasting_time = 0, prop_type = -1, fruit_lasting_time = 0;
     prop_pos_x = game_map->vals.size() - 1;

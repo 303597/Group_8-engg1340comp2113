@@ -5,8 +5,6 @@
 #include <sstream>
 using namespace std;
 
-const double time_per_loop = 300; // milliseconds
-
 extern int score; // declare a score variable that can be modified in other files
 
 //extern cookie_num;
