@@ -6,6 +6,7 @@
 using namespace std;
 
 extern int score; // declare a score variable that can be modified in other files
+extern int level_score;
 
 //extern cookie_num;
 
