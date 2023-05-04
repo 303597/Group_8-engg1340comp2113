@@ -29,7 +29,7 @@
 🟦                    5. Capitalize on special items.                                                                       🟦
 🟦                    6. Eat as many fruits as possible.                                                                    🟦
 🟦                    7. Press left and right repeatedly if you want to stay in place.                                      🟦
-🟦                    8. If you don't take any action after hitting a wall, you will stay still.                            🟦
+🟦                                                                                                                          🟦
 🟦                                                                                                                          🟦
 🟦                                                                                              Press any key to go back    🟦
 🟦                                                                                                                          🟦 
