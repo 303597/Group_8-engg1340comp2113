@@ -201,12 +201,12 @@ int Map::updateTile(int x, int y, vector<Ghost*> ghosts, string &special, int &p
             break;
         case '*':
             special = "frozen";
-            prop_turns = 4 * ghosts.size();
+            prop_turns = 6 * ghosts.size();
             num = 2;
             break;
         case '^':
             special = "slow";
-            prop_turns = 6 * ghosts.size();
+            prop_turns = 8 * ghosts.size();
             num = 3;
             break;
         case '!':

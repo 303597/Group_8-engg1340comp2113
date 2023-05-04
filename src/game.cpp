@@ -867,13 +867,13 @@ int Game::startGame()
         showStatus();
         mvprintw(19, 98, "%5d", level);
 	    mvprintw(24, 108, "%d", turns);
-        if(prop_lasting_time >= 4 * ghosts.size())
-        {
-            mvprintw(25, 108, "%ld", prop_lasting_time - 4 * ghosts.size());
-        }
-        else if(prop_turns != 0)
+        if(prop_turns != 0)
         {
             mvprintw(25, 108, "%d", prop_turns);
+        }
+        else if(prop_lasting_time >= 4 * ghosts.size())
+        {
+            mvprintw(25, 108, "%ld", prop_lasting_time - 4 * ghosts.size());
         }
         else
         {
