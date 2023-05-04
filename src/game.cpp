@@ -207,6 +207,8 @@ Game::Game(string filename, PacMan &_pacman)
     
     _pacman.x = pacman_start_x;
     _pacman.y = pacman_start_y;
+    _pacman.start_x = pacman_start_x;
+    _pacman.start_y = pacman_start_y;
     pacman = &_pacman;
     
     getline(fin,line);
@@ -425,7 +427,7 @@ Game::Game(int _level, PacMan &_pacman)
                     cout << "ERROR: Map includes more than 1 pac-man." << endl;
                     return;
                 }
-                _pacman.x = i; _pacman.y = j; _pacman.lives++;
+                _pacman.start_x = _pacman.x = i; _pacman.start_y = _pacman.y = j; _pacman.lives++;
                 pacman = &_pacman;
                 vals[i][j] = ' ';
             }
