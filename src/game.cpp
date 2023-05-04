@@ -570,8 +570,8 @@ int Game::startGame()
     int ghost_rand = rand() % ghosts.size();
     int fruit_x = game_map->vals.size() - 1;
     int fruit_y = game_map->vals[fruit_x].size() - 1;
-    int prop_pos_xall[6];
-    int prop_pos_yall[6];
+    int prop_pos_xall[20];
+    int prop_pos_yall[20];
     int lev_already = level;
 
     auto last_frame_time = chrono::high_resolution_clock::now(), this_frame_time = last_frame_time;
