@@ -50,10 +50,10 @@ int config()
 int welcomeLoop()
 {
     cbreak();
-    
+    string filename = ascii ? "start_menu_ascii.txt" : "start_menu.txt";
     int selected = 1, line_no = 0;
     bool confirmed = false, saved_data_exists = false;
-    Menu start_menu("start_menu.txt");
+    Menu start_menu(filename);
 
     if (filesystem::exists(getExecutablePath() + "/../data/temp.txt"))
         saved_data_exists = true;
@@ -93,6 +93,7 @@ int pauseLoop()
 {
     int selected = 1, line_no = 0;
     bool confirmed = false;
+
     Menu start_menu("pause.txt");
     
     while (!confirmed)
