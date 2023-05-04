@@ -93,8 +93,8 @@ int pauseLoop()
 {
     int selected = 1, line_no = 0;
     bool confirmed = false;
-
-    Menu start_menu("pause.txt");
+    string filename1 = ascii ? "pause_ascii.txt" : "pause.txt";
+    Menu start_menu(filename1);
     
     while (!confirmed)
     {
@@ -128,8 +128,9 @@ void showTutorial()
 {
     cbreak();
     nodelay(stdscr, false);
-    
-    ifstream fin(getExecutablePath() + "/../ui/tutorial.txt");
+    string filename2 = ascii ? "tutorial_ascii.txt" : "tutorial.txt";
+    filename2 = "/../ui/" + filename2;
+    ifstream fin(getExecutablePath() + filename2);
     if (fin.fail())
         cout << "Error opening file." << endl;
     
@@ -148,8 +149,9 @@ void showHighScore()
 {
     cbreak();
     nodelay(stdscr, false);
-    
-    ifstream fin(getExecutablePath() + "/../ui/high_scores.txt");
+    string filename3 = ascii ? "high_scores_ascii.txt" : "high_scores.txt";
+    filename3 = "/../ui/" + filename3;
+    ifstream fin(getExecutablePath() + filename3);
     if (fin.fail())
         cout << "Error opening file." << endl;
     
