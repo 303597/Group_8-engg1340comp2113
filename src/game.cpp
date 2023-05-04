@@ -570,6 +570,9 @@ int Game::startGame()
     int ghost_rand = rand() % ghosts.size();
     int fruit_x = game_map->vals.size() - 1;
     int fruit_y = game_map->vals[fruit_x].size() - 1;
+    int prop_pos_xall[6];
+    int prop_pos_yall[6];
+    int lev_already = level;
 
     auto last_frame_time = chrono::high_resolution_clock::now(), this_frame_time = last_frame_time;
 
@@ -636,8 +639,13 @@ int Game::startGame()
         pacman->move(direction, special);
         
         if (score >= ghosts.size()*150 && prop_lasting_time == 0 && prop_turns == 0)
-        {
-            generate_prop(game_map, ghosts, prop_lasting_time, prop_pos_x, prop_pos_y, fruit_lasting_time);
+	{
+	    for(int lev = 1; lev <= level; lev++)
+	    {
+            	generate_prop(game_map, ghosts, prop_lasting_time, prop_pos_x, prop_pos_y, fruit_lasting_time);
+	    	prop_pos_xall[lev] = prop_pos_x;
+		prop_pos_yall[lev] = prop_pos_y;
+	    }
         }
         if(level_score >= game_map->cookie_num * 5 / 3 + 50 * ghosts.size() / 3)
         {
@@ -668,7 +676,16 @@ int Game::startGame()
         }
         else if(tile_info <= 5 && tile_info >= 0)
         {
+	    lev_already--;
             prop_type = tile_info;
+	    /*for(int lev = 1; lev <= level; lev++)
+	    {
+	    	if(prop_pos_xall[lev] == pacman->x && prop_pos_yall[lev] == pacman->y)
+		{
+			continue;
+		}
+		game_map->vals[prop_pos_xall[lev]][prop_pos_yall[lev]] = ' ';
+	    }*/
             if(tile_info == 5)
             {
                 fruit_num = rand() % 10;
@@ -708,12 +725,16 @@ int Game::startGame()
                         fruit_lasting_time = 8 * ghosts.size();
                         break;
                     }
-                    fruit_pos_y = fruit_y;
+                    fruit_pos_x = fruit_x;
+		    fruit_pos_y = fruit_y;
                     game_map->vals[fruit_x][fruit_y] = fruits[fruit_num];
                     fruit_x = game_map->vals.size() - 1;
                     fruit_y = game_map->vals[fruit_x].size() - 1;
                 }
-                prop_lasting_time = 4 * ghosts.size(); 
+		if(lev_already == 0)
+		{
+		    prop_lasting_time = 4 * ghosts.size();
+		}
                 tile_info = 6;
         }
 
@@ -812,7 +833,7 @@ int Game::startGame()
                 if(ghost->speed >= 1.3)
                 {
                     ghost->speed -= 1.3;
-                    ghost->move(pacman->x, pacman->y, ghosts.size());
+                    ghost->moveBFS(pacman->x, pacman->y);
                 }
             }
         }
@@ -821,7 +842,10 @@ int Game::startGame()
 
         if(prop_lasting_time == 4 * ghosts.size())
         {
-            game_map->vals[prop_pos_x][prop_pos_y] = ' ';
+	    for(int lev = 1; lev <= level; lev++)	
+	    {
+		game_map->vals[prop_pos_xall[lev]][prop_pos_yall[lev]] = ' ';
+	    }
         }
         if(fruit_lasting_time == 0)
         {
