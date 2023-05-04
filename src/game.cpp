@@ -237,6 +237,7 @@ Game::Game(string filename, PacMan &_pacman)
         ghosts.back()->speed = read_line<double>(line);
         getline(fin,line);
         ghosts.back()->in_counteratk_mode = read_line<bool>(line);
+        // Add ghost type
     }
     
     // tools
@@ -785,7 +786,7 @@ int Game::startGame()
                 if(ghost->speed >= 1.0)
                 {
                     ghost->speed -= 1.0;
-                    ghost->move(pacman->x, pacman->y, ghost_speed, ghosts.size());
+                    ghost->move(pacman->x, pacman->y, ghosts.size());
                 }
             }
             else
@@ -793,7 +794,7 @@ int Game::startGame()
                 if(ghost->speed >= 1.5)
                 {
                     ghost->speed -= 1.5;
-                    ghost->move(pacman->x, pacman->y, ghost_speed, ghosts.size());
+                    ghost->move(pacman->x, pacman->y, ghosts.size());
                 }
             }
         }

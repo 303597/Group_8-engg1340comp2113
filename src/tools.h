@@ -36,7 +36,7 @@ public:
     int cookie_num = 0;
     bool fl = false;
     string& operator[](int index);
-    size_t size();
+    pair<size_t, size_t> size();
 };
 
 class Menu

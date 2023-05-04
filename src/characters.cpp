@@ -6,7 +6,11 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
+#include <queue>
+#include <map>
 #include <cursesw.h>
+
+typedef map<pair<int, int>, int> DirectionMap;
 
 Character::Character(int _start_x, int _start_y)
 {
@@ -60,7 +64,7 @@ void PacMan::move(int direction, string special)
 	return;
 }
 
-void Ghost::move(int target_x, int target_y, double speed, int ghost_num)
+void Ghost::move(int target_x, int target_y, int ghost_num)
 {
 	if(x == start_x && y == start_y){
 		if(map->vals[x-1][y] == '_'){
@@ -299,6 +303,55 @@ void Ghost::move(int target_x, int target_y, double speed, int ghost_num)
 	}
 	// deal with overflow;
 	return;
+}
+
+bool Ghost::moveBFS(int target_x, int target_y)
+{
+	int dirx[4] = {-1, 1, 0, 0};//up down left right
+    int diry[4] = {0, 0, -1, 1};
+	if (x == target_x && y == target_y)
+		return true;
+	queue<pair<int, int>> q;
+	q.push(make_pair(x, y));
+	int steps = 0;
+	bool found = false;
+	DirectionMap directions;
+	directions[make_pair(x, y)] = -1;
+	
+	//mvprintw(36, 0, "%d %d", x, y);
+	while (!q.empty() && steps < map->size().first * map->size().second && !found)
+	{
+		pair<int, int> now = q.front();
+		q.pop();
+		steps++;
+		for (int i = 0; i < 4; i++)
+		{
+			pair<int, int> nxt = make_pair(now.first + dirx[i], now.second + diry[i]);
+			if (nxt.first >= 0 && nxt.first < map->size().first && nxt.second >= 0 && nxt.second < map->size().second 
+				&& map->vals[nxt.first][nxt.second] != '#' && directions.count(nxt) == 0)
+			{
+				if (directions[now] == -1)
+					directions[nxt] = i;
+				else
+					directions[nxt] = directions[now];
+				if (nxt.first == target_x && nxt.second == target_y)
+				{
+					found = true;
+					break;
+				}
+				q.push(nxt);
+			}
+		}
+	}
+	if (found)
+	{
+		int move_dir = directions[make_pair(target_x, target_y)];
+		x += dirx[move_dir];
+		y += diry[move_dir];
+		//mvprintw(36, 10, "%d %d", found, move_dir);
+	}
+	//mvprintw(36, 10, "%d", found);
+	return found;
 }
 
 void PacMan::show()

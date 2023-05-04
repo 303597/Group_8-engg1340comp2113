@@ -316,7 +316,7 @@ string& Map::operator[](int index)
     return vals[index];
 }
 
-size_t Map::size()
+pair<size_t, size_t> Map::size()
 {
-    return vals.size();
+    return make_pair(vals.size(), vals[0].size());
 }

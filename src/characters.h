@@ -34,10 +34,11 @@ class Ghost: public Character
 {
 public:
     using Character::Character;
-    void move(int target_x, int target_y, double ghost_speed, int ghost_num);
+    void move(int target_x, int target_y, int ghost_num);
     void show();
+    bool moveBFS(int target_x, int target_y);
     bool in_counteratk_mode = false;
-    int type;
+    int type = 0;
     double speed = 0.0;
 };
 
