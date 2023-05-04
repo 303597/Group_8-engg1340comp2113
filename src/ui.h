@@ -1,6 +1,8 @@
 #ifndef UI_H
 #define UI_H
 
+int config();
+
 int welcomeLoop();
 
 int pauseLoop();

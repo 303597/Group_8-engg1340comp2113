@@ -1,25 +1,80 @@
 #include <cursesw.h>
 #include "tools.h"
 #include <fstream>
+#include <filesystem>
 
-int welcomeLoop()
+int config()
 {
+    ifstream fin(getExecutablePath() + "/../data/config.txt");
+    bool ascii_saved;
+    if (!fin.fail())
+    {
+        if (fin >> ascii_saved)
+            return ascii_saved ? 4 : 3;
+    }
+    fin.close();
+
     cbreak();
     
-    int selected = 1, line_no = 0;
+    int selected = 3, line_no = 0;
     bool confirmed = false;
-    Menu start_menu("start_menu.txt");
-    
+    Menu config_menu("config.txt");
+
     while (!confirmed)
     {
-        start_menu.showWelcome(selected);
+        config_menu.showWelcome(selected);
         refresh();
         int ch = getch();
         switch (ch)
         {
             case 'w':
             case KEY_UP:
-                selected = max(0, selected - 1);
+                selected = max(3, selected - 1);
+                break;
+            case 's':
+            case KEY_DOWN:
+                selected = min(4, selected + 1);
+                break;
+            case ' ':
+            case '\n':
+                confirmed = true;
+                break;
+        }
+    }
+    ofstream fout(getExecutablePath() + "/../data/config.txt");
+    fout << selected - 3 << endl;
+    fout.close();
+    return selected - 3;
+}
+
+int welcomeLoop()
+{
+    cbreak();
+    
+    int selected = 1, line_no = 0;
+    bool confirmed = false, saved_data_exists = false;
+    Menu start_menu("start_menu.txt");
+
+    if (filesystem::exists(getExecutablePath() + "/../data/temp.txt"))
+        saved_data_exists = true;
+    
+    while (!confirmed)
+    {
+        start_menu.showWelcome(selected);
+        if (!saved_data_exists)
+        {
+            for (int i = 14; i <= 16; i++)
+                mvprintw(i, 45, "                                     ");
+            mvprintw(32, 0, " ");
+        }
+
+        refresh();
+        int ch = getch();
+        switch (ch)
+        {
+            case 'w':
+            case KEY_UP:
+                selected = max(saved_data_exists ? 0 : 1, selected - 1);
                 break;
             case 's':
             case KEY_DOWN:

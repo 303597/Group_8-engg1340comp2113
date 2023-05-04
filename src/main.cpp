@@ -7,6 +7,9 @@
 #include <filesystem>
 #include <string>
 #include <ctime>
+#include <fstream>
+
+bool ascii;
 
 void initialize()
 {
@@ -20,6 +23,7 @@ void initialize()
     init_pair(1, COLOR_WHITE, COLOR_BLACK);
     init_pair(2, COLOR_YELLOW, COLOR_BLACK);
     srand(time(0));
+    ascii = config();
 }
 
 int main()

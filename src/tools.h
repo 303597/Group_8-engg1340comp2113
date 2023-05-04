@@ -11,6 +11,7 @@ using namespace std;
 extern int score;
 extern int dirx[]; //  = {0, 0, -1, 1}
 extern int diry[]; // = {-1, 1, 0, 0}// up, down, left, right
+extern bool ascii;
 
 class Character;
 
