@@ -3,7 +3,11 @@ This is Group 8 of the course engg1340andcomp2113.
 
 
 ## Contributors
-Cao Nuanyu, Liu Yihan, Wu Haoyuan, Wu Lixin, Yang Liuqing
+Cao Nuanyu <br>
+Liu Yihan <br>
+Wu Haoyuan <br>
+Wu Lixin <br>
+Yang Liuqing: 3035974339
 
 ## Description
 "Pac-Man+" is a game created by imitating the classic game Pac-Man. In this game, players take on the role of the titular character, a yellow circle(🟡) that moves through a maze while eating small cookies(◽), large cookies(🟢), and fruits(🍒/🍑/🍉/🍇) to score points and progress to the next level. Along the way, they must avoid being caught by  ghosts(👻) that continually chase after them, losing a life if caught. The game ends when all three lives are lost. Difficulty increases as levels progress, with faster and more numerous ghosts.
@@ -77,5 +81,8 @@ make
 ./bin/pacman
 ```
 
+## Introduction Video
 
+
+## Hope you enjoy our game!
 
