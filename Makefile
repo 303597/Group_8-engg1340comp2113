@@ -1,4 +1,5 @@
 TARGET = bin/pacman
+.DEFAULT_GOAL = $(TARGET)
 FLAGS = -I lib/ncurses-6.4/include -I lib/ncurses-6.4/include/ncursesw -L lib/ncurses-6.4/lib -pedantic-errors -std=c++17 -lncursesw
 
 bin/ui.o: src/ui.cpp src/tools.h
@@ -23,6 +24,6 @@ all: bin/ui.o bin/tools.o bin/characters.o bin/game.o bin/main.o $(TARGET)
 
 
 clean:
-	rm bin/ui.o bin/tools.o bin/characters.o bin/game.o bin/main.o bin/pacman
+	rm -f bin/ui.o bin/tools.o bin/characters.o bin/game.o bin/main.o bin/pacman data/config.txt data/score_record.txt data/temp.txt
 
 .PHONY: all clean

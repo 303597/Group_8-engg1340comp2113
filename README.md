@@ -73,7 +73,7 @@ Ncurses also optimizes screen changes to reduce the latency experienced when usi
 Start the game with these commands:
 ```
 make clean
-make bin/pacman
+make
 ./bin/pacman
 ```
 
