@@ -168,10 +168,10 @@ void showHighScore()
         mvprintw(line_no, 49, "No score record yet.");
     for (int i = 0; i < min((size_t)10, histories.size()); i++)
     {
-        mvprintw(line_no, 19, "%d", i + 1);
-        mvprintw(line_no, 34, "%s", histories[i].username.c_str());
-        mvprintw(line_no, 59, "%5d", histories[i].score);
-        mvprintw(line_no, 84, "%5d", histories[i].level);
+        mvprintw(line_no, 22, "%d", i + 1);
+        mvprintw(line_no, 37, "%s", histories[i].username.c_str());
+        mvprintw(line_no, 62, "%5d", histories[i].score);
+        mvprintw(line_no, 87, "%d", histories[i].level);
         line_no++;
     }
     refresh();
