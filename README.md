@@ -3,10 +3,10 @@ This is Group 8 of the course engg1340andcomp2113.
 
 
 ## Contributors
-Cao Nuanyu <br>
+Cao Nuanyu: 3035973579<br>
 Liu Yihan: 3036094875 <br>
-Wu Haoyuan <br>
-Wu Lixin <br>
+Wu Haoyuan: 3035974142 <br>
+Wu Lixin: 3036065501 <br>
 Yang Liuqing: 3035974339
 
 ## Description
