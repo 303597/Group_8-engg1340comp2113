@@ -426,7 +426,7 @@ Game::Game(int _level, PacMan &_pacman)
                     cout << "ERROR: Map includes more than 1 pac-man." << endl;
                     return;
                 }
-                _pacman.x = i; _pacman.y = j;
+                _pacman.x = i; _pacman.y = j; _pacman.lives++;
                 pacman = &_pacman;
                 vals[i][j] = ' ';
             }
