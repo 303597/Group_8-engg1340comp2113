@@ -833,20 +833,20 @@ int Game::startGame()
         }
 
         showStatus();
-        mvprintw(23, 104, "%d" ,turns);
+        mvprintw(24, 108, "%d" ,turns);
         if(prop_lasting_time >= 4 * ghosts.size())
         {
-            mvprintw(24, 104, "%ld", prop_lasting_time - 4 * ghosts.size());
+            mvprintw(25, 108, "%ld", prop_lasting_time - 4 * ghosts.size());
         }
         else if(prop_turns != 0)
         {
-            mvprintw(24, 104, "%d", prop_turns);
+            mvprintw(25, 108, "%d", prop_turns);
         }
         else
         {
-            mvprintw(24, 104, "%d", 0);
+            mvprintw(25, 108, "%d", 0);
         }
-        mvprintw(25, 104, "%d", fruit_lasting_time);
+        mvprintw(26, 108, "%d", fruit_lasting_time);
 
         refresh();
         last_frame_time = this_frame_time;
