@@ -64,7 +64,7 @@ int welcomeLoop()
         if (!saved_data_exists)
         {
             for (int i = 14; i <= 16; i++)
-                mvprintw(i, 45, "                                     ");
+                mvprintw(i, 45, "                                        ");
             mvprintw(32, 0, " ");
         }
 
