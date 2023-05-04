@@ -91,11 +91,12 @@ void initializeGame(string filename)
     bool from_saved_data = true;
     if (filename == "")
             from_saved_data = false;
+    PacMan pacman = PacMan();
     for (int level = 1; level <= 4; level++)
     {
         nodelay(stdscr, true); // don't wait until input
 
-        Game game = from_saved_data ? Game(filename) : Game(level);
+        Game game = from_saved_data ? Game(filename, pacman) : Game(level, pacman);
         if (from_saved_data)
             level = game.level;
         /*
@@ -176,7 +177,7 @@ Game::Game(int level)
 }
 */
 
-Game::Game(string filename)
+Game::Game(string filename, PacMan &_pacman)
 {
     string path;
     path = getExecutablePath() + "/../data/" + filename;
@@ -208,7 +209,9 @@ Game::Game(string filename)
     getline(fin,line);
     int pacman_start_y = read_line<int>(line);
     
-    pacman = new PacMan(pacman_start_x, pacman_start_y);
+    _pacman.x = pacman_start_x;
+    _pacman.y = pacman_start_y;
+    pacman = &_pacman;
     
     getline(fin,line);
     pacman->x = read_line<int>(line);
@@ -387,7 +390,7 @@ bool isMapCompleted(const string& filename) {
 }
 */
 
-Game::Game(int _level)
+Game::Game(int _level, PacMan &_pacman)
 {
     level = _level;
 
@@ -423,7 +426,8 @@ Game::Game(int _level)
                     cout << "ERROR: Map includes more than 1 pac-man." << endl;
                     return;
                 }
-                pacman = new PacMan(i, j);
+                _pacman.x = i; _pacman.y = j;
+                pacman = &_pacman;
                 vals[i][j] = ' ';
             }
             if (vals[i][j] == 'E')
@@ -449,7 +453,6 @@ Game::Game(int _level)
 Game::~Game()
 {
     delete game_map;
-    delete pacman;
     for (int i = 0; i < ghosts.size(); i++)
         delete ghosts[i];
     delete game_menu;

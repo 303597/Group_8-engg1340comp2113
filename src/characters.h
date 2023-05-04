@@ -26,7 +26,7 @@ public:
     using Character::Character;
     void move(int direction, string special);
     void show();
-    int lives = 3;
+    int lives = 2;
     int eaten_ghosts = 0;
 };
 

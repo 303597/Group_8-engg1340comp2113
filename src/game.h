@@ -45,8 +45,8 @@ private:
 public:
     //int cookie_count = 0;
     int level = 0;
-    Game(int _level);
-    Game(string filename);
+    Game(int _level, PacMan &_pacman);
+    Game(string filename, PacMan &_pacman);
     int startGame();
     int pauseGame();
     ~Game();
