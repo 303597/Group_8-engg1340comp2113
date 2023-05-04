@@ -45,6 +45,17 @@ For example, the "Pacman" class stores variables including numbers of Pacman's l
 
 * The information of pacman and ghosts are stored and updated in dynamic memory.  <br>
 In class Game, pacman and each ghost are allocated with new memory when initializing them under class constructors, and memory spaces are deleted everytime game terminates.
+```
+  ghosts.emplace_back(new Ghost(ghost_start_x,ghost_start_y));
+```
+```
+for (int i = 0; i < ghosts.size(); i++)
+        delete ghosts[i];
+```
+* The game map is stored and updated with dynamic memory during the game loop.
+```
+  game_map = new Map(vals); 
+```
 
 ### 4. File input/output
 
