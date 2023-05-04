@@ -883,7 +883,7 @@ int Game::startGame()
 
         refresh();
         last_frame_time = this_frame_time;
-        mvprintw(0, 0, "🟦"); // move cursor
+        mvprintw(36, 0, "  "); // move cursor
         if (pacman->lives <= 0)
         {
             saveScoreRecord(level);
