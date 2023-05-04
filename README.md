@@ -4,7 +4,7 @@ This is Group 8 of the course engg1340andcomp2113.
 
 ## Contributors
 Cao Nuanyu <br>
-Liu Yihan <br>
+Liu Yihan: 3036094875 <br>
 Wu Haoyuan <br>
 Wu Lixin <br>
 Yang Liuqing: 3035974339
