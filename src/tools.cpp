@@ -9,6 +9,7 @@
 #include <filesystem>
 using namespace std;
 
+// This function decides the cookie number by reading the map vector
 Map::Map(vector<string> _vals)
 {
     vals = _vals;
@@ -31,6 +32,7 @@ void Map::show()
             printElement(i, j, vals[i][j]);
 }
 
+// This function outprints the corresponding emojis
 void printElement(int x, int y, char element)
 {
     switch (element)
@@ -190,64 +192,13 @@ int Map::updateTile(int x, int y, vector<Ghost*> ghosts, string &special, int &p
     return 2;*/
 }
 
-string getExecutablePath() // This solution to get the path of the execuatable is found at https://stackoverflow.com/questions/1528298/get-path-of-executable
+// This solution to get the path of the execuatable is found at https://stackoverflow.com/questions/1528298/get-path-of-executable
+string getExecutablePath() 
 {
     string str = filesystem::canonical("/proc/self/exe");
     return str.substr(0, str.rfind('/'));
 }
 
-/*
-void Map::saveToFile(string filename)
-{
-    ofstream fout;
-    fout.open(getExecutablePath() + "/../data/" + filename);
-    if (fout.fail())
-    {
-        cout << "Error in saving records." << endl;
-        return;
-    }
-
-    fout << "Score " << score << endl;
-
-    // pacman
-    fout << "startx " << pacman->start_x << endl;
-    fout << "starty " << pacman->start_y << endl;
-    fout << "x " << pacman->x << endl;
-    fout << "y " << pacman->y << endl;
-    fout << "lives " << pacman->lives << endl;
-    fout << "eatenghosts " << pacman->eaten_ghosts << endl;
-
-    // ghosts
-    fout << "ghostnumber " << ghosts->size() << endl;
-    for (int i=0; i<ghosts->size(); ++i)
-    {
-        fout << "startx " << (*ghosts)[i].start_x << endl;
-        fout << "starty " << (*ghosts)[i].start_y << endl;
-	fout << "x " << (*ghosts)[i].x << endl;
-        fout << "y " << (*ghosts)[i].y << endl;
-	fout << "speed " << (*ghosts)[i].speed << endl;
-    }
-
-    // map
-    for (size_t i=0; i<vals.size(); ++i)
-        fout << vals[i] << endl;
-
-    fout.close();
-    return;
-}
-*/
-
-/*
-int read_line(string line)
-{
-    istringstream record(line);
-    string name;
-    int value;
-    record >> name;
-    record >> value;
-    return value;
-}
-*/
 
 void clearSavedData(string filename)
 {
@@ -294,6 +245,7 @@ void Menu::showInGame(int score, int lives)
     //mvprintw(14, 100, "%5d", turns);
 }
 
+// This function reads from score record file
 vector<ScoreRecord> getScoreRecords()
 {
     ifstream fin(getExecutablePath() + "/../data/score_record.txt");
