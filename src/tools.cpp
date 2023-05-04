@@ -244,8 +244,8 @@ void Menu::showInGame(int score, int lives)
         mvprintw(line_no, 0, "%s", line.c_str());
         line_no++;
     }
-    mvprintw(19, 94, "%5d", score);
-    mvprintw(20, 94, "%5d", lives);
+    mvprintw(20, 98, "%5d", score);
+    mvprintw(21, 98, "%5d", lives);
     //mvprintw(14, 100, "%5d", turns);
 }
 
