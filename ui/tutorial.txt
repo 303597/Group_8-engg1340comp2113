@@ -14,12 +14,12 @@
 🟦                   ┗━━┛┗━━┛┗━━┛       ┗━━┛┗━━┛┗━━┛                                                                        🟦
 🟦                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄             🟦
 🟦                   Items                                                                                                  🟦
-🟦                   🟦 Wall     ◽ Cookie    👻 Ghost    🟢 Super Bean    🥶 Vulnerable Ghost    🟩 Ghost Home             🟦
+🟦                   🟦 Wall     ◽ Cookie    👻 Ghost    🟢 Super Bean    🥶 Vulnerable Ghost    🟩 Ghost Home           🟦
 🟦                                                                                                                          🟦
-🟦                   🧲 Magnet   🧊 Freeze    🛹 Slow     📜 Through Wall  ❓Random Bonus    🍒 🍑 🍉 🍇 Fruits             🟦
+🟦                   🧲 Magnet   🧊 Freeze    🛹 Slow     📜 Through Wall  ❓Random Bonus    🍒 🍑 🍉 🍇 Fruits          🟦
 🟦                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄             🟦
 🟦                   Tips                                                                                                   🟦
-🟦                    1. Eat "◽" to obtain higher score. Eat all the "◽" to enter the next level.                         🟦
+🟦                    1. Eat "◽" to obtain higher score. Eat all the "◽" to enter the next level.                          🟦
 🟦                    2. Ghosts are chasing after you, don't touch them!                                                    🟦
 🟦                    3. Make use of the warp tunnels in the maze.                                                          🟦
 🟦                    4. Special items have time limit.                                                                     🟦
