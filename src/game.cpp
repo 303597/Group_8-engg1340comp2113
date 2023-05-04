@@ -380,7 +380,7 @@ void Game::showStatus()
 {
     game_menu->showInGame(score, pacman->lives);
     game_map->show();
-    pacman->show();
+    pacman->show(special, in_counteratk_mode);
     for (Ghost* ghost: ghosts)
         ghost->show();
     refresh();
@@ -818,6 +818,7 @@ int Game::startGame()
         
         checkCharacterCollision();
 
+        in_counteratk_mode = false;
         for (Ghost* ghost: ghosts)
         {
             if(ghost->in_counteratk_mode)
@@ -827,6 +828,7 @@ int Game::startGame()
                     ghost->speed -= 1.0;
                     ghost->move(pacman->x, pacman->y, ghosts.size());
                 }
+                in_counteratk_mode = true;
             }
             if(ghost->type % 2 == 1)
             {

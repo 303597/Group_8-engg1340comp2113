@@ -25,9 +25,11 @@ class PacMan: public Character
 public:
     using Character::Character;
     void move(int direction, string special);
-    void show();
+    void show(string special = "none", bool in_counteratk_mode = false);
     int lives = 2;
-    int eaten_ghosts = 0;
+    int eaten_ghosts = 0, expression_timer = 0, expression_index = 0;
+private:
+    const string expression_list[5] = {"😉", "😶", "😏", "😑", "😄"};
 };
 
 class Ghost: public Character

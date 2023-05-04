@@ -354,9 +354,29 @@ bool Ghost::moveBFS(int target_x, int target_y)
 	return found;
 }
 
-void PacMan::show()
+void PacMan::show(string special, bool in_counteratk_mode)
 {
-	printElement(x, y, 'o');
+	int posx = x + 2, posy = 2 * y + 4;
+	string expression;
+	if (in_counteratk_mode)
+		expression = "😈";
+	else if (special == "magnet")
+		expression = "🤑";
+	else if (special == "slow")
+		expression = "🤓";
+	else if (special == "pass_bricks")
+		expression = "🤩";
+	else
+	{
+		if (expression_timer >= 20)
+		{
+			expression_timer = 0;
+			expression_index = rand() % 5;
+		}
+		expression = expression_list[expression_index];
+		expression_timer++;
+	}
+	mvprintw(posx, posy, "%s", expression.c_str());
 }
 
 void Ghost::show()

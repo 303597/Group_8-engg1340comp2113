@@ -23,6 +23,8 @@ void initialize()
     init_pair(1, COLOR_WHITE, COLOR_BLACK);
     init_pair(2, COLOR_YELLOW, COLOR_BLACK);
     srand(time(0));
+    if (!filesystem::exists(getExecutablePath() + "/../data"))
+        filesystem::create_directory(getExecutablePath() + "/../data");
     ascii = config();
 }
 
