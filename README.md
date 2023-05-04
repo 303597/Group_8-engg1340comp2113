@@ -70,6 +70,12 @@ Ncurses is mainly used to read keyboard input and output text to the terminal sc
 Ncurses also optimizes screen changes to reduce the latency experienced when using remote shells. The refresh() function is used to update the physical screen with the content of the virtual screen in the welcomeLoop(). Any changes to the virtual screen will not be immediately visible on the physical screen until refresh() is called. After the user has provided input and the program has updated the virtual screen accordingly, refresh() is called to display the updated content on the physical screen.</sub>
 
 ## Instructions
-// Compilation and executions
+Start the game with these commands:
+```
+make clean
+make bin/pacman
+./bin/pacman
+```
+
 
 
