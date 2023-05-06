@@ -167,6 +167,7 @@ void printElement(int x, int y, char element)
     }
 }
 
+// Check what a tile contains and update the map accordingly
 int Map::updateTile(int x, int y, vector<Ghost*> ghosts, string &special, int &prop_turns)
 {
     int num;
@@ -266,7 +267,7 @@ string getExecutablePath()
     return str.substr(0, str.rfind('/'));
 }
 
-
+// Delete the save file
 void clearSavedData(string filename)
 {
     if (!filesystem::remove(getExecutablePath() + "/../data/" + filename))
@@ -284,6 +285,7 @@ Menu::Menu(string filename)
     fin.close();
 }
 
+// Show a menu similar to the welcome menu
 void Menu::showWelcome(int selected)
 {
     int line_no = 0;
@@ -298,6 +300,7 @@ void Menu::showWelcome(int selected)
     }
 }
 
+// Show a menu similar to the in-game menu
 void Menu::showInGame(int score, int lives)
 {
     int line_no = 0;

@@ -3,6 +3,7 @@
 #include <fstream>
 #include <filesystem>
 
+// Let the user choose whether to display emoji and save the result to a config file
 int config()
 {
     ifstream fin(getExecutablePath() + "/../data/config.txt");
@@ -47,6 +48,7 @@ int config()
     return selected - 3;
 }
 
+// Get the user's choice in the welcome menu
 int welcomeLoop()
 {
     cbreak();
@@ -89,6 +91,7 @@ int welcomeLoop()
     return selected;
 }
 
+// Get the user's choice in the pause menu
 int pauseLoop()
 {
     int selected = 1, line_no = 0;

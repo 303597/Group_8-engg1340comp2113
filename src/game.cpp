@@ -376,6 +376,7 @@ void Game::saveToFile(string filename)
     fout.close();
 }
 
+// Shows menu, map, pacman and ghosts
 void Game::showStatus()
 {
     game_menu->showInGame(score, pacman->lives);
