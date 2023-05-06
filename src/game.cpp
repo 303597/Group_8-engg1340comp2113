@@ -91,7 +91,7 @@ void generate_prop(Map* game_map, vector<Ghost*> ghosts, int &prop_lasting_time,
 void initializeGame(string filename)
 {
     bool from_saved_data = true;
-    if (filename == "")
+    if (filename == "")https://github.com/303597/Group_8-engg1340comp2113/projects
             from_saved_data = false;
     score = 0;
     level_score = 0;
@@ -121,60 +121,6 @@ void initializeGame(string filename)
     }
 }
 
-/*
-Game::Game(int level)
-{
-    string path, filename;
-    int y = 1 + rand() % (3); 
-    string map_no = to_string(y); 
-    if (level <= 3)
-        filename = to_string(level + 1) + "_Monsters/map" + map_no + ".txt";
-    else
-        filename = "bonus/map.txt";
-    path = getExecutablePath() + "/../map/" + filename;
-    
-    ifstream fin(path);
-    if (fin.fail())
-    {
-        cout << "Failed to open file: " << filename << endl;
-        return;
-    }
-    
-    string str;
-    vector<string> vals;
-    while (getline(fin, str))
-        game_map->vals.emplace_back(str);
-        
-    int pacman_count = 0, ghost_count = 0;
-    for (size_t i = 0; i < game_map->vals.size(); i++)
-        for (size_t j = 0; j < game_map->vals[i].length(); j++)
-        {
-            if (vals[i][j] == 'o')
-            {
-                pacman_count++;
-                if (pacman_count != 1)
-                {
-                    cout << "ERROR: Map includes more than 1 pac-man." << endl;
-                    return;
-                }
-                *pacman = PacMan(i, j); // to be changed
-                vals[i][j] = ' ';
-            }
-            if (vals[i][j] == 'E')
-            {
-                ghost_count++;
-		        ghosts.emplace_back(new Ghost(i, j)); // to be changed
-                vals[i][j] = ' ';
-                //ghosts.emplace_back(&_ghosts.back());
-                //ghosts.emplace_back(new Ghost(i, j, this));
-            }
-        }
-    game_map = new Map(vals);
-
-    if (pacman_count < 1)
-        cout << "ERROR: Map does not include pac-man starting point." << endl;
-}
-*/
 
 // This Game constructor loads data from the saved file
 Game::Game(string filename, PacMan &_pacman)
