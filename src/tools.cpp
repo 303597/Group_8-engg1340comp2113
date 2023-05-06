@@ -260,14 +260,14 @@ int Map::updateTile(int x, int y, vector<Ghost*> ghosts, string &special, int &p
     return 2;*/
 }
 
-// This solution to get the path of the execuatable is found at https://stackoverflow.com/questions/1528298/get-path-of-executable
+// This function to get the path of the execuatable is found at https://stackoverflow.com/questions/1528298/get-path-of-executable
 string getExecutablePath() 
 {
     string str = filesystem::canonical("/proc/self/exe");
     return str.substr(0, str.rfind('/'));
 }
 
-// Delete the save file
+// Delete the saved file
 void clearSavedData(string filename)
 {
     if (!filesystem::remove(getExecutablePath() + "/../data/" + filename))
