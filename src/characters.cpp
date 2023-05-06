@@ -12,6 +12,7 @@
 
 typedef map<pair<int, int>, int> DirectionMap;
 
+// Creates a character with starting coordinates
 Character::Character(int _start_x, int _start_y)
 {
 	start_x = x = _start_x;
@@ -354,6 +355,7 @@ bool Ghost::moveBFS(int target_x, int target_y)
 	return found;
 }
 
+// Show expressions of pacman (change with items)
 void PacMan::show(string special, bool in_counteratk_mode)
 {
 	int posx = x + 2, posy = 2 * y + 4;
